@@ -2,7 +2,7 @@
   "name": "generator",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js"
+    "start": "npm install node server.js"
   },
   "main": "server.js",
   "author": "Wojciech Olejnik",
@@ -14,6 +14,8 @@
     "express-session": "^1.17.2",
     "mongodb": "^4.1.3",
     "mongoose": "^6.0.12",
-    "nodemon": "^2.0.14"
+    "node": "^17.0.1",
+    "nodemon": "^2.0.14",
+    "server.js": "^1.0.0"
   }
 }
