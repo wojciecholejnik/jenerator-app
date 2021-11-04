@@ -45,6 +45,18 @@ exports.getRandom = async (req, res) => {
   }
 };
 
+exports.deleteQuestion = async  (req, res) => {
+  try {
+    const itemToDelete = await Question.find({ _id: req.params.id });
+    console.log(itemToDelete)
+    await Question.deleteOne({ _id: req.params.id });
+    res.json({ message: 'OK' });
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+};
+
 exports.postQuestion = async (req, res) => {
   const [key, cos] = Object.entries(req.body);
   const odp = JSON.parse(key[0]);
