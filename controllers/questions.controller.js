@@ -32,13 +32,18 @@ exports.getBycategoryAndType = async (req, res) => {
 };
 
 exports.getRandom = async (req, res) => {
-  console.log('req.body: ', req.body)
   try {
     const count = await Question.find({category: req.params.category, type: req.params.type}).countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const user = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand);
-    if(!user) res.status(404).json({ message: 'Not found' });
-    else res.json(user);
+    let rand2 = Math.floor(Math.random() * count);
+    while (rand2 === rand) {
+      rand2 = Math.floor(Math.random() * count);
+    };
+    const question = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand);
+    const question2 = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand2);
+    const questions = [question, question2];
+    if(!question && !question2) res.status(404).json({ message: 'Not found' });
+    else res.json(questions);
   }
   catch(err) {
     res.status(500).json({ message: err });
@@ -48,7 +53,6 @@ exports.getRandom = async (req, res) => {
 exports.deleteQuestion = async  (req, res) => {
   try {
     const itemToDelete = await Question.find({ _id: req.params.id });
-    console.log(itemToDelete)
     await Question.deleteOne({ _id: req.params.id });
     res.json({ message: 'OK' });
   }
