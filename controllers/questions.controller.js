@@ -66,12 +66,6 @@ exports.postQuestion = async (req, res) => {
   const odp = JSON.parse(key[0]);
   const {type, questionContent, answers, category, img} = odp;
 
-  console.log('type: ', type);
-  console.log('questionContent: ', questionContent);
-  console.log('answers: ', Object.values(answers));
-  console.log('category: ', category);
-  console.log('img: ', img);
-
   try {
     if (type, questionContent, category) {
       const newQuestion = new Question({
