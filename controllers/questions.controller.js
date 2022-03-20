@@ -62,10 +62,8 @@ exports.deleteQuestion = async  (req, res) => {
 };
 
 exports.postQuestion = async (req, res) => {
-  const [key, cos] = Object.entries(req.body);
-  const odp = JSON.parse(key[0]);
-  const {type, questionContent, answers, category, img} = odp;
-
+  const {type, questionContent, answers, category, img} = req.body;
+  
   try {
     if (type, questionContent, category) {
       const newQuestion = new Question({
@@ -78,12 +76,31 @@ exports.postQuestion = async (req, res) => {
       await newQuestion.save();
       res.json({ message: 'OK' });
     } else {
-      console.log('NIe podales wszystkich parametrow')
+      res.status(500).json({message: 'Za mała ilość danych'});
     }
-
-
   } catch(err) {
+    res.status(500).json({message: err});
+  }
+};
 
+exports.updateQuestion = async (req, res) => {
+  const {type, questionContent, answers, category, img} = req.body;
+  
+  try {
+    if (type, questionContent, category) {
+
+      await Question.updateOne({ _id: req.params.id }, { $set: { 
+        type: type,
+        questionContent: questionContent,
+        answers: answers ? Object.values(answers) : [],
+        category: category,
+        img: img ? img : null
+      }});
+      res.json({ message: 'OK' });
+    } else {
+      res.status(500).json({message: 'Za mała ilość danych'});
+    }
+  } catch(err) {
     res.status(500).json({message: err});
   }
 };

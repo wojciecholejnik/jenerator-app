@@ -7,7 +7,8 @@ const questionRoutes = require('./routes/questions.routes');
 const bodyParser = require('body-parser')
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, './public/client')));
 
@@ -21,7 +22,7 @@ db.once('error', () => {console.log('error')});
 app.use('/api', usersRoutes);
 app.use('/api', questionRoutes);
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/client.index.html'));
+  res.sendFile(path.join(__dirname + '/public/client/index.html'));
 });
 
 const port = process.env.PORT || 7000;
