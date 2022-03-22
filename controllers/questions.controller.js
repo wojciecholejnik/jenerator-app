@@ -127,7 +127,7 @@ exports.generatePdf = async (req, res) => {
     html: html,
     data: req.body,
     path: `./document.pdf`,
-    type: "pdf",
+    type: "",
   };
   
   pdf
@@ -135,7 +135,7 @@ exports.generatePdf = async (req, res) => {
     .then((document) => {
       res.sendFile(document.filename);
     })
-    .catch((error) => {
+    .catch(() => {
       res.status(500).json({message: err});
     });
 };
