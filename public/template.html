@@ -61,7 +61,7 @@
         }
 
         img {
-          max-height: 115px;
+          max-height: 100px;
           margin-right: 10px;
           float: right;
         }
@@ -93,8 +93,8 @@
                         </div>
                         {{/each}}
                     </div>
-                    <img src="https://cdn.pixabay.com/photo/2022/03/06/05/30/clouds-7050884_960_720.jpg">
                     {{#ifCond singleSelect.1.img "&&" 'singleSelect.1.img.length'}}
+                    <img src={{singleSelect.1.img}}>
                     {{/ifCond}}
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         {{/each}}
                     </div>
                     {{#ifCond singleSelect.2.img "&&" 'singleSelect.2.img.length'}}
-                    <img src={{singleSelect.1.img}}>
+                    <img src={{singleSelect.2.img}}>
                     {{/ifCond}}
                 </div>
             </div>
