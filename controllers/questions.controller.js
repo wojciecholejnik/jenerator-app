@@ -114,11 +114,11 @@ exports.generatePdf = async (req, res) => {
     orientation: "portrait",
     header: {
         height: "5mm",
-        contents: `<div style="text-align: right; font-weight: 600;"> ${req.body.category}</div>`
+        contents: `<div style="text-align: right; font-weight: 600; font-size: 12px"> ${req.body.category}</div>`
     },
     footer: {
       height: "10mm",
-      contents: `<div style="text-align: right; border-top: 1px solid black;">${req.body.composer}</div>`
+      contents: `<div style="text-align: right; font-size: 12px; border-top: 1px solid black;">${req.body.composer}</div>`
   
     }
   };
