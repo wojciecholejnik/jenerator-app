@@ -4,7 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const usersRoutes = require('./routes/users.routes');
 const questionRoutes = require('./routes/questions.routes');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +24,9 @@ app.use('/api', questionRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/client/index.html'));
 });
+
+
+
 
 const port = process.env.PORT || 7000;
 app.listen(port, () => {

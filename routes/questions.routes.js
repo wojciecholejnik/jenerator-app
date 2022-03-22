@@ -9,6 +9,7 @@ router.get('/questions/:category/:type/random', questionsController.getRandom);
 router.delete('/questions/:id', questionsController.deleteQuestion);
 router.put('/questions/:id', questionsController.updateQuestion);
 router.post('/questions', questionsController.postQuestion);
+router.post('/questionGenerate', questionsController.generatePdf);
 
 
 module.exports = router;

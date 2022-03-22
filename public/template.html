@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+          input {
+            margin: 0 5px 5px 25px;
+          }
+          label {
+            margin: 0;
+            font-size: 14px;
+            display: inline;
+          }
+          h6 {
+            margin: 5px 5px 0 5px;
+            font-size: 14px;
+          }
+          img {
+            max-height: 165px;
+            margin-right: 20px;
+            float: right;
+          }
+          .answers {
+            float: left;
+          }
+          .question {
+            margin-bottom: 15px;
+            border-top: 1px solid gray;
+            min-height: 150px;
+          }
+
+          .question:first-child {
+            border-top: none;
+          }
+          .question::after {
+            content: "";
+            clear: both;
+            display: table;
+          }
+          p {
+            margin-bottom: 5px;
+          }
+          .header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid black;
+          }
+          .test-info {
+            text-align: end;
+          }
+          p.category {
+            font-size: 18px;
+            font-weight: 600;
+          }
+          p.composer {
+            font-size: 10px;
+          }
+        
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="student-info">
+                <p>Data:</p>
+                <p>Imię i Nazwisko:</p>
+            </div>
+        </div>
+
+        <!-- QUESTIONS -->
+        <div class="singleSelect-container groupContainer">
+
+            <!-- QUESTION1 -->
+            <div class="question">
+                <h6>1. {{singleSelect.1.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers">
+                        {{#each singleSelect.1.answers}}
+                        <div>
+                            <input type="checkbox" name="question1">
+                            <label for="question1">{{ this.content }}</label>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{#ifCond singleSelect.1.img "&&" 'singleSelect.1.img.length'}}
+                    <img src={{singleSelect.1.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- QUESTION2 -->
+            <div class="question">
+                <h6>2. {{singleSelect.2.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers">
+                        {{#each singleSelect.2.answers}}
+                        <div>
+                            <input type="checkbox" name="question1">
+                            <label for="question1">{{ this.content }}</label>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{#ifCond singleSelect.2.img "&&" 'singleSelect.2.img.length'}}
+                    <img src={{singleSelect.1.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- QUESTION3 -->
+            <div class="question">
+                <h6>3. {{multiSelect.1.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers">
+                        {{#each multiSelect.1.answers}}
+                        <div>
+                            <input type="checkbox" name="question1">
+                            <label for="question1">{{ this.content }}</label>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{#ifCond multiSelect.1.img "&&" 'multiSelect.1.img.length'}}
+                    <img src={{multiSelect.1.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- QUESTION4 -->
+            <div class="question">
+                <h6>4. {{multiSelect.2.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers">
+                        {{#each multiSelect.2.answers}}
+                        <div>
+                            <input type="checkbox" name="question1">
+                            <label for="question1">{{ this.content }}</label>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{#ifCond multiSelect.2.img "&&" 'multiSelect.2.img.length'}}
+                    <img src={{multiSelect.2.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- QUESTION5 -->
+            <div class="question">
+                <h6>5. {{open.1.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers"></div>
+                    {{#ifCond open.1.img "&&" 'open.1.img.length'}}
+                    <img src={{open.1.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+            <!-- QUESTION6 -->
+            <div class="question">
+                <h6>6. {{open.2.questionContent}}</h6>
+                <div class="answersContainer">
+                    <div class="answers"></div>
+                    {{#ifCond open.2.img "&&" 'open.2.img.length'}}
+                    <img src={{open.2.img}}>
+                    {{/ifCond}}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+</html>

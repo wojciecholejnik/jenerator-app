@@ -1,4 +1,6 @@
 const Question = require('../models/question.model');
+const pdf = require("pdf-creator-node");
+const fs = require("fs");
 
 exports.getAll = async (req, res) => {
   try {
@@ -103,4 +105,37 @@ exports.updateQuestion = async (req, res) => {
   } catch(err) {
     res.status(500).json({message: err});
   }
+};
+
+exports.generatePdf = async (req, res) => {
+  const html = fs.readFileSync("./public/template.html", "utf8");
+  const options = {
+    format: "A4",
+    orientation: "portrait",
+    header: {
+        height: "5mm",
+        contents: `<div style="text-align: right; font-weight: 600;"> ${req.body.category}</div>`
+    },
+    footer: {
+      height: "10mm",
+      contents: `<div style="text-align: right; border-top: 1px solid black;">${req.body.composer}</div>`
+  
+    }
+  };
+  
+  const document = {
+    html: html,
+    data: req.body,
+    path: `./document.pdf`,
+    type: "pdf",
+  };
+  
+  pdf
+    .create(document, options)
+    .then((document) => {
+      res.sendFile(document.filename);
+    })
+    .catch((error) => {
+      res.status(500).json({message: err});
+    });
 };
