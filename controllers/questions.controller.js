@@ -108,19 +108,10 @@ exports.updateQuestion = async (req, res) => {
 };
 
 exports.generatePdf = async (req, res) => {
-  const html = fs.readFileSync("./public/template.html", "utf8");
+  const html = fs.readFileSync("./public/template-test.html", "utf8");
   const options = {
-    width: "210mm",
-    height: "297mm",
-    header: {
-        height: "3mm",
-        contents: `<div style="text-align: right; font-weight: 600; font-size: 12px; margin-right: 10px"> ${req.body.category}</div>`
-    },
-    footer: {
-      height: "7mm",
-      contents: `<div style="text-align: right; font-size: 12px; border-top: 1px solid black; margin-right: 10px">${req.body.composer}</div>`
-  
-    }
+    format: "A4",
+    border: "5mm",
   };
   
   const document = {

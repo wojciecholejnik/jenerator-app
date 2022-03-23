@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" >
+    <style>
+      * {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+  padding: 5mm;
+  width: 210mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  border: 1px solid black;
+}
+
+.header {
+  margin-bottom: 5mm;
+  border-bottom: 1px solid black;
+  height: 20mm;
+}
+
+header::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.student-info {
+  float: left;
+}
+
+.date-placeholder, .student-name-placehoder {
+  font-size: 4mm;
+}
+
+.date-placeholder {
+  margin-bottom: 3mm;
+}
+
+.test-info {
+  float: right;
+  text-align: end;
+}
+
+.category-name {
+  font-size: 4mm;
+  margin: 0 0 3mm 0;
+}
+
+.composer-name {
+  font-size: 3mm;
+}
+
+.question {
+  margin-bottom: 3mm;
+  border-top: 1px solid gray;
+  height: 85mm;
+}
+
+.question.open {
+  height: 100mm;
+}
+
+.first {
+  border: none;
+}
+
+.question::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+h6 {
+  margin: 2mm 0;
+  font-size: 4mm;
+}
+
+.left-container {
+  float: left;
+}
+
+div.checkbox {
+  border: 1px solid black;
+  border-radius: 2px;
+  width: 3mm;
+  min-height: 3mm;
+  display: inline-block;
+  margin: 1mm 2mm 0 2mm;
+}
+
+div.checkbox-label {
+  min-height: 3mm;
+  display: inline-block;
+  font-size: 3.5mm;
+}
+
+
+label {
+  margin: 0;
+  font-size: 10px;
+  display: inline;
+}
+
+.right-container {
+  float: right;
+}
+
+img {
+  max-height: 80mm;
+  max-width: 70mm;
+}
+    </style>
+  </head>
+  <body>
+    <!-- FIRST-PAGE -->
+    <div class="container">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="student-info">
+          <p class="date-placeholder">Data:</p>
+          <p class="student-name-placehoder">Imię i Nazwisko:</p>
+        </div>
+        <div class="test-info">
+          <h6 class="category-name">Prawa przepływu. Fala tętna.</h6>
+          <p class="composer-name">MUO</p>
+        </div>
+      </div>
+      <!-- QUESTIONS -->
+      <!-- QUESTION1 -->
+      <div class="question first">
+        <div class="left-container">
+          <h6>1. Pytanie jeden jakaś treść: </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              <div>
+                <div class="checkbox"></div>
+                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+
+      <!-- QUESTION2 -->
+      <div class="question">
+        <div class="left-container">
+          <h6>2. Pytanie jeden jakaś treść: </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+
+      <!-- QUESTION3 -->
+      <div class="question">
+        <div class="left-container">
+          <h6>3. Pytanie jeden jakaś treść: </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECOND-PAGE -->
+    <div class="container">
+
+      <!-- QUESTION4 -->
+      <div class="question first">
+        <div class="left-container">
+          <h6>4. Pytanie jeden jakaś treść: </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+              <div>
+                <div class="checkbox"></div>
+                <label for="question1">jakaś wartość odpowiedzi</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+
+      <!-- QUESTION5 -->
+      <div class="question open">
+        <div class="left-container">
+          <h6>5. Pytanie piąte jakaś treść: </h6>
+          <div class="answersContainer">
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+
+      <!-- QUESTION6 -->
+      <div class="question open">
+        <div class="left-container">
+          <h6>6. Pytanie szóste jakaś treść: </h6>
+          <div class="answersContainer">
+          </div>
+        </div>
+        <div class="right-container">
+          <img src="https://iili.io/GXTqZX.png">
+        </div>
+      </div>
+      
+    </div>
+  </body>
+</html>
