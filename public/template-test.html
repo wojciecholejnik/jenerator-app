@@ -17,12 +17,13 @@
         min-height: calc(297mm * 0.75);
         max-height: calc(297mm * 0.75);
         border: 1px solid black;
+        padding: calc(5mm * 0.75);
       }
 
       .header {
-        margin-bottom: calc(5mm * 0.75);;
+        margin-bottom: calc(5mm * 0.75);
         border-bottom: 1px solid black;
-        height: calc(20mm * 0.75);;
+        height: calc(20mm * 0.75);
       }
 
       header::after {
@@ -36,11 +37,11 @@
       }
 
       .date-placeholder, .student-name-placehoder {
-        font-size: 4mm;
+        font-size: calc(4mm * 0.75);
       }
 
       .date-placeholder {
-        margin-bottom: 3mm;
+        margin-bottom: calc(3mm * 0.75);
       }
 
       .test-info {
@@ -49,22 +50,22 @@
       }
 
       .category-name {
-        font-size: 4mm;
-        margin: 0 0 3mm 0;
+        font-size: calc(4mm * 0.75);
+        margin: 0 0 calc(3mm * 0.75) 0;
       }
 
       .composer-name {
-        font-size: 3mm;
+        font-size: calc(3mm * 0.75);
       }
 
       .question {
-        margin-bottom: 3mm;
+        margin-bottom: calc(3mm * 0.75);
         border-top: 1px solid gray;
-        height: 85mm;
+        height: calc(85mm * 0.75);
       }
 
       .question.open {
-        height: 100mm;
+        height: calc(100mm * 0.75);
       }
 
       .first {
@@ -78,8 +79,8 @@
       }
 
       h6 {
-        margin: 2mm 0;
-        font-size: 4mm;
+        margin: calc(2mm * 0.75) 0;
+        font-size: calc(4mm * 0.75);
       }
 
       .left-container {
@@ -89,23 +90,16 @@
       div.checkbox {
         border: 1px solid black;
         border-radius: 2px;
-        width: 3mm;
-        min-height: 3mm;
+        width: calc(3mm * 0.75);
+        min-height: calc(3mm * 0.75);
         display: inline-block;
-        margin: 1mm 2mm 0 2mm;
+        margin: calc(1mm * 0.75) calc(2mm * 0.75) 0 calc(2mm * 0.75);
       }
 
       div.checkbox-label {
-        min-height: 3mm;
+        min-height: calc(3mm * 0.75);
         display: inline-block;
-        font-size: 3.5mm;
-      }
-
-
-      label {
-        margin: 0;
-        font-size: 10px;
-        display: inline;
+        font-size: calc(3.5mm * 0.75);
       }
 
       .right-container {
@@ -113,8 +107,8 @@
       }
 
       img {
-        max-height: 80mm;
-        max-width: 70mm;
+        max-height: calc(80mm * 0.75);
+        max-width: calc(70mm * 0.75);
       }
     </style>
   </head>
@@ -134,7 +128,7 @@
       </div>
       <!-- QUESTIONS -->
       <!-- QUESTION1 -->
-      <!-- <div class="question first">
+      <div class="question first">
         <div class="left-container">
           <h6>1. Pytanie jeden jakaś treść: </h6>
           <div class="answersContainer">
@@ -161,10 +155,10 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
 
       <!-- QUESTION2 -->
-      <!-- <div class="question">
+      <div class="question">
         <div class="left-container">
           <h6>2. Pytanie jeden jakaś treść: </h6>
           <div class="answersContainer">
@@ -191,10 +185,10 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
 
       <!-- QUESTION3 -->
-      <!-- <div class="question">
+      <div class="question">
         <div class="left-container">
           <h6>3. Pytanie jeden jakaś treść: </h6>
           <div class="answersContainer">
@@ -221,14 +215,14 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
     </div>
 
     <!-- SECOND-PAGE -->
     <div class="container">
 
       <!-- QUESTION4 -->
-      <!-- <div class="question first">
+      <div class="question first">
         <div class="left-container">
           <h6>4. Pytanie jeden jakaś treść: </h6>
           <div class="answersContainer">
@@ -255,10 +249,10 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
 
       <!-- QUESTION5 -->
-      <!-- <div class="question open">
+      <div class="question open">
         <div class="left-container">
           <h6>5. Pytanie piąte jakaś treść: </h6>
           <div class="answersContainer">
@@ -267,10 +261,10 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
 
       <!-- QUESTION6 -->
-      <!-- <div class="question open">
+      <div class="question open">
         <div class="left-container">
           <h6>6. Pytanie szóste jakaś treść: </h6>
           <div class="answersContainer">
@@ -279,7 +273,7 @@
         <div class="right-container">
           <img src="https://iili.io/GXTqZX.png">
         </div>
-      </div> -->
+      </div>
       
     </div>
   </body>
