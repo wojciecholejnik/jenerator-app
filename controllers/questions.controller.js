@@ -110,8 +110,9 @@ exports.updateQuestion = async (req, res) => {
 exports.generatePdf = async (req, res) => {
   const html = fs.readFileSync("./public/template-test.html", "utf8");
   const options = {
-    format: "A4",
-    border: "5mm",
+    width: "210mm",
+    height: "297mm",
+    border: "5mm"
   };
   
   const document = {
