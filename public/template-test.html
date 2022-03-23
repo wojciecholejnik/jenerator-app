@@ -7,23 +7,22 @@
     <link rel="stylesheet" href="style.css" >
     <style>
       * {
-          font-family: 'Roboto', sans-serif;
-          margin: 0;
-          padding: 0;
-          transform: scale(0.725);
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
       }
 
       .container {
-        width: 210mm;
-        min-height: 297mm;
-        max-height: 297mm;
+        width: calc(210mm * 0.725);
+        min-height: calc(297mm * 0.725);
+        max-height: calc(297mm * 0.725);
         border: 1px solid black;
       }
 
       .header {
-        margin-bottom: 5mm;
+        margin-bottom: calc(5mm * 0.725);;
         border-bottom: 1px solid black;
-        height: 20mm;
+        height: calc(20mm * 0.725);;
       }
 
       header::after {
