@@ -59,7 +59,7 @@
 
       .question {
         margin-bottom: calc(3mm * 0.72);
-        margin-top: calc(1mm * 0.72);
+        padding-top: calc(1mm * 0.72);
         border-top: 1px solid gray;
         height: calc(85mm * 0.72);
       }
@@ -122,100 +122,77 @@
           <p class="student-name-placehoder">Imię i Nazwisko:</p>
         </div>
         <div class="test-info">
-          <h6 class="category-name">Prawa przepływu. Fala tętna.</h6>
-          <p class="composer-name">MUO</p>
+          <h6 class="category-name">{{category}}</h6>
+          <p class="composer-name">{{composer}}</p>
         </div>
       </div>
       <!-- QUESTIONS -->
       <!-- QUESTION1 -->
       <div class="question first">
         <div class="left-container">
-          <h6>1. Pytanie jeden jakaś treść: </h6>
+          <h6>1. {{singleSelect.1.questionContent}} </h6>
           <div class="answersContainer">
             <div class="answers">
+              {{#each singleSelect.1.answers}}
               <div>
                 <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+                <div class="checkbox-label">{{this.content}}</div>
               </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
+        {{#ifCond singleSelect.1.img "&&" 'singleSelect.1.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{singleSelect.1.img}}>
         </div>
+        {{/ifCond}}
       </div>
 
       <!-- QUESTION2 -->
       <div class="question">
         <div class="left-container">
-          <h6>2. Pytanie jeden jakaś treść: </h6>
+          <h6>2. {{singleSelect.2.questionContent}} </h6>
           <div class="answersContainer">
             <div class="answers">
+              {{#each singleSelect.2.answers}}
               <div>
                 <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+                <div class="checkbox-label">{{this.content}}</div>
               </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
+        {{#ifCond singleSelect.2.img "&&" 'singleSelect.2.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{singleSelect.2.img}}>
         </div>
+        {{/ifCond}}
       </div>
 
       <!-- QUESTION3 -->
       <div class="question">
         <div class="left-container">
-          <h6>3. Pytanie jeden jakaś treść: </h6>
+          <h6>3. {{multiSelect.1.questionContent}} </h6>
           <div class="answersContainer">
             <div class="answers">
+              {{#each multiSelect.1.answers}}
               <div>
                 <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+                <div class="checkbox-label">{{this.content}}</div>
               </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
+        {{#ifCond multiSelect.1.img "&&" 'multiSelect.1.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{multiSelect.1.img}}>
         </div>
+        {{/ifCond}}
       </div>
+
     </div>
 
     <!-- SECOND-PAGE -->
@@ -224,55 +201,51 @@
       <!-- QUESTION4 -->
       <div class="question first">
         <div class="left-container">
-          <h6>4. Pytanie jeden jakaś treść: </h6>
+          <h6>4. {{multiSelect.2.questionContent}} </h6>
           <div class="answersContainer">
             <div class="answers">
+              {{#each multiSelect.2.answers}}
               <div>
                 <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
+                <div class="checkbox-label">{{this.content}}</div>
               </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
-              <div>
-                <div class="checkbox"></div>
-                <div class="checkbox-label">jakaś wartość odpowiedzi</div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </div>
+        {{#ifCond multiSelect.2.img "&&" 'multiSelect.2.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{multiSelect.2.img}}>
         </div>
+        {{/ifCond}}
       </div>
 
       <!-- QUESTION5 -->
       <div class="question open">
         <div class="left-container">
-          <h6>5. Pytanie piąte jakaś treść: </h6>
+          <h6>5. {{open.1.questionContent}} </h6>
           <div class="answersContainer">
           </div>
         </div>
+        {{#ifCond open.1.img "&&" 'open.1.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{open.1.img}}>
         </div>
+        {{/ifCond}}
       </div>
 
       <!-- QUESTION6 -->
       <div class="question open">
         <div class="left-container">
-          <h6>6. Pytanie szóste jakaś treść: </h6>
+          <h6>5. {{open.2.questionContent}} </h6>
           <div class="answersContainer">
           </div>
         </div>
+        {{#ifCond open.2.img "&&" 'open.2.img.length'}}
         <div class="right-container">
-          <img src="https://iili.io/GXTqZX.png">
+          <img src={{open.2.img}}>
         </div>
+        {{/ifCond}}
       </div>
       
     </div>
