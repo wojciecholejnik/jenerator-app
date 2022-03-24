@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" >
     <style>
       * {
         font-family: 'Roboto', sans-serif;
@@ -13,7 +12,6 @@
       }
 
       .container {
-        /* width: calc(210mm * 0.72); */
         min-height: calc(297mm * 0.72);
         max-height: calc(297mm * 0.72);
         padding: calc(6mm * 0.72);
@@ -53,8 +51,22 @@
         margin: 0 0 calc(3mm * 0.72) 0;
       }
 
+      .emoticon {
+        width: calc(10mm * 0.72);
+        margin-right: calc(2mm * 0.72);
+        float: left;
+      }
+
+      .composer-container::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
       .composer-name {
+        float: right;
         font-size: calc(3mm * 0.72);
+        margin-top: calc(3mm * 0.72);
       }
 
       .question {
@@ -123,7 +135,10 @@
         </div>
         <div class="test-info">
           <h6 class="category-name">{{category}}</h6>
-          <p class="composer-name">{{composer}}</p>
+          <div class="composer-container">
+            <img class="emoticon" src="https://iili.io/GNvQGp.png">
+            <p class="composer-name">{{composer}}</p>
+          </div>
         </div>
       </div>
       <!-- QUESTIONS -->
