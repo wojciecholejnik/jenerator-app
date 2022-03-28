@@ -35,22 +35,46 @@ exports.getBycategoryAndType = async (req, res) => {
 
 exports.getRandom = async (req, res) => {
   try {
-    const count = await Question.find({category: req.params.category, type: req.params.type}).countDocuments();
-    const rand = Math.floor(Math.random() * count);
-    let rand2 = Math.floor(Math.random() * count);
-    while (rand2 === rand) {
-      rand2 = Math.floor(Math.random() * count);
-    };
-    const question = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand);
-    const question2 = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand2);
-    const questions = [question, question2];
-    if(!question && !question2) res.status(404).json({ message: 'Not found' });
-    else res.json(questions);
+    const countSingle = await Question.find({type: 'singleSelect', category: req.params.category}).countDocuments();
+    const countMulti = await Question.find({type: 'multiSelect', category: req.params.category}).countDocuments();
+    const countOpen = await Question.find({type: 'open', category: req.params.category}).countDocuments();
+    if (countSingle < 2 && countMulti < 2 && countOpen < 2) {
+      res.status(404).json({message: 'za mało pytań w wybranej kategorii'})
+    } else {
+      const count = await Question.find({category: req.params.category, type: req.params.type}).countDocuments();
+      const rand = Math.floor(Math.random() * count);
+      let rand2 = Math.floor(Math.random() * count);
+      while (rand2 === rand) {
+        rand2 = Math.floor(Math.random() * count);
+      };
+      const question = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand);
+      const question2 = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand2);
+      const questions = [question, question2];
+      if(!question && !question2) res.status(404).json({ message: 'Not found' });
+      else res.json(questions);
+    }  
+
   }
   catch(err) {
     res.status(500).json({ message: err });
   }
 };
+
+// exports.getRandom = async (req, res) => {
+//   try {
+//     const countSingle = await Question.find({type: 'singleSelect', category: req.body.category}).countDocuments();
+//     const countMulti = await Question.find({type: 'multiSelect', category: req.body.category}).countDocuments();
+//     const countOpen = await Question.find({type: 'open', category: req.body.category}).countDocuments();
+//     if (countSingle < 2 && countMulti < 2 && countOpen < 2) {
+//       res.status(404).json({message: 'za mało pytań w wybranej kategorii'})
+//     } else {
+
+//     }    
+//   }
+//   catch(err) {
+//     res.status(500).json({message: err})
+//   } 
+// }
 
 exports.deleteQuestion = async  (req, res) => {
   try {

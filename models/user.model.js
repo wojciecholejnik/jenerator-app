@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
   displayName: { type: String, required: true },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, required: true },
+  shortName: { type: String, required: true},
+  emoticon: {type: String, required: true}
 });
 
 module.exports = mongoose.model('User', userSchema);
