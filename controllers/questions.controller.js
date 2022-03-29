@@ -60,22 +60,6 @@ exports.getRandom = async (req, res) => {
   }
 };
 
-// exports.getRandom = async (req, res) => {
-//   try {
-//     const countSingle = await Question.find({type: 'singleSelect', category: req.body.category}).countDocuments();
-//     const countMulti = await Question.find({type: 'multiSelect', category: req.body.category}).countDocuments();
-//     const countOpen = await Question.find({type: 'open', category: req.body.category}).countDocuments();
-//     if (countSingle < 2 && countMulti < 2 && countOpen < 2) {
-//       res.status(404).json({message: 'za mało pytań w wybranej kategorii'})
-//     } else {
-
-//     }    
-//   }
-//   catch(err) {
-//     res.status(500).json({message: err})
-//   } 
-// }
-
 exports.deleteQuestion = async  (req, res) => {
   try {
     const itemToDelete = await Question.find({ _id: req.params.id });
@@ -131,7 +115,7 @@ exports.updateQuestion = async (req, res) => {
   }
 };
 
-exports.generatePdf = async (req, res) => {
+exports.generateTestPdf = async (req, res) => {
   const html = fs.readFileSync("templatePDF.html", "utf8");
   const options = {
     format: "A4",
@@ -141,6 +125,29 @@ exports.generatePdf = async (req, res) => {
     html: html,
     data: req.body,
     path: `./document.pdf`,
+    type: "",
+  };
+  
+  pdf
+    .create(document, options)
+    .then((document) => {
+      res.sendFile(document.filename);
+    })
+    .catch(() => {
+      res.status(500).json({message: err});
+    });
+};
+
+exports.generateResolvedPdf = async (req, res) => {
+  const html = fs.readFileSync("templateResolvedPDF.html", "utf8");
+  const options = {
+    format: "A4",
+  };
+  
+  const document = {
+    html: html,
+    data: req.body,
+    path: `./documentResolved.pdf`,
     type: "",
   };
   

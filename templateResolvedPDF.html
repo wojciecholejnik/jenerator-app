@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        min-height: calc(297mm * 0.72);
+        max-height: calc(297mm * 0.72);
+        padding: calc(6mm * 0.72);
+      }
+
+      .header {
+        margin-bottom: calc(5mm * 0.72);
+        border-bottom: 1px solid black;
+        height: calc(20mm * 0.72);
+      }
+
+      header::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .student-info {
+        float: left;
+      }
+
+      .date-placeholder, .student-name-placehoder {
+        font-size: calc(4mm * 0.72);
+      }
+
+      .date-placeholder {
+        margin-bottom: calc(3mm * 0.72);
+      }
+
+      .test-info {
+        float: right;
+        text-align: end;
+      }
+
+      .category-name {
+        font-size: calc(4mm * 0.72);
+        margin: 0 0 calc(3mm * 0.72) 0;
+      }
+
+      .emoticon {
+        width: calc(10mm * 0.72);
+        margin-right: calc(2mm * 0.72);
+      }
+
+      .composer-container::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .composer-name {
+        float: right;
+        font-size: calc(3mm * 0.72);
+        margin-top: calc(3mm * 0.72);
+      }
+
+      .question {
+        margin-bottom: calc(3mm * 0.72);
+        padding-top: calc(1mm * 0.72);
+        border-top: 1px solid gray;
+        height: calc(85mm * 0.72);
+      }
+
+      .question.open {
+        height: calc(100mm * 0.72);
+      }
+
+      .first {
+        border: none;
+      }
+
+      .question::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      h6 {
+        margin: calc(2mm * 0.72) 0;
+        font-size: calc(4mm * 0.72);
+      }
+
+      .left-container {
+        float: left;
+      }
+
+      div.checkbox {
+        border: 1px solid black;
+        border-radius: 2px;
+        width: calc(3mm * 0.72);
+        min-height: calc(3mm * 0.72);
+        display: inline-block;
+        margin: calc(1mm * 0.72) calc(2mm * 0.72) 0 calc(2mm * 0.72);
+      }
+
+      div.checkbox-label {
+        min-height: calc(3mm * 0.72);
+        display: inline-block;
+        font-size: calc(3.5mm * 0.72);
+      }
+
+      .right-container {
+        float: right;
+      }
+
+      img {
+        max-height: calc(80mm * 0.72);
+        max-width: calc(70mm * 0.72);
+      }
+
+      div.rightAnswer {
+        width: calc(3mm * 0.72);
+        min-height: calc(3mm * 0.72);
+        background-color: dimgray;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FIRST-PAGE -->
+    <div class="container">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="student-info">
+          <p class="date-placeholder">Data:</p>
+          <p class="student-name-placehoder">Imię i Nazwisko:</p>
+        </div>
+        <div class="test-info">
+          <h6 class="category-name">{{category}}</h6>
+          <div class="composer-container">
+            <img class="emoticon" src={{emoticon}}>
+            <p class="composer-name">{{composer}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- QUESTIONS -->
+      <!-- QUESTION1 -->
+      <div class="question first">
+        <div class="left-container">
+          <h6>1. {{singleSelect.1.questionContent}} </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              {{#each singleSelect.1.answers}}
+              <div>
+                <div class="checkbox">
+                  {{#ifCond this.isRight '===' true}}
+                  <div class="rightAnswer"></div>
+                  {{/ifCond}}
+                </div>
+                <div class="checkbox-label">{{this.content}}</div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        {{#ifCond singleSelect.1.img "&&" 'singleSelect.1.img.length'}}
+        <div class="right-container">
+          <img src={{singleSelect.1.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+
+      <!-- QUESTION2 -->
+      <div class="question">
+        <div class="left-container">
+          <h6>2. {{singleSelect.2.questionContent}} </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              {{#each singleSelect.2.answers}}
+              <div>
+                <div class="checkbox">
+                  {{#ifCond this.isRight '===' true}}
+                  <div class="rightAnswer"></div>
+                  {{/ifCond}}
+                </div>
+                <div class="checkbox-label">{{this.content}}</div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        {{#ifCond singleSelect.2.img "&&" 'singleSelect.2.img.length'}}
+        <div class="right-container">
+          <img src={{singleSelect.2.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+
+      <!-- QUESTION3 -->
+      <div class="question">
+        <div class="left-container">
+          <h6>3. {{multiSelect.1.questionContent}} </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              {{#each multiSelect.1.answers}}
+              <div>
+                <div class="checkbox">
+                  {{#ifCond this.isRight '===' true}}
+                  <div class="rightAnswer"></div>
+                  {{/ifCond}}
+                </div>
+                <div class="checkbox-label">{{this.content}}</div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        {{#ifCond multiSelect.1.img "&&" 'multiSelect.1.img.length'}}
+        <div class="right-container">
+          <img src={{multiSelect.1.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+
+    </div>
+
+    <!-- SECOND-PAGE -->
+    <div class="container">
+
+      <!-- QUESTION4 -->
+      <div class="question first">
+        <div class="left-container">
+          <h6>4. {{multiSelect.2.questionContent}} </h6>
+          <div class="answersContainer">
+            <div class="answers">
+              {{#each multiSelect.2.answers}}
+              <div>
+                <div class="checkbox">
+                  {{#ifCond this.isRight '===' true}}
+                  <div class="rightAnswer"></div>
+                  {{/ifCond}}
+                </div>
+                <div class="checkbox-label">{{this.content}}</div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        {{#ifCond multiSelect.2.img "&&" 'multiSelect.2.img.length'}}
+        <div class="right-container">
+          <img src={{multiSelect.2.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+
+      <!-- QUESTION5 -->
+      <div class="question open">
+        <div class="left-container">
+          <h6>5. {{open.1.questionContent}} </h6>
+          <div class="answersContainer">
+          </div>
+        </div>
+        {{#ifCond open.1.img "&&" 'open.1.img.length'}}
+        <div class="right-container">
+          <img src={{open.1.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+
+      <!-- QUESTION6 -->
+      <div class="question open">
+        <div class="left-container">
+          <h6>6. {{open.2.questionContent}} </h6>
+          <div class="answersContainer">
+          </div>
+        </div>
+        {{#ifCond open.2.img "&&" 'open.2.img.length'}}
+        <div class="right-container">
+          <img src={{open.2.img}}>
+        </div>
+        {{/ifCond}}
+      </div>
+      
+    </div>
+  </body>
+</html>
