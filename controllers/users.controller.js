@@ -6,7 +6,7 @@ const User = require('../models/user.model');
       if (!user.length) {
         res.status(404).json({ message: 'invalid data'});
       } else {
-        res.json(user);
+        res.json(user[0]);
       }
     }
     catch(err) {
@@ -71,6 +71,22 @@ const User = require('../models/user.model');
       } else {
         await User.updateOne({ _id: req.body.userId }, { $set: { 
           emoticon: req.body.newEmoticon,
+        }}).then(() => res.json({ message: 'OK' }))
+      }
+    }
+    catch(err) {
+      res.status(500).json({ message: err });
+    }
+  };
+
+  exports.changeBackground = async (req, res) => {
+    try {
+      const user = await User.find({_id: req.body.userId});
+      if (!user.length) {
+        res.status(404).json({ message: 'brak użytwkonika !'});
+      } else {
+        await User.updateOne({ _id: req.body.userId }, { $set: { 
+          background: req.body.newBackground,
         }}).then(() => res.json({ message: 'OK' }))
       }
     }

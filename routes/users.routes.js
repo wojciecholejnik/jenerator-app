@@ -7,5 +7,5 @@ router.put('/users/changePassword', userControllert.changePassword);
 router.put('/users/changeName', userControllert.changeName);
 router.put('/users/changeLogin', userControllert.changeLogin);
 router.put('/users/changeEmoticon', userControllert.changeEmoticon);
-
+router.put('/users/changeBackground', userControllert.changeBackground);
 module.exports = router;
