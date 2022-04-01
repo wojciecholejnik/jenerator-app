@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const usersRoutes = require('./routes/users.routes');
 const questionRoutes = require('./routes/questions.routes');
+const testRoutes = require('./routes/test.routes');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -21,6 +22,7 @@ db.once('error', () => {console.log('error')});
 
 app.use('/api', usersRoutes);
 app.use('/api', questionRoutes);
+app.use('/api', testRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/client/index.html'));
 });

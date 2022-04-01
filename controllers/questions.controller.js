@@ -38,7 +38,7 @@ exports.getRandom = async (req, res) => {
     const countSingle = await Question.find({type: 'singleSelect', category: req.params.category}).countDocuments();
     const countMulti = await Question.find({type: 'multiSelect', category: req.params.category}).countDocuments();
     const countOpen = await Question.find({type: 'open', category: req.params.category}).countDocuments();
-    if (countSingle < 2 && countMulti < 2 && countOpen < 2) {
+    if (countSingle < 2 || countMulti < 2 || countOpen < 2) {
       res.status(404).json({message: 'za mało pytań w wybranej kategorii'})
     } else {
       const count = await Question.find({category: req.params.category, type: req.params.type}).countDocuments();
