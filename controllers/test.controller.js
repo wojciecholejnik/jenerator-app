@@ -13,7 +13,14 @@ exports.postTest = async (req, res) => {
   const {author, questions, category} = req.body;
   
   try {
-    if (author && questions && category) {
+    const testIsEgzist = await Test.findOne({
+      author: author,
+      questions: questions,
+      category: category,
+    });
+    if (testIsEgzist) {
+      res.status(404).json({message: 'test już istnieje'});
+    } else if (author && questions && category) {
       const newTest = new Test({
         author: author,
         questions: questions,
