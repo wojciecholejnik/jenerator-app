@@ -1,0 +1,46 @@
+.card {
+    margin-top: 15px;
+    padding: 15px;
+}
+
+.print-button {
+    margin-left: 15px;
+}
+
+input.category {
+    width: 90%;
+    height: 38px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    background: pink;
+  
+    &:focus-visible {
+      outline: 1px solid #007bff;
+      background: white;
+    }
+  }
+  
+  .clear-button {
+    margin-left: 15px;
+    :hover {
+      cursor:pointer;
+      color: #007bff;
+    }
+  }
+  
+  .input-wrapper {
+    position: relative;
+  
+    span {
+      position: absolute;
+      top: 6px;
+      right: 20px;
+    }
+  }
+
+  .filter-container {
+    border-bottom: none;
+    input {
+      width: 74%;
+    }
+  }

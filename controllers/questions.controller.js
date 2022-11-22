@@ -1,6 +1,8 @@
 const Question = require('../models/question.model');
 const pdf = require("pdf-creator-node");
 const fs = require("fs");
+const uniqid = require('uniqid');
+const formidable = require('formidable');
 
 exports.getAll = async (req, res) => {
   try {
@@ -35,23 +37,23 @@ exports.getBycategoryAndType = async (req, res) => {
 
 exports.getRandom = async (req, res) => {
   try {
-    const countSingle = await Question.find({type: 'singleSelect', category: req.params.category}).countDocuments();
-    const countMulti = await Question.find({type: 'multiSelect', category: req.params.category}).countDocuments();
-    const countOpen = await Question.find({type: 'open', category: req.params.category}).countDocuments();
+    const countSingle = await Question.find({type: 'singleSelect', category: req.body.category}).countDocuments();
+    const countMulti = await Question.find({type: 'multiSelect', category: req.body.category}).countDocuments();
+    const countOpen = await Question.find({type: 'open', category: req.body.category}).countDocuments();
+    const randomQuestions = {
+      singleSelect: [],
+      multiSelect: [],
+      open: []
+    };
+
     if (countSingle < 2 || countMulti < 2 || countOpen < 2) {
       res.status(404).json({message: 'za mało pytań w wybranej kategorii'})
     } else {
-      const count = await Question.find({category: req.params.category, type: req.params.type}).countDocuments();
-      const rand = Math.floor(Math.random() * count);
-      let rand2 = Math.floor(Math.random() * count);
-      while (rand2 === rand) {
-        rand2 = Math.floor(Math.random() * count);
-      };
-      const question = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand);
-      const question2 = await Question.findOne({category: req.params.category, type: req.params.type}).skip(rand2);
-      const questions = [question, question2];
-      if(!question && !question2) res.status(404).json({ message: 'Not found' });
-      else res.json(questions);
+      randomQuestions.singleSelect = await findRandomQuestionsFromCategory(req.body.category, 'singleSelect');
+      randomQuestions.multiSelect = await findRandomQuestionsFromCategory(req.body.category, 'multiSelect');
+      randomQuestions.open = await findRandomQuestionsFromCategory(req.body.category, 'open');
+
+      res.json(randomQuestions);
     }  
 
   }
@@ -59,6 +61,18 @@ exports.getRandom = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
+findRandomQuestionsFromCategory = async (category, type) => {
+  const count = await Question.find({category: category, type: 'singleSelect'}).countDocuments();
+  const rand = Math.floor(Math.random() * count);
+  let rand2 = Math.floor(Math.random() * count);
+  while (rand2 === rand) {
+    rand2 = Math.floor(Math.random() * count);
+  };
+  const question = await Question.findOne({category: category, type: type}).skip(rand);
+  const question2 = await Question.findOne({category: category, type: type}).skip(rand2);
+  return [question, question2]
+}
 
 exports.deleteQuestion = async  (req, res) => {
   try {
@@ -72,22 +86,53 @@ exports.deleteQuestion = async  (req, res) => {
 };
 
 exports.postQuestion = async (req, res) => {
-  const {type, questionContent, answers, category, img} = req.body;
   
   try {
-    if (type, questionContent, category) {
-      const newQuestion = new Question({
-        type: type,
-        questionContent: questionContent,
-        answers: answers ? Object.values(answers) : [],
-        category: category,
-        img: img ? img : null
-      });
-      await newQuestion.save();
-      res.json({ message: 'OK' });
-    } else {
-      res.status(500).json({message: 'Za mała ilość danych'});
-    }
+    var form = new formidable.IncomingForm();
+    form.parse(req, async (err, fields, files) => {
+
+      if (files.hasOwnProperty('upload')) {
+        var oldpath = files.upload.path;
+        const fileName = uniqid() + '.' + files.upload.name;
+        var newpath = process.cwd() + '/public/uploads/' + fileName;
+        fs.rename(oldpath, newpath, async (err) => {
+
+          if (err) throw err;
+
+          const {type, questionContent, category, answers} = fields;
+
+          if (type, questionContent, category) {
+            const newQuestion = new Question({
+            type: type,
+            questionContent: questionContent,
+            answers: answers ? Object.values(answers) : [],
+            category: category,
+            img: fileName ? fileName : null
+          });
+          await newQuestion.save();
+          res.json({ message: 'OK' });
+        } else {
+          res.status(500).json({message: 'Za mała ilość danych'});
+        }
+          res.end();
+        });
+      } else {
+        const {type, questionContent, category, answers} = fields;
+        if (type, questionContent, category) {
+          const newQuestion = new Question({
+          type: type,
+          questionContent: questionContent,
+          answers: answers ? Object.values(answers) : [],
+          category: category,
+          img: null
+        });
+        await newQuestion.save();
+        res.json({ message: 'OK' });
+      } else {
+        res.status(500).json({message: 'Za mała ilość danych'});
+      }
+      }
+    });
   } catch(err) {
     res.status(500).json({message: err});
   }

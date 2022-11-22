@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+$theme-colors: (
+  "primary": black,
+  );
+
+/* Importing Bootstrap SCSS file. */
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import '~bootstrap/scss/bootstrap';
+@import 'app/shared/global-styling/tables-styling.scss';
+
+
+body {
+  margin: 20px;
+  background-color: pink;
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
+}
+
+input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

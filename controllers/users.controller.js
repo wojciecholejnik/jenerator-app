@@ -1,8 +1,9 @@
 const User = require('../models/user.model');
 
   exports.login = async (req, res) => {
+    console.log('działam')
     try {
-      const user = await User.find({email: req.params.email, password: req.params.password});
+      const user = await User.find({email: req.body.email, password: req.body.password});
       if (!user.length) {
         res.status(404).json({ message: 'invalid data'});
       } else {

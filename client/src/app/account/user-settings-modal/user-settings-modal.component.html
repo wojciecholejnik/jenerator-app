@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <div id="modal-container" class="modal-container">
+
+        <ng-container *ngIf="modalForPasswordChange">
+            <h5 >zmiana hasła</h5>
+            <p>podaj nowe hasło:</p>
+            <input class="new-data" [(ngModel)]="newPassword">
+        </ng-container>
+
+        <ng-container *ngIf="modalForNameChange">
+            <h5 >zmiana nazwy</h5>
+            <p>podaj nową nazwę użytkownika:</p>
+            <input class="new-data" [(ngModel)]="newName">
+        </ng-container>
+
+        <ng-container *ngIf="modalForLoginChange">
+            <h5 >zmiana loginu</h5>
+            <p>podaj nowy login:</p>
+            <input class="new-data" [(ngModel)]="newLogin">
+        </ng-container>
+
+        <ng-container *ngIf="modalForEmoticonChange">
+            <h5 >zmiana emotki</h5>
+            <p>podaj nowy login:</p>
+            <input class="new-data" [(ngModel)]="newEmoticon">
+            <img class="emoticon" *ngIf="newEmoticon.length" [src]="newEmoticon">
+        </ng-container>
+
+        <ng-container *ngIf="modalForBackgroundChange">
+            <h5 >zmiana koloru tła</h5>
+            <p>wybierz nowy kolor:</p>
+            <select [(ngModel)]="newColor" (change)="setNewColor($event)">
+                <option value="linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)">disco club</option>
+                <option value="linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%)">aqua spray</option>
+                <option value="linear-gradient(90deg, #efd5ff 0%, #515ada 100%)">lovely lilly</option>
+                <option value="linear-gradient(90deg, #fcff9e 0%, #c67700 100%)">dusty cactus</option>
+                <option value="linear-gradient(90deg, #f8ff00 0%, #3ad59f 100%)">mello yellow</option>
+                <option value="pink">pink</option>
+                <option value="powderblue">powderblue</option>
+                <option value="lightgray">lightgray</option>
+                <option value="beige">beige</option>
+                <option value="aquamarine">aquamarine</option>
+                <option value="bisque">bisque</option>
+                <option value="gold">gold</option>
+                <option value="greenyellow">greenyellow</option>
+            </select>
+            <p>lub wpisz własny:</p>
+            <input class="color" type="text" [(ngModel)]="newColor" (keyup)="setNewColor($event)">
+        </ng-container>
+        
+        <div *ngIf="!requestPending" class="buttons-wrapper">
+            <button class="btn btn-secondary" (click)="closeModal()">zamknij</button>
+            <button class="btn btn-primary" (click)="save()" [disabled]="!inputInvalid()">zapisz</button>
+        </div>
+
+        <div *ngIf="requestPending" class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+        <small>* zmiana spowoduje automatyczne wylogowanie z aplikacji</small>
+    </div>
+</div>
+
+

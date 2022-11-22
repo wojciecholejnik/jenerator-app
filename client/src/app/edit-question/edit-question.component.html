@@ -1,0 +1,51 @@
+<div class="wrapper">
+    <div id="modal-container" class="modal-container">
+        <h4 class="modal-title">edytuj pytanie</h4>
+        <h5>rodzaj pytania:</h5> 
+            <select [value]="question.type" [(ngModel)]="questionToUpdate.type">
+                <option value="singleSelect" label="pojedyncze"></option>
+                <option value="multiSelect" label="multi"></option>
+                <option value="open" label="otwarte"></option>
+            </select> 
+        <h5>kategoria: </h5>
+        <input [(ngModel)]="questionToUpdate.category">
+        <br>
+        <br>
+        <h5> treść pytania: 
+            <textarea [(ngModel)]="questionToUpdate.questionContent"></textarea>
+        </h5>
+        <h5> link obazka: 
+            <input [(ngModel)]="questionToUpdate.img">
+        </h5>
+        <img *ngIf="questionToUpdate.img && questionToUpdate.img.length" [src]="questionToUpdate.img" ale>
+        <br>
+        <h5 *ngIf="questionToUpdate.type !== 'open'">odpowiedzi:</h5>
+        <div *ngIf="questionToUpdate.type !== 'open'" class="answers-container">
+            <div class="answer">
+                <input #checkbox type="checkbox" [checked]="question.answers[0].isRight" class="form-checkbox" 
+                id="ans1isRight" [(ngModel)]="questionToUpdate.answers[0].isRight">
+                <textarea [(ngModel)]="questionToUpdate.answers[0].content"></textarea>
+            </div>
+            <div class="answer">
+                <input #checkbox type="checkbox" [checked]="question.answers[1].isRight" class="form-checkbox" 
+                id="ans2isRight" [(ngModel)]="questionToUpdate.answers[1].isRight">
+                <textarea [(ngModel)]="questionToUpdate.answers[1].content"></textarea>
+            </div>
+            <div class="answer">
+                <input #checkbox type="checkbox" class="form-checkbox"[checked]="question.answers[2].isRight" 
+                id="ans3isRight" [(ngModel)]="questionToUpdate.answers[2].isRight">
+                <textarea [(ngModel)]="questionToUpdate.answers[2].content"></textarea>
+            </div>
+            <div class="answer">
+                <input #checkbox type="checkbox" class="form-checkbox" [checked]="question.answers[3].isRight" 
+                id="ans4isRight" [(ngModel)]="questionToUpdate.answers[3].isRight">
+                <textarea [(ngModel)]="questionToUpdate.answers[3].content"></textarea>
+
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="btn btn-secondary" (click)="closeModal()">anuluj</button>
+            <button class="btn btn-primary" [disabled]="disableSendButton()" (click)="updateQuestion()">zapisz</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+li.true {
+  color: lightgreen;
+  font-weight: 500;
+}
+
+li.false {
+  color: lightcoral;
+}
+
+.button-container {
+  display: flex;
+
+  .btn-secondary {
+    margin-right: 5px;
+  }
+}
+
+.type-chooser {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.filter-container {
+  border-bottom: none;
+  input {
+    width: 74%;
+  }
+}
