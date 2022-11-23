@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParamsOptions,   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Category, Question, Test, TestToSave } from './shared/interafaces';
 
@@ -10,7 +10,7 @@ import { Category, Question, Test, TestToSave } from './shared/interafaces';
 })
 export class DataService {
   API_URL = '';
-  data: Question[] = [];
+  data: BehaviorSubject<any> = new BehaviorSubject([]);
   categories: string[] = [];
   categories2: Category[] = [];
   subjectedCategories: Subject<any> = new Subject<any>();
@@ -43,7 +43,7 @@ export class DataService {
   getData() {
     this.http.get<Question[]>(`${this.API_URL}/questions`).subscribe({
       next: (questions) => {
-        this.data = questions;
+        this.data.next(questions);
         this.getCategories();
       },
       error: () => {
@@ -76,7 +76,7 @@ export class DataService {
   getCategories() {
     this.categories2 = [];
     this.categories = [];
-    this.data.map((category: { category: any; }) => {
+    this.data.value.map((category: { category: any; }) => {
       const testCategory = this.categories.find(cat => cat === category.category);
       if (!testCategory) {
         this.categories.push(category.category);
@@ -91,7 +91,7 @@ export class DataService {
       }
     });
 
-    this.data.forEach(question => {
+    this.data.value.forEach((question: any) => {
       const category = this.categories2.find(category => category.name === question.category);
       if (category && question.type === 'singleSelect') {
         category.amount +=1;

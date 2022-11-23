@@ -32,7 +32,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.getDataRequestPending = true;
     this.dataService.getData();
-    this.subscription = this.dataService.subscribeData().subscribe(data => {
+    this.subscription = this.dataService.data.subscribe(data => {
       if (data) {
         this.data = data;
         this.setActiveCategory({target: {value: this.activeCategory}});
@@ -60,7 +60,7 @@ export class PreviewComponent implements OnInit {
   }
 
   filterDate() {
-    this.filteredData = this.dataService.data.filter((question: { category: string; }) => question.category === this.activeCategory);
+    this.filteredData = this.data.filter((question: { category: string; }) => question.category === this.activeCategory);
   }
 
   filterByType(event: any, secondFiltering?: string) {

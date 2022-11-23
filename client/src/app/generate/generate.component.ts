@@ -54,7 +54,7 @@ export class GenerateComponent implements OnInit {
   }
 
   filterDate() {
-    this.filteredData = this.dataService.data.filter((question: { category: string; }) => question.category === this.activeCategory);
+    this.filteredData = this.dataService.data.value.filter((question: { category: string; }) => question.category === this.activeCategory);
   }
 
   filterByType(type: string) {
