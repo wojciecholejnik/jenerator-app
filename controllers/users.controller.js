@@ -1,7 +1,6 @@
 const User = require('../models/user.model');
 
   exports.login = async (req, res) => {
-    console.log('działam')
     try {
       const user = await User.find({email: req.body.email, password: req.body.password});
       if (!user.length) {

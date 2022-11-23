@@ -10,6 +10,7 @@ router.post('/randomQuestions', questionsController.getRandom);
 router.delete('/questions/:id', questionsController.deleteQuestion);
 router.put('/questions/:id', questionsController.updateQuestion);
 router.post('/questions', questionsController.postQuestion);
+router.post('/save-file', questionsController.saveFile);
 router.post('/questionGenerate', questionsController.generateTestPdf);
 router.post('/questionGenerateResolved', questionsController.generateResolvedPdf);
 

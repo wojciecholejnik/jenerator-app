@@ -34,7 +34,7 @@ export class AddOpenComponent implements OnInit {
 
   handleFileInput(event: any) {
     this.fileToUpload = event.target.files[0]
-}
+  }
 
   setActiveCategory(name?: string, event?: any) {
     if (name && name !== 'clear-button') {
@@ -54,31 +54,48 @@ export class AddOpenComponent implements OnInit {
   sendquestion(){
     const question: {[key: string]: any} = {
       type: 'open',
-      answers: [],
+      answers: [], 
       category: this.activeCategory,
       questionContent: this.questionContent,
+      img: '',
     };
+
     const formData:FormData = new FormData();
     if (this.fileToUpload) {
       formData.append('upload', this.fileToUpload, this.fileToUpload.name);
+      const params = new HttpParams();
+      const options = {
+        params: params,
+      };
+      this.dataService.addFile(formData, options).subscribe({
+        next: (res: {fileName: string}) => {
+          question.img = res.fileName;
+          this.sendQuestionContent(question);
+        },
+        error: (e) => {
+          this.handleError(e);
+        }
+      });
+    } else {
+      this.sendQuestionContent(question);
     }
-    Object.keys(question).forEach(key => formData.append(key, question[key]));
-    const params = new HttpParams();
-    const options = {
-      params: params,
-    };
+  }
 
-    this.dataService.postData(formData, options).subscribe({
-      next: () => {
-        this.dataService.getData();
-        this.toastService.show('pytanie zostało dodane', { classname: 'bg-success text-light', delay: 5000 })
-        this.clear();
-      },
-      error: (e) => {
-        this.toastService.show('coś poszło nie tak :(', { classname: 'bg-danger text-light', delay: 5000 })
+  sendQuestionContent(question: any) {
+    this.dataService.addQuestion(question).subscribe({
+      next: () => this.handleSucces(),
+      error: (e) => this.handleError(e)
+    })
+  }
 
-      }
-    });
+  handleSucces() {
+    this.toastService.show('pytanie zostało dodane', { classname: 'bg-success text-light', delay: 5000 })
+    this.clear();
+    this.dataService.getData();
+  }
+
+  handleError(e: any) {
+    this.toastService.show('coś poszło nie tak :(', { classname: 'bg-danger text-light', delay: 5000 })
   }
 
   clear() {

@@ -66,7 +66,7 @@
     <div class="row justify-content-center p-2" *ngIf="activeCategory || creatingNewCategory">
       <div class="col-md-8">
         <label for="newCategory" class="form-label">dodaj link do obrazu</label>
-        <input type="text" class="form-control" id="newCategory" [(ngModel)]="imgURL" autocomplete="off">
+        <input type="file" accept="image/*" class="form-control" id="newCategory" (change)="handleFileInput($event)">
       </div>
     </div>
     <div *ngIf="imgURL" class="row justify-content-center p-1">

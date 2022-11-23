@@ -18,7 +18,7 @@ export class DataService {
   private subjectedData2: Subject<any> = new Subject<any>();
   randomQuestions = {singleSelect: [], multiSelect: [], open: [] };
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=utf-8' }),
   };
   constructor(private http: HttpClient) {
     this.API_URL = environment.baseApiUrl;
@@ -56,6 +56,14 @@ export class DataService {
     return this.http.post<any>(`${this.API_URL}/randomQuestions`, {category: category}, this.httpOptions)
   }
 
+  addFile(formData: any, options: any): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/save-file`, formData, options)
+  }
+
+  addQuestion(questionContent: any,): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}/questions`, questionContent);
+  }
+/// deprecated
   postData(formData: any, options?: any): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/questions`, formData, options)
   }

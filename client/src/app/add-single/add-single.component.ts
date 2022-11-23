@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { DataService } from '../data-service.service';
 import { Category } from '../shared/interafaces';
@@ -24,6 +25,7 @@ export class AddSingleComponent implements OnInit  {
     {content: '', isRight: false},
     {content: '', isRight: false},
   ];
+  fileToUpload: File | null = null;
 
   constructor(private dataService: DataService, private toastService: ToastService) {}
 
@@ -35,6 +37,10 @@ export class AddSingleComponent implements OnInit  {
       this.getDataRequestPending = false;
     });
     this.dataService.getData();
+  }
+
+  handleFileInput(event: any) {
+    this.fileToUpload = event.target.files[0]
   }
 
   setActiveCategory(name?: string, event?: any) {
@@ -60,26 +66,51 @@ export class AddSingleComponent implements OnInit  {
   }
 
   sendquestion(){
-    const question = {
+    const question: {[key: string]: any} = {
       type: 'singleSelect',
-      answers: this.answers,
+      answers: this.answers, 
       category: this.activeCategory,
       questionContent: this.questionContent,
-      img: this.imgURL
+      img: '',
     };
 
-    this.dataService.postData(question, {}).subscribe({
-      next: () => {
-        this.toastService.show('pytanie zostało dodane', { classname: 'bg-success text-light', delay: 5000 })
-        this.clear();
-        this.dataService.getData();
-      },
-      error: (e) => {
-        this.toastService.show('coś poszło nie tak :(', { classname: 'bg-danger text-light', delay: 5000 })
-      }
-    });
+    const formData:FormData = new FormData();
+    if (this.fileToUpload) {
+      formData.append('upload', this.fileToUpload, this.fileToUpload.name);
+      const params = new HttpParams();
+      const options = {
+        params: params,
+      };
+      this.dataService.addFile(formData, options).subscribe({
+        next: (res: {fileName: string}) => {
+          question.img = res.fileName;
+          this.sendQuestionContent(question);
+        },
+        error: (e) => {
+          this.handleError(e);
+        }
+      });
+    } else {
+      this.sendQuestionContent(question);
+    }
   }
 
+  sendQuestionContent(question: any) {
+    this.dataService.addQuestion(question).subscribe({
+      next: () => this.handleSucces(),
+      error: (e) => this.handleError(e)
+    })
+  }
+
+  handleSucces() {
+    this.toastService.show('pytanie zostało dodane', { classname: 'bg-success text-light', delay: 5000 })
+    this.clear();
+    this.dataService.getData();
+  }
+
+  handleError(e: any) {
+    this.toastService.show('coś poszło nie tak :(', { classname: 'bg-danger text-light', delay: 5000 })
+  }
 
   isButtonDisabled(){
     let amountOfAnswers = 0;

@@ -85,10 +85,9 @@ exports.deleteQuestion = async  (req, res) => {
   }
 };
 
-exports.postQuestion = async (req, res) => {
-  
+exports.saveFile = async (req, res) => {
   try {
-    var form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
     form.parse(req, async (err, fields, files) => {
 
       if (files.hasOwnProperty('upload')) {
@@ -96,43 +95,32 @@ exports.postQuestion = async (req, res) => {
         const fileName = uniqid() + '.' + files.upload.name;
         var newpath = process.cwd() + '/public/uploads/' + fileName;
         fs.rename(oldpath, newpath, async (err) => {
-
           if (err) throw err;
+          res.json({fileName});
+        })
+      }
+    })
+  } catch(err) {
+    res.status(500).json({message: err});
+  }
+};
 
-          const {type, questionContent, category, answers} = fields;
-
+exports.postQuestion = async (req, res) => {
+  try {
+    const {type, questionContent, category, answers, img} = req.body;
           if (type, questionContent, category) {
             const newQuestion = new Question({
             type: type,
             questionContent: questionContent,
             answers: answers ? Object.values(answers) : [],
             category: category,
-            img: fileName ? fileName : null
+            img: img ? img : ''
           });
           await newQuestion.save();
           res.json({ message: 'OK' });
         } else {
           res.status(500).json({message: 'Za mała ilość danych'});
         }
-          res.end();
-        });
-      } else {
-        const {type, questionContent, category, answers} = fields;
-        if (type, questionContent, category) {
-          const newQuestion = new Question({
-          type: type,
-          questionContent: questionContent,
-          answers: answers ? Object.values(answers) : [],
-          category: category,
-          img: null
-        });
-        await newQuestion.save();
-        res.json({ message: 'OK' });
-      } else {
-        res.status(500).json({message: 'Za mała ilość danych'});
-      }
-      }
-    });
   } catch(err) {
     res.status(500).json({message: err});
   }
