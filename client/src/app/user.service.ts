@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {Router} from "@angular/router"
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from './shared/interafaces';
 import { environment } from 'src/environments/environment';
 
@@ -10,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
   API_URL = '';
-  user?: User;
+  user: BehaviorSubject<any> = new BehaviorSubject(undefined); ;
   userId = '';
   displayName = '';
   email = '';
@@ -22,7 +21,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=utf-8' }),
   };
   
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
     this.API_URL = environment.baseApiUrl;
   }
 
@@ -51,11 +50,10 @@ export class UserService {
   }
 
   logOut(){
-    this.user = undefined;
+    this.user.next(undefined);
     this.displayName = '';
     this.email = '';
     this.isAdmin = false;
     sessionStorage.clear();
-    this.router.navigate(['/']);
   }
 }

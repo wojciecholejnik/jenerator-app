@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import {Router} from "@angular/router"
 import { DataService } from '../data-service.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class NavigationComponent implements OnInit {
   active = naviation.addOopen;
   emoticon = sessionStorage.getItem('emoticon');
 
-  constructor(public userService: UserService, private dataService: DataService, private router: Router) {}
+  constructor(public userService: UserService, private dataService: DataService) {}
 
   ngOnInit(): void {}
 

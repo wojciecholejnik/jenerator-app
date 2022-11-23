@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { Router } from "@angular/router"
 import { ToastService } from '../toast/toast.service';
 
 
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
   requestError = '';
 
   constructor(private userService: UserService,
-              private router: Router,
               private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -38,7 +36,6 @@ export class LoginComponent implements OnInit {
       this.userService.emoticon = emoticon;
       this.userService.userId = userId;
       isAdmin ? this.userService.isAdmin = true : this.userService.isAdmin = false;
-      this.router.navigate(['/main']);
     }
   }
 
@@ -49,6 +46,7 @@ export class LoginComponent implements OnInit {
         (res) => {
           const user = res;
           if(user && user.displayName && user.email) {
+            this.userService.user?.next(res);
             this.userService.displayName = user.displayName;
             this.userService.email = user.email;
             this.userService.shortName = user.shortName;
@@ -62,7 +60,6 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('emoticon', user.emoticon);
             localStorage.setItem('background', user.background);
             document.body.style.background = user.background;
-            this.router.navigate(['/main']);
             this.requestPending = false;
           }
         },

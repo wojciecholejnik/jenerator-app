@@ -5,20 +5,8 @@ const cors = require('cors');
 const usersRoutes = require('./routes/users.routes');
 const questionRoutes = require('./routes/questions.routes');
 const testRoutes = require('./routes/test.routes');
-const formidable = require('express-formidable');
-const uniqid = require('uniqid');
-const bodyParser = require('body-parser');
 
 const app = express();
-// app.use(formidable({uploadDir: './public/uploads/'}, [ 
-//   {
-//     event: 'fileBegin', // on every file upload...
-//     action: (req, res, next, name, file) => {
-//       const fileName = uniqid() + '.' + file.name.split('.')[ 1 ];
-//       file.path = __dirname + '/public/uploads/photo_' + fileName; // ...move the file to public/uploads with unique name
-//     }
-//   }
-// ]));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
