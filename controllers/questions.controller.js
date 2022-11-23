@@ -76,9 +76,21 @@ findRandomQuestionsFromCategory = async (category, type) => {
 
 exports.deleteQuestion = async  (req, res) => {
   try {
-    const itemToDelete = await Question.find({ _id: req.params.id });
-    await Question.deleteOne({ _id: req.params.id });
-    res.json({ message: 'OK' });
+    let message = 'OK';
+    const itemToDelete = await Question.findById(req.params.id);
+    if (itemToDelete) {
+      await Question.deleteOne({ _id: req.params.id });
+      if (itemToDelete.img && itemToDelete.img.length) {
+        const fileName = itemToDelete.img;
+        const filePath = process.cwd() + '/public/uploads/' + fileName;
+        await fs.unlinkSync(filePath, (err) => {
+        if (err) {
+        message = 'Question was removed but image is still on the disk.'
+      };
+    })
+      }
+    res.json({ message });
+    }
   }
   catch(err) {
     res.status(500).json({ message: err });
