@@ -1,6 +1,6 @@
 const Question = require('../models/question.model');
 const pdf = require("pdf-creator-node");
-const fs = require("fs");
+const fs = require("graceful-fs");
 const uniqid = require('uniqid');
 const formidable = require('formidable');
 
