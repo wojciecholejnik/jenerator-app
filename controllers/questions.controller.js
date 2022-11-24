@@ -161,6 +161,7 @@ exports.updateQuestion = async (req, res) => {
 };
 
 exports.generateTestPdf = async (req, res) => {
+  console.log('generate to pdf works !!');
   const html = fs.readFileSync("templatePDF.html", "utf8");
   const options = {
     format: "A4",
@@ -176,6 +177,7 @@ exports.generateTestPdf = async (req, res) => {
   pdf
     .create(document, options)
     .then((document) => {
+      console.log('then create document with options');
       res.download(document.filename);
     })
     .catch((err) => {
