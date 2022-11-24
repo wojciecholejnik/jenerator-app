@@ -167,18 +167,20 @@ exports.generateTestPdf = async (req, res) => {
     format: "A4",
   };
   
+  const newFileName = 'document.pdf';
   const document = {
     html: html,
     data: req.body,
-    path: `./document.pdf`,
+    path: `./${newFileName}`,
     type: "",
+    filename: newFileName,
   };
   
   pdf
     .create(document, options)
-    .then((document) => {
-      console.log('then create document with options');
-      res.download(document.filename);
+    .then(() => {
+      const path = process.cwd() + '/' + newFileName;
+      res.download(path);
     })
     .catch((err) => {
       res.status(500).json({message: err});
