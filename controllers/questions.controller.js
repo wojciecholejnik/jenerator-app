@@ -161,7 +161,7 @@ exports.updateQuestion = async (req, res) => {
 };
 
 exports.generateTestPdf = async (req, res) => {
-  const html = fs.readFileSync(process.cwd() + "/templatePDF.html", "utf8");
+  const html = fs.readFileSync(process.cwd() + "/documents/templatePDF.html", "utf8");
 
   const options = {
     format: "A4",
@@ -171,7 +171,7 @@ exports.generateTestPdf = async (req, res) => {
   const document = {
     html: html,
     data: req.body,
-    path: `./${newFileName}`,
+    path: `./documents/${newFileName}`,
     type: "",
     filename: newFileName,
   };
@@ -179,7 +179,7 @@ exports.generateTestPdf = async (req, res) => {
   pdf
     .create(document, options)
     .then(() => {
-      const path = process.cwd() + '/' + newFileName;
+      const path = process.cwd() + '/documents/' + newFileName;
       res.download(path);
     })
     .catch((err) => {
@@ -188,22 +188,23 @@ exports.generateTestPdf = async (req, res) => {
 };
 
 exports.generateResolvedPdf = async (req, res) => {
-  const html = fs.readFileSync("templateResolvedPDF.html", "utf8");
+  const html = fs.readFileSync(process.cwd() + "/documents/templateResolvedPDF.html", "utf8");
   const options = {
     format: "A4",
   };
-  
+  const newFileName = 'documentResolved.pdf';
   const document = {
     html: html,
     data: req.body,
-    path: `./documentResolved.pdf`,
+    path: `./documents/${newFileName}`,
     type: "",
   };
   
   pdf
     .create(document, options)
-    .then((document) => {
-      res.sendFile(document.filename);
+    .then(() => {
+      const path = process.cwd() + '/documents/' + newFileName;
+      res.download(path);
     })
     .catch(() => {
       res.status(500).json({message: err});
