@@ -20,3 +20,5 @@ yarn-error.log*
 
 # files
 /public/uploads/*
+document.pdf
+documentResolved.pdf

@@ -176,9 +176,9 @@ exports.generateTestPdf = async (req, res) => {
   pdf
     .create(document, options)
     .then((document) => {
-      res.sendFile(document.filename);
+      res.download(document.filename);
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).json({message: err});
     });
 };
