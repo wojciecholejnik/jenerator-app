@@ -177,14 +177,15 @@ exports.generateTestPdf = async (req, res) => {
     filename: newFileName,
   };
   
+  let path = '';
   pdf
     .create(document, options)
     .then(() => {
-      const path = process.cwd() + '/documents/' + newFileName;
+      path = process.cwd() + '/documents/' + newFileName;
       res.download(path);
     })
     .catch((err) => {
-      res.json({message: err, message2: document});
+      res.json({message: err, message2: path});
     });
   } catch (err) {
     res.status(500).json({message: err, message2: 'try-catch-blok1'});
