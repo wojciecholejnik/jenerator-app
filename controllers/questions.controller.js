@@ -163,7 +163,7 @@ exports.updateQuestion = async (req, res) => {
 exports.generateTestPdf = async (req, res) => {
   try {
     const html = fs.readFileSync(process.cwd() + "/documents/templatePDF.html", "utf8");
-    res.json({path: process.cwd()});
+    await res.json({path: process.cwd()});
 
     // const options = {
     //   format: "A4",
