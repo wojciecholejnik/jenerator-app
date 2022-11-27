@@ -177,11 +177,10 @@ exports.generateTestPdf = async (req, res) => {
     filename: newFileName,
   };
   
-  let path = '';
+  const path = process.cwd() + '/documents/' + newFileName;
   pdf
     .create(document, options)
     .then(() => {
-      path = process.cwd() + '/documents/' + newFileName;
       res.download(path);
     })
     .catch((err) => {
