@@ -169,15 +169,15 @@ exports.generateTestPdf = async (req, res) => {
   };
   
   const newFileName = 'document.pdf';
+  const path = `./documents/${newFileName}`;
   const document = {
     html: html,
     data: req.body,
-    path: `./documents/${newFileName}`,
+    path: path,
     type: "",
     filename: newFileName,
   };
   
-  const path = process.cwd() + '/documents/' + newFileName;
   pdf
     .create(document, options)
     .then(() => {
