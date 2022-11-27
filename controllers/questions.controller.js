@@ -161,7 +161,8 @@ exports.updateQuestion = async (req, res) => {
 };
 
 exports.generateTestPdf = async (req, res) => {
-  const html = fs.readFileSync(process.cwd() + "/documents/templatePDF.html", "utf8");
+  try {
+    const html = fs.readFileSync(process.cwd() + "/documents/templatePDF.html", "utf8");
 
   const options = {
     format: "A4",
@@ -183,8 +184,11 @@ exports.generateTestPdf = async (req, res) => {
       res.download(path);
     })
     .catch((err) => {
-      res.status(500).json({message: err});
+      res.status(500).json({message: err, message2: 'try-catch-blok2'});
     });
+  } catch (err) {
+    res.status(500).json({message: err, message2: 'try-catch-blok1'});
+  }
 };
 
 exports.generateResolvedPdf = async (req, res) => {
