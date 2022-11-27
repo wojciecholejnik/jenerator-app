@@ -184,7 +184,8 @@ exports.generateTestPdf = async (req, res) => {
       res.download(path);
     })
     .catch((err) => {
-      res.status(500).json({message: err, message2: path});
+      console.log("Mój log: ", err);
+      res.json({message: err, message2: path});
     });
   } catch (err) {
     res.status(500).json({message: err, message2: 'try-catch-blok1'});
