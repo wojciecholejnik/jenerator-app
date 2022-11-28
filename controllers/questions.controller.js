@@ -112,7 +112,7 @@ exports.saveFile = async (req, res) => {
         c.on('ready', function (err) {
           c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
             if (err) {
-              res.status(500).json({message: err});
+              res.status(500).json({message: 'connection problem'});
             } else {
               res.json({fileName: fileName, err: err});
             }
