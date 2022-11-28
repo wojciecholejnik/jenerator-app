@@ -3,8 +3,7 @@ const pdf = require("pdf-creator-node");
 const fs = require("graceful-fs");
 const uniqid = require('uniqid');
 const formidable = require('formidable');
-var Client = require('ftp');
-var c = Client();
+var Client = require('ssh2-sftp-client');
 
 exports.getAll = async (req, res) => {
   try {
@@ -108,25 +107,42 @@ exports.saveFile = async (req, res) => {
         var oldpath = files.upload.path;
         const fileName = uniqid() + '.' + files.upload.name;
         var newpath = process.cwd() + '/public/uploads/' + fileName;
-        
-        c.on('ready', function (err) {
-          c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
-            if (err) {
-              res.status(500).json({message: 'connection problem'});
-            } else {
-              res.json({fileName: fileName, err: err});
-            }
-          });
-        }).connect({
-          'host': 'server601294.nazwa.pl',
-          'username': 'server601294',
-          'password': '240818Mw!',
-        });
+        let client = new Client();
 
-        // fs.rename(oldpath, newpath, async (err) => {
-        //   if (err) throw err;
-        //   res.json({fileName});
-        // })
+        client.connect({
+            host: '85.128.146.12',
+            port: 22 ,
+            username: 'server601294_jenerator',
+            password: 'Jenerator123',
+          })
+          .then(() => {
+            return client.rename(oldpath, newpath);
+          })
+          .then(() => {
+            return client.end();
+          })
+          .catch(err => {
+            console.error(err.message);
+          });
+        
+        // c.on('ready', function (err) {
+        //   c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
+        //     if (err) {
+        //       res.status(500).json({message: 'connection problem'});
+        //     } else {
+        //       res.json({fileName: fileName, err: err});
+        //     }
+        //   });
+        // }).connect({
+        //   'host': 'server601294.nazwa.pl',
+        //   'username': 'server601294',
+        //   'password': '240818Mw!',
+        // });
+
+        fs.rename(oldpath, newpath, async (err) => {
+          if (err) throw err;
+          res.json({fileName});
+        })
       }
     })
   } catch(err) {
