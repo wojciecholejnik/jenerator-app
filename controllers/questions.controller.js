@@ -108,17 +108,18 @@ exports.saveFile = async (req, res) => {
         var oldpath = files.upload.path;
         const fileName = uniqid() + '.' + files.upload.name;
         var newpath = process.cwd() + '/public/uploads/' + fileName;
-        c.connect({
-          'host': 'server601294.nazwa.pl',
-          'username': 'server601294',
-          'password': '240818Mw!',
-        });
-        c.on('ready', function (err) {
-          res.json({fileName: fileName, err: err});
+        // c.connect({
+        //   'host': 'server601294.nazwa.pl',
+        //   'username': 'server601294',
+        //   'password': '240818Mw!',
+        // });
+        res.json({fileName: fileName, err: err});
+        // c.on('ready', function (err) {
+        //   res.json({fileName: fileName, err: err});
           // c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
           //   if (err) throw err;
           // });
-      })
+      // })
 
         // fs.rename(oldpath, newpath, async (err) => {
         //   if (err) throw err;
