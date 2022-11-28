@@ -113,11 +113,11 @@ exports.saveFile = async (req, res) => {
           'username': 'server601294',
           'password': '240818Mw!',
         });
-        c.on('ready', function () {
-          c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
-            if (err) throw err;
-            res.json({fileName});
-          });
+        c.on('ready', function (err) {
+          res.json({fileName: fileName, err: err});
+          // c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
+          //   if (err) throw err;
+          // });
       })
 
         // fs.rename(oldpath, newpath, async (err) => {
