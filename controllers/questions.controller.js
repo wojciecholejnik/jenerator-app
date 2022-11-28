@@ -109,9 +109,9 @@ exports.saveFile = async (req, res) => {
         const fileName = uniqid() + '.' + files.upload.name;
         var newpath = process.cwd() + '/public/uploads/' + fileName;
         c.connect({
-          'host': 'ftp.server601294.nazwa.pl',
-          'username': 'server601294_jenerator',
-          'password': 'Jenerator1',
+          'host': 'server601294.nazwa.pl',
+          'username': 'server601294',
+          'password': '240818Mw!',
         });
         c.on('ready', function () {
           c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
