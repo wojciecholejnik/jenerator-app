@@ -3,6 +3,8 @@ const pdf = require("pdf-creator-node");
 const fs = require("graceful-fs");
 const uniqid = require('uniqid');
 const formidable = require('formidable');
+var Client = require('ftp');
+var c = Client();
 
 exports.getAll = async (req, res) => {
   try {
@@ -106,14 +108,26 @@ exports.saveFile = async (req, res) => {
         var oldpath = files.upload.path;
         const fileName = uniqid() + '.' + files.upload.name;
         var newpath = process.cwd() + '/public/uploads/' + fileName;
-        fs.rename(oldpath, newpath, async (err) => {
-          if (err) throw err;
-          res.json({fileName});
-        })
+        c.connect({
+          'host': 'ftp.server601294.nazwa.pl',
+          'username': 'server601294_jenerator',
+          'password': 'Jenerator1',
+        });
+        c.on('ready', function () {
+          c.rename(oldpath, newpath, function(err) {//only one parameter err is available for rename method.
+            if (err) throw err;
+            res.json({fileName});
+          });
+      })
+
+        // fs.rename(oldpath, newpath, async (err) => {
+        //   if (err) throw err;
+        //   res.json({fileName});
+        // })
       }
     })
   } catch(err) {
-    res.status(500).json({message: err, message2: 'try catch1 save file'});
+    res.status(500).json({message: err});
   }
 };
 
