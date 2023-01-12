@@ -12,12 +12,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '/public/client')));
 
-
-const dbURI = `mongodb+srv://pytania:pytaniaPassword@cluster0.bpoyn.mongodb.net/Pytania`;
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set("strictQuery", false);
+const dbURI = `mongodb+srv://pytania:pytaniaPassword@cluster0.bpoyn.mongodb.net/Pytania?retryWrites=true&w=majority`;
+mongoose.connect(dbURI);
 const db = mongoose.connection;
-db.once('open', () => {});
-db.once('error', () => {console.log('error')});
+db.once('open', () => {console.log('DB connected')});
+db.once('error', () => {console.warn('DB conection error')});
+
 
 app.use('/api', usersRoutes);
 app.use('/api', questionRoutes);
@@ -25,9 +26,6 @@ app.use('/api', testRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/client/index.html'));
 });
-
-
-
 
 const port = process.env.PORT || 7000;
 app.listen(port, () => {
