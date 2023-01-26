@@ -1,0 +1,59 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MainWrapperComponent } from './main-wrapper/main-wrapper.component';
+import { LeftMenuComponent } from './left-menu/left-menu.component';
+import { RouterModule, Routes } from '@angular/router';
+import { TopMenuComponent } from './top-menu/top-menu.component';
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { OverviewComponent } from './overview/overview.component';
+import { CategoriesComponent } from './overview/categories/categories/categories.component';
+import { CategoriesTableComponent } from './overview/categories/categories-table/categories-table.component';
+import { CategoriesSearchComponent } from './overview/categories/categories-search/categories-search.component';
+import { FormsModule } from '@angular/forms';
+import { CategoriesModalComponent } from './overview/categories/categories-modal/categories-modal.component';
+import { QuestionsComponent } from './overview/questions/questions/questions.component';
+import { CategorySelectorComponent } from './overview/questions/category-selector/category-selector.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: MainWrapperComponent
+  },
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+class MainWrapperRoutingModule { }
+
+
+@NgModule({
+  declarations: [
+    MainWrapperComponent,
+    LeftMenuComponent,
+    TopMenuComponent,
+    OverviewComponent,
+    CategoriesComponent,
+    CategoriesTableComponent,
+    CategoriesSearchComponent,
+    CategoriesModalComponent,
+    QuestionsComponent,
+    CategorySelectorComponent
+  ],
+  imports: [
+    CommonModule,
+    MainWrapperRoutingModule,    
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    FormsModule
+  ],
+  exports: [
+    MainWrapperComponent
+  ]
+})
+export class MainWrapperModule { }

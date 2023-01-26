@@ -1,0 +1,8 @@
+<app-top-menu></app-top-menu>
+<div class="wrapper">
+    <app-left-menu></app-left-menu>
+    <div class="modules-container">
+        <app-overview *ngIf="shoulBeVisible('categories')"></app-overview>
+        <app-questions *ngIf="shoulBeVisible('questions')"></app-questions>
+    </div>
+</div>

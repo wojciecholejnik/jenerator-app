@@ -1,0 +1,50 @@
+@import './colors.scss';
+
+.modal-wrapper {
+    position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0,0,0,0.7);
+	z-index: 999;
+}
+
+.modal-content {
+    max-width: 600px;
+    // min-height: 400px;
+
+	.header {
+		font-size: 38px;
+		font-weight: 800;
+		line-height: 48px;
+		text-align: center;
+		color: $color1;
+		margin: 24px 0;
+	}
+
+	.content {
+		margin: 0 auto;
+
+		.confirmation {
+			font-size: 18px;
+		}
+
+		.inputs {
+			margin-top: 12px;
+			min-width: 380px;
+		}
+	}
+
+	.footer {
+		display: flex;
+		grid-gap: 6px;
+		gap: 6px;
+		align-items: center;
+		justify-content: center;
+		margin: 24px 0;
+	}
+}

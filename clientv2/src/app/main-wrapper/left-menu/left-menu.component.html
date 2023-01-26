@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <div class="trigger">
+        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+    </div>
+    <div class="menu">
+        <div
+            *ngFor="let item of navigation"
+            class="menu-item"
+            [class.active]="item.active"
+            (click)="changeNavOption(item.name)"
+        >
+            {{translateNavNames(item.name)}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@import '../../global-styling/colors.scss';
+
+.wrapper {
+    display: block;
+    height: calc(100vh - 60px);
+    width: 200px;
+    background: $color1-opacity50;
+    position: relative;
+
+    .trigger {
+        position: absolute;
+        left: 10px;
+        top: -50px;
+        background: #606C3850;
+        color: $color3;
+    }
+
+    .menu  {
+        padding: 48px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .menu-item {
+        line-height: 36px;
+        font-size: 16px;
+        font-weight: 400;
+        color: $font-gray;
+        padding-left: 24px;
+        cursor: pointer;
+  
+        &.active {
+            color: $font-dark-gray;
+            background-color: $light-gray;
+            border-right: 3px solid $color2;
+        }
+    }
+}

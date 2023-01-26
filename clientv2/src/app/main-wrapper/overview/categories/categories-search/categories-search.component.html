@@ -1,0 +1,16 @@
+<div class="wrapper card">
+    <div class="header">Wyszukaj</div>
+    <div class="searching">
+        <div class="input-group mb-3">
+            <input 
+                type="text"
+                class="form-control"
+                placeholder="Jakiej kategorii szukasz ?"
+                [(ngModel)]="inputPhrase"
+                (keyup)="search()"
+            >
+            <i *ngIf="inputPhrase.length" class="bi bi-x-lg" (click)="clear()"></i>
+            <button class="btn btn-outline-secondary ml-1" type="button" (click)="search()">Szukaj</button>
+        </div>
+    </div>
+</div>

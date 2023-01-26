@@ -1,0 +1,24 @@
+@import '../../global-styling/colors.scss';
+
+.wrapper {
+    display: flex;
+    height: 60px;
+    background-color: $color1;
+    justify-content: flex-end;
+    gap: 6px;
+    padding-right: 24px;
+    align-items: center;
+    position: relative;
+
+    button, .account-name {
+        color: $color3;
+        font-size: 18px;
+    }
+
+    .logo {
+        position: absolute;
+        left: 60px;
+        color: $color3;
+        font-size: 24px;
+    }
+}

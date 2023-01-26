@@ -1,0 +1,14 @@
+<div class="header">
+    <div class="name">Kategorie</div>
+    <button class="btn btn-primary" (click)="openAddModal()"><i class="bi bi-plus-square mr-1"></i>Dodaj</button>
+</div>
+<div class="module-content">
+    <app-categories-search></app-categories-search>
+    <app-categories-table [categories]="categories"></app-categories-table>
+</div>
+
+<app-categories-modal
+    *ngIf="addModalIsOpen"
+    [type]="'add'"
+    (onCloseModal)="closeAddModal()"
+></app-categories-modal>

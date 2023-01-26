@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .name {
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.module-content {
+    padding: 24px;
+}

@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import './app/global-styling/colors.scss';
+@import './app/global-styling/modal.scss';
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$primary: $color1;
+
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-icons';
+
+.card {
+    padding: 12px;
+    box-shadow: 0px 0px 10px 1px $color2;
+    max-width: 800px;
+    margin: 0 auto;
+}

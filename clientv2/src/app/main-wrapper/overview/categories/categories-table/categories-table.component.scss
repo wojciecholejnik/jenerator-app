@@ -1,0 +1,23 @@
+.header {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.nr {
+    width: 40px;
+}
+
+.actions {
+    width: 140px;
+    
+    button {
+        visibility: hidden;
+    }
+}
+
+tbody tr:hover {
+    .actions button {
+        visibility: visible;
+    }
+}

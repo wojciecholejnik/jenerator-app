@@ -1,0 +1,62 @@
+<div class="modal-wrapper">
+    <div *ngIf="type === 'delete'" class="modal-content">
+        <div class="header">
+            Usuń kategorię
+        </div>
+
+        <div class="content">
+            <div class="confirmation">
+                Czy napewno chcesz usunąć kategorię: 
+                <strong class="name">{{category.name}}</strong>
+                ?
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-danger" (click)="deleteCategory()">Usuń</button>
+        </div>
+    </div>
+
+    <div *ngIf="type === 'add'" class="modal-content">
+        <div class="header">
+            Dodaj kategorię
+        </div>
+
+        <div class="content">
+            <div class="confirmation">
+                Wpisz nazwę nowej kategorii: 
+            </div>
+
+            <div class="inputs input-group mb-3">
+                <input type="text" class="form-control" placeholder="np. Kubuś i przyjaciele w stumilowym lesie ..." [(ngModel)]="categoryName">
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-primary" (click)="addCategory()">Dodaj</button>
+        </div>
+    </div>
+
+    <div *ngIf="type === 'edit'" class="modal-content">
+        <div class="header">
+            Edytuj kategorię
+        </div>
+
+        <div class="content">
+            <div class="confirmation">
+                Edytuj nazwę kategorii: 
+            </div>
+
+            <div class="inputs input-group mb-3">
+                <input type="text" class="form-control" placeholder="np. Kubuś i przyjaciele w stumilowym lesie ..." [(ngModel)]="categoryName">
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-primary" (click)="editCategory()">Zapisz</button>
+        </div>
+    </div>
+</div>
