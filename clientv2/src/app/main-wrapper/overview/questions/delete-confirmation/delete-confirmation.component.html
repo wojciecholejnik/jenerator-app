@@ -1,0 +1,19 @@
+<div class="modal-wrapper">
+    <div class="modal-content">
+        <div class="header">
+            Usuń pytanie
+        </div>
+
+        <div class="content">
+            <div class="confirmation">
+                Czy napewno chcesz usunąć pytanie ?
+                <div class="question-content">{{question.questionContent}}</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-danger" (click)="deleteCategory()">Usuń</button>
+        </div>
+    </div>
+</div>

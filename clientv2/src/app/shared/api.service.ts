@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Category, User } from './models';
+import { Category, Question, QuestionToSaveDTO, User } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +35,17 @@ export class ApiService {
 
   deleteCategory(id: string): Observable<Category[]> {
     return this.http.post<any>(`${this.apiHost}/delete-category`, {_id: id}, this.httpOptions)  
+  }
+
+  getQuestionsByCategory(categoryId: string): Observable<Question[]> {
+    return this.http.get<any>(`${this.apiHost}/get-questions-category/${categoryId}`, this.httpOptions)  
+  }
+
+  addQuestion(question: QuestionToSaveDTO): Observable<any[]> {
+    return this.http.post<any>(`${this.apiHost}/add-question/${question.category}`, question, this.httpOptions)  
+  }
+
+  deleteQuestion(questionId: string, categoryId: string): Observable<Question[]> {
+    return this.http.delete<any>(`${this.apiHost}/delete-question/${questionId}/${categoryId}`, this.httpOptions) 
   }
 }

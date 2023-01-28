@@ -1,0 +1,104 @@
+<div class="wrapper card mt-4">
+
+    <app-loading *ngIf="loading"></app-loading>
+
+    <div class="filtering" *ngIf="!loading">
+        <div class="input-group mb-1">
+            <input 
+                type="text"
+                class="form-control"
+                placeholder="Jakiego pytania szukasz ?"
+                [(ngModel)]="searchPhrase"
+                (keyup)="onFilterChange()"
+            >
+        </div>
+        <!-- <div class="form-check form-switch">
+            <input type="radio" role="switch" name="type" value=""  [(ngModel)]="type" (change)="onFilterChange()">
+            <label>wszystkie</label>
+        </div>
+        <div class="form-check form-switch">
+            <input type="radio" role="switch" name="type" value="singleSelect" [(ngModel)]="type" (change)="onFilterChange()">
+            <label>single</label>
+        </div>
+        <div class="form-check form-switch">
+            <input type="radio" role="switch" name="type" value="multiSelect" [(ngModel)]="type" (change)="onFilterChange()">
+            <label>multi</label>
+        </div>
+        <div class="form-check form-switch">
+            <input type="radio" role="switch" name="type" value="open" [(ngModel)]="type" (change)="onFilterChange()">
+            <label>open</label>
+        </div> -->
+        <div class="type-filter">
+            <button
+            class="btn"
+            [class.btn-secondary]="type!==''"
+            [class.btn-primary]="type===''"
+            (click)="onFilterChange('')"
+        >wszystkie</button>
+            <button
+            class="btn"
+            [class.btn-secondary]="type!=='singleSelect'"
+            [class.btn-primary]="type==='singleSelect'"
+            (click)="onFilterChange('singleSelect')"
+        >single</button>
+        <button
+            class="btn"
+            [class.btn-secondary]="type!=='multiSelect'"
+            [class.btn-primary]="type==='multiSelect'"
+            (click)="onFilterChange('multiSelect')"
+        >multi</button>
+        <button
+            class="btn"
+            [class.btn-secondary]="type!=='open'"
+            [class.btn-primary]="type==='open'"
+            (click)="onFilterChange('open')"
+        >open</button>
+        </div>
+    </div>
+
+    <div class="table-wrapper" *ngIf="questions && questions.length && !loading">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td class="nr">#</td>
+                    <td>Treść pytania</td>
+                    <td class="actions"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let question of questions; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{question.questionContent}}</td>
+                    <td class="actions">
+                        <button class="btn btn-sm btn-primary mr-2" (click)="togglePreviewModal(question)"><i class="bi bi-arrow-up-right"></i></button>
+                        <button class="btn btn-sm btn-primary mr-2" (click)="toggleEditModal(question)"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-danger" (click)="toggelDeleteModalIsOpen(question)"><i class="bi bi-x-lg"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="no-questions-message" *ngIf="!loading && !questions">
+        <span>Brak pytań do wyświetlenia.</span>
+    </div>
+</div>
+
+<app-delete-confirmation
+    *ngIf="deletModalIsOpen && selectedQuestion"
+    (onModalClose)="toggelDeleteModalIsOpen()"
+    [question]="selectedQuestion"
+></app-delete-confirmation>
+
+<app-question-preview
+    *ngIf="editModalIsOpen && selectedQuestion"
+    [question]="selectedQuestion"
+    (onCloseModal)="toggleEditModal()"
+></app-question-preview>
+
+<app-question-preview
+    *ngIf="previewModalIsOpen && selectedQuestion"
+    [question]="selectedQuestion"
+    [previewOnly]="true"
+    (onCloseModal)="togglePreviewModal()"
+></app-question-preview>

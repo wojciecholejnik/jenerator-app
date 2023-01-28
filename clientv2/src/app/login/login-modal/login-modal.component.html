@@ -1,4 +1,5 @@
 <div *ngIf="!loading"  class="wrapper">
+    
     <div class="title">Jenerator</div>
     <div class="error-message" [class.visible]="errorMessage" [class.hidden]="!errorMessage">{{errorMessage}}</div>
     <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate >

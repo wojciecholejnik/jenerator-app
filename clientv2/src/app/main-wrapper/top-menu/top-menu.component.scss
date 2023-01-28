@@ -20,5 +20,9 @@
         left: 60px;
         color: $color3;
         font-size: 24px;
+        font-family: $logo-font;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 }

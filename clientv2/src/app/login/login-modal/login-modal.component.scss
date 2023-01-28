@@ -2,10 +2,11 @@
 .wrapper {
     width: 400px;
     height: 400px;
-    background-color: $color3;
+    background-color: $white;
     box-shadow: 0px 0px 10px 1px $color2;
     padding: 24px;
     display: block;
+    border-radius: 5px;
 }
 
 .error-message {
@@ -16,15 +17,17 @@
 }
 
 .title {
-    font-size: 28px;
     text-align: center;
+    font-family: $logo-font, cursive;
+    font-size: 48px;
+    margin-top: 12px;
 }
 
 form {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    margin-top: 24px;
+    margin-top: 6px;
 
     .button-wrapper {
         text-align: center;

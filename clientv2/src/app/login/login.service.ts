@@ -30,13 +30,19 @@ export class LoginService implements OnDestroy {
   }
 
   isUserLogged(): boolean {
-    console.log('isUserLogged: ', this.loggedUser.value)
     return this.loggedUser.value
   }
 
   logout() {
     this.loggedUser.next('');
     this.router.navigate([''])
+  }
+
+  getAuthor() {
+    return {
+      _id: this.loggedUser.value._id,
+      shortName: this.loggedUser.value.shortName
+    }
   }
 
 

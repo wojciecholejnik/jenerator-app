@@ -1,0 +1,45 @@
+
+.table-wrapper {
+    overflow-y: auto;
+    max-height: calc(100vh - 375px);
+}
+
+.nr {
+    width: 40px;
+}
+
+.actions {
+    width: 140px;
+    
+    button {
+        visibility: hidden;
+    }
+}
+
+tbody tr:hover {
+    .actions button {
+        visibility: visible;
+    }
+}
+
+.filtering {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+
+    .type-filter {
+        display: flex;
+        gap: 4px;
+        margin-left: 4px;
+    }
+
+    .input-group {
+        margin-bottom: 0 !important;
+    }
+}
+
+.no-questions-message {
+    margin: 24px;
+    text-align: center;
+    font-style: italic;
+}

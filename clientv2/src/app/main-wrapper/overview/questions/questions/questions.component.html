@@ -1,6 +1,14 @@
 <div class="header">
     <div class="name">Pytania</div>
+    <button class="btn btn-primary" (click)="toggleAddModal()"><i class="bi bi-plus-square mr-1"></i>Dodaj</button>
 </div>
 <div class="module-content">
-    <app-category-selector *ngIf="categories && categories.length" [categories]="categories"></app-category-selector>
+    <app-category-selector *ngIf="categories" [categories]="categories"></app-category-selector>
+    <app-questions-table *ngIf="selectedCategory" [questions]="questions" [loading]="questionsLoading"></app-questions-table>
 </div>
+
+<app-question-preview
+    *ngIf="categories && addModalIsOpen"
+    [categories]="categories"
+    (onCloseModal)="toggleAddModal()"
+></app-question-preview>

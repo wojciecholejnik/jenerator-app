@@ -2,6 +2,17 @@
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+        
+        i {
+            cursor: pointer;
+            font-size: 22px;
+        }
+    }
 }
 
 .searching {
@@ -12,5 +23,35 @@
         transform: translateY(-50%);
         cursor: pointer;
         z-index: 3;
+    }
+}
+
+@import '../../../../global-styling/colors.scss';
+
+.categories {
+    overflow-y: auto;
+    height: 0;
+
+    &.isOpen {
+        height: 200px;
+    
+    }
+
+    .category {
+        display: block;
+        width: 70%;
+        text-align: center;
+        border: 1px solid $color1;
+        padding: 3px;
+        cursor: pointer;
+        background-color: $color1-opacity50;
+        margin: 4px auto 0;
+        color: $font-gray;
+
+        &.active {
+            color: $font-dark-gray;
+            background-color: $light-gray;
+            border-right: 3px solid $color2;
+        }
     }
 }

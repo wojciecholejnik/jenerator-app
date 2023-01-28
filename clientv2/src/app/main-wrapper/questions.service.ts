@@ -1,19 +1,29 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ApiService } from '../shared/api.service';
-import { Category } from '../shared/models';
+import { Category, Question, QuestionFilter, QuestionToSaveDTO, QuestionType } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService implements OnDestroy {
 
-  allCategories?: Category[];
   categories$: BehaviorSubject<any> = new BehaviorSubject('');
   categoryFilterPhrase$: BehaviorSubject<string> = new BehaviorSubject('');
+  selectedCategory$: BehaviorSubject<any> = new BehaviorSubject('');
+  questions$: BehaviorSubject<any> = new BehaviorSubject('');
+  selectedQuestion$: BehaviorSubject<any> = new BehaviorSubject('');
+  questionFilter$: BehaviorSubject<QuestionFilter> = new BehaviorSubject({
+    content: '',
+    type: ''
+  } as QuestionFilter)
+  allCategories?: Category[];
+  allQuestions?: Question[];
+
   private getCategories$?: Subscription;
   private deleteCategory$?: Subscription;
   private editCategory$?: Subscription;
+  private getQuestions$?: Subscription;
 
   constructor(private apiService: ApiService) { }
 
@@ -21,6 +31,7 @@ export class QuestionsService implements OnDestroy {
     this.getCategories$?.unsubscribe();
     this.deleteCategory$?.unsubscribe();
     this.editCategory$?.unsubscribe();
+    this.questions$?.unsubscribe();
   }
 
   getCategories() {
@@ -53,5 +64,33 @@ export class QuestionsService implements OnDestroy {
     return this.apiService.addCategory(name)
   }
 
+  getQuestionsByCategory(categoryId: string): void {
+    this.apiService.getQuestionsByCategory(categoryId).subscribe({
+      next: (res) => {
+        this.questions$.next(res);
+        this.allQuestions = res;
+      },
+      error: () => {
+        this.questions$.next('')
+      }
+    })
+  }
+
+  filterQuestions(filter: QuestionFilter): void {
+    this.questionFilter$.next(filter);
+    const filteredQuestions = this.allQuestions?.filter(
+      question => question.questionContent.toLocaleLowerCase().includes(this.questionFilter$.value.content) 
+      && question.type.includes(this.questionFilter$.value.type)
+    )
+    this.questions$.next(filteredQuestions);
+  }
+
+  addQuestion(question: QuestionToSaveDTO): Observable<Question[]> {
+    return this.apiService.addQuestion(question)
+  }
+
+  deleteQuestion(questionId: string, categoryId: string): Observable<Question[]> {
+    return this.apiService.deleteQuestion(questionId, categoryId)
+  }
 
 }

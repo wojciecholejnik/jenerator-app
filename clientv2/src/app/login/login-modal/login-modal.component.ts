@@ -39,7 +39,7 @@ export class LoginModalComponent implements OnInit {
         this.errorMessage = 'Coś poszło nie tak. Spróbuj ponownie.'
       }
     });
-    this.loginService.login(mockedUser.email, mockedUser.password)
+    // this.loginService.login(mockedUser.email, mockedUser.password)
   }
 
   inputChange() {

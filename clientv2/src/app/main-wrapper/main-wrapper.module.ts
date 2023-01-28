@@ -11,10 +11,15 @@ import { OverviewComponent } from './overview/overview.component';
 import { CategoriesComponent } from './overview/categories/categories/categories.component';
 import { CategoriesTableComponent } from './overview/categories/categories-table/categories-table.component';
 import { CategoriesSearchComponent } from './overview/categories/categories-search/categories-search.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesModalComponent } from './overview/categories/categories-modal/categories-modal.component';
 import { QuestionsComponent } from './overview/questions/questions/questions.component';
 import { CategorySelectorComponent } from './overview/questions/category-selector/category-selector.component';
+import { QuestionsTableComponent } from './overview/questions/questions-table/questions-table.component';
+import { SharedModule } from '../shared/shared.module';
+import { QuestionPreviewComponent } from './overview/questions/question-preview/question-preview.component';
+import { TypeSelectorComponent } from './overview/questions/type-selector/type-selector.component';
+import { DeleteConfirmationComponent } from './overview/questions/delete-confirmation/delete-confirmation.component';
 
 const routes: Routes = [
   {
@@ -42,7 +47,11 @@ class MainWrapperRoutingModule { }
     CategoriesSearchComponent,
     CategoriesModalComponent,
     QuestionsComponent,
-    CategorySelectorComponent
+    CategorySelectorComponent,
+    QuestionsTableComponent,
+    QuestionPreviewComponent,
+    TypeSelectorComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +59,9 @@ class MainWrapperRoutingModule { }
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    FormsModule
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     MainWrapperComponent

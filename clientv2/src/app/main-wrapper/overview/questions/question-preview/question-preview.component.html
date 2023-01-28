@@ -1,0 +1,112 @@
+<div class="modal-wrapper">
+    <div class="modal-content" *ngIf="!previewOnly">
+        <div class="header">
+            {{question ? 'Edytuj pytanie' : 'Dodaj pytanie'}}
+        </div>
+
+        <app-category-selector [categories]="categories" [disabled]="question ? true : false"></app-category-selector>
+
+        <app-type-selector *ngIf="selectedCategory" (onTypeSelect)="selectType($event)" [questionType]="question ? question.type : ''"></app-type-selector>
+
+        <div class="content">
+            <div class="confirmation" *ngIf="selectedCategory && selectedType">
+                <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" id="questionForm" validate>
+                    <div class="mb-4">
+                        <label for="questionContent" class="form-label">Treść pytania:</label>
+                        <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent" aria-describedby="emailHelp"></textarea>
+                    </div>
+
+                    <ng-container *ngIf="selectedType!='open'" formGroupName="answers">
+                        <div class="mb-4">
+                            <label for="question1-content" class="form-label">Odpowiedź 1</label>
+                            <div class="answer-inputs" formGroupName="ans1">
+                                <input 
+                                    type="checkbox"
+                                    formControlName="isRight"
+                                    (change)="checkboxChange('ans1')"
+                                >
+                                <textarea type="email" class="form-control" id="question1-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="question1-content" class="form-label">Odpowiedź 2</label>
+                            <div class="answer-inputs" formGroupName="ans2">
+                                <input 
+                                    type="checkbox"
+                                    formControlName="isRight"
+                                    (change)="checkboxChange('ans2')"
+                                >
+                                <textarea type="email" class="form-control" id="question2-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="question1-content" class="form-label">Odpowiedź 3</label>
+                            <div class="answer-inputs" formGroupName="ans3">
+                                <input
+                                    type="checkbox"
+                                    formControlName="isRight"
+                                    (change)="checkboxChange('ans3')"
+                                >
+                                <textarea type="email" class="form-control" id="question3-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="question1-content" class="form-label">Odpowiedź 4</label>
+                            <div class="answer-inputs" formGroupName="ans4">
+                                <input
+                                    type="checkbox"
+                                    formControlName="isRight"
+                                    (change)="checkboxChange('ans4')"
+                                >
+                                <textarea type="email" class="form-control" id="question4-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="mb-4">
+                        <label for="questionContent" class="form-label">Adres url obrazka:</label>
+                        <input type="text" class="form-control" id="imgUrl" formControlName="img" (keyup)="setSrc()">
+                    </div>    
+                </form>
+
+                <img *ngIf="imgSrc" [src]="imgSrc" alt="img-preview" style="max-width: 100%;">
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-primary" form="questionForm" type="submit" [disabled]="!isValidToSave()" >Zapisz</button>
+        </div>
+    </div>
+
+    <div class="modal-content" *ngIf="previewOnly">
+        <div class="header preview" >
+            Szczegóły
+        </div>
+
+        <div class="content">
+            <div class="preview-container">
+                <div>Kategoria: <strong>{{question.category.name}}</strong></div>
+                <div>Typ pytania: <strong>{{question.type}}</strong></div>
+                <div>Autor pytania: <strong>{{question.author.shortName}}</strong></div>
+                <div>Data utworzenia: <strong>{{question.creationDate || '---' }}</strong></div>
+                <div class="mt-2">Pytanie:</div>
+                <div class="question-content preview">
+                    {{question.questionContent}}
+                </div>
+                <div class="answers preview mt-2">
+                    <div *ngFor="let answer of question.answers" class="answer mb-1">
+                        <div><input [class.isRight]="answer.isRight" type="checkbox" disabled [checked]="answer.isRight"></div>
+                        <div>{{answer.content}}</div>
+                    </div>
+                </div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Zamknij</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+.modal-content {
+    overflow-y: auto;
+    max-height: 90vh;
+
+    .content {
+        width: 80%;
+    }
+
+    app-category-selector, app-type-selector  {
+        width: 80%;
+        margin: 0 auto 16px
+    }
+
+    .answer-inputs {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        input[type='checkbox'] {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .header.preview {
+        font-size: 24px;
+        margin: 12px 0;
+    }
+
+    .question-content.preview {
+        font-style: italic;
+    }
+
+    .answers.preview {
+        display: flex;
+        flex-wrap: wrap;
+
+        .answer {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            width: 50%;
+
+            input[disabled].isRight{
+                width: 15px;
+              }
+        }
+    }
+}

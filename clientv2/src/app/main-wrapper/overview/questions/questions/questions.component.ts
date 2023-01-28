@@ -11,17 +11,57 @@ import { Category } from 'src/app/shared/models';
 export class QuestionsComponent implements OnInit, OnDestroy {
 
   private categories$?: Subscription;
+  private selectedCategory$?: Subscription;
+  private questions$?: Subscription;
   categories?: Category[];
+  questions?: any;
+  selectedCategory?: Category;
+  categoriesLoading = true;
+  questionsLoading = true;
+  addModalIsOpen = false;
 
   constructor(private questionsService: QuestionsService) { }
 
   ngOnInit(): void {
-    this.categories$ = this.questionsService.categories$.subscribe(data => this.categories = data);
+    this.categories$ = this.questionsService.categories$.subscribe(data => {
+      if (data) {
+        this.categories = data;
+        this.categoriesLoading = false;
+      } else {
+        this.categories = undefined;
+        this.categoriesLoading = false;
+      }
+    });
+    this.questions$ = this.questionsService.questions$.subscribe(data => {
+      if (data) {
+        this.questions = data;
+        // this.addModalIsOpen = false;
+        this.questionsLoading = false;
+      } else {
+        this.questions = undefined;
+        this.questionsLoading = false;
+      }
+    });
+    this.selectedCategory$ = this.questionsService.selectedCategory$.subscribe(data => {
+      if (data) {
+        this.questionsLoading = true;
+        this.selectedCategory = data;
+        this.questionsService.getQuestionsByCategory(data._id)
+      } else {
+        this.selectedCategory = undefined;
+      }
+    });
     this.questionsService.getCategories();
   }
 
   ngOnDestroy(): void {
     this.categories$?.unsubscribe();
+    this.questions$?.unsubscribe();
+    this.selectedCategory$?.unsubscribe();
+  }
+
+  toggleAddModal() {
+    this.addModalIsOpen = !this.addModalIsOpen;
   }
 
 }

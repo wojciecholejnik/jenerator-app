@@ -1,11 +1,29 @@
 <div class="wrapper card">
-    <div class="header">Wybierz kategorię</div>
+    <div class="resoults">
+        <div class="categories" [class.isOpen]="isOpen">
+            <div
+                *ngFor="let category of categories"
+                class="category"
+                (click)="selectCategory(category)"
+                [class.active]="isSelected(category)"
+            >{{category.name}}</div>
+        </div>
+        <div class="no-categories-info"></div>
+    </div>
+    <div class="header mt-3">
+        <span>{{selectedCategory ? 'Wybrana kategoria:' : 'Wybierz kategorię'}}</span>
+        <span *ngIf="!isOpen" (click)="toggleIsOpen()"><i class="bi bi-chevron-double-down"></i></span>
+        <span *ngIf="isOpen" (click)="toggleIsOpen()"><i class="bi bi-chevron-double-up"></i></span>
+    </div>
     <div class="searching">
-        <div class="input-group mb-3">
+        <div class="input-group mb-1">
             <input 
                 type="text"
                 class="form-control"
                 placeholder="Jakiej kategorii szukasz ?"
+                [(ngModel)]="inputPhrase"
+                (keyup)="search()"
+                [disabled]="disabled ? true : false"
             >
         </div>
     </div>

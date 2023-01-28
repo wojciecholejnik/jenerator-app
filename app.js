@@ -15,7 +15,8 @@ app.use(express.static(path.join(__dirname, '/public/client')));
 app.use(express.static(path.join(__dirname, '/public/uploads')));
 
 mongoose.set("strictQuery", false);
-const dbURI = `mongodb+srv://pytania:pytaniaPassword@cluster0.bpoyn.mongodb.net/Pytania?retryWrites=true&w=majority`;
+const databaseName = 'Jenerator-test';
+const dbURI = `mongodb+srv://wojtek:wojtek@jenerator.pvmtn2j.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
 mongoose.connect(dbURI);
 const db = mongoose.connection;
 db.once('open', () => {console.log('DB connected')});
