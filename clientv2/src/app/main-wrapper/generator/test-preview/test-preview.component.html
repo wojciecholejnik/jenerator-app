@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <div class="header">
+        <strong>{{test.name}}</strong>
+        <div class="buttons">
+            <button class="btn btn-primary" (click)="print()">Drukuj</button>
+            <button class="btn btn-secondary" (click)="closePreview()">Zamknij</button>
+        </div>
+    </div>
+    <app-new-test [newTest]='test'></app-new-test>
+</div>

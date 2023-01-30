@@ -4,7 +4,8 @@ const testSchema = new mongoose.Schema({
   name: {type: String, required: true},
   author: {
     _id: {type: String, required: true},
-    shortName: {type: String, required: true}
+    shortName: {type: String, required: true},
+    emoticon: {type: String}
   },
   category: {
     _id: {type: String, required: true},

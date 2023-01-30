@@ -22,6 +22,9 @@ import { TypeSelectorComponent } from './overview/questions/type-selector/type-s
 import { DeleteConfirmationComponent } from './overview/questions/delete-confirmation/delete-confirmation.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { NewTestComponent } from './generator/new-test/new-test.component';
+import { TestsTableComponent } from './generator/tests-table/tests-table.component';
+import { TestPreviewComponent } from './generator/test-preview/test-preview.component';
+import { DeleteTestConfirmationComponent } from './generator/delete-test-confirmation/delete-test-confirmation.component';
 
 const routes: Routes = [
   {
@@ -56,6 +59,9 @@ class MainWrapperRoutingModule { }
     DeleteConfirmationComponent,
     GeneratorComponent,
     NewTestComponent,
+    TestsTableComponent,
+    TestPreviewComponent,
+    DeleteTestConfirmationComponent
   ],
   imports: [
     CommonModule,

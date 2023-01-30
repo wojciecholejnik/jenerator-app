@@ -63,9 +63,9 @@ export interface QuestionToSaveDTO {
     blocked: boolean
 }
 
-export interface NewTest {
-    _id?: string,
-    name?: string,
+export interface Test {
+    _id: string,
+    name: string,
     author: {
         _id: string,
         shortName: string,
@@ -76,7 +76,23 @@ export interface NewTest {
     category: {
         _id: string,
         name: string
-    } | '';
+    };
+}
+
+export interface NewTest {
+    _id?: string,
+    name?: string,
+    author: {
+        _id: string,
+        shortName: string,
+        emoticon: string
+    }
+    date: Date;
+    questions: Question[];
+    category?: {
+        _id: string,
+        name: string
+    };
 }
 
 export interface TestToSaveDTO {

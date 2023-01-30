@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Category, NewTest } from 'src/app/shared/models';
+import { Category, NewTest, Test } from 'src/app/shared/models';
 import { QuestionsService } from '../questions.service';
 import { GeneratorService } from './generator.service';
 import { TestService } from './test.service';
@@ -15,13 +15,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   newTest$?: Subscription;
   selectedCategory$?: Subscription
   saveTest$?: Subscription;
+  tests$?: Subscription;
 
   isNewTest = false;
   newTest?: NewTest;
   categories$?: Subscription;
   allCategories: Category[] = [];
   selectedCategory?: Category;
-
+  tests: Test[] = [];
 
   constructor(
     private generatorService: GeneratorService,
@@ -29,6 +30,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     private testService: TestService) { }
 
   ngOnInit(): void {
+    this.tests$ = this.testService.tests$.subscribe(tests => this.tests = tests);
     this.newTest$ = this.generatorService.newTest$.subscribe((test: any) => {
       if (test) {
         this.newTest = test;
@@ -45,12 +47,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
         this.generatorService.newTest$.next({...this.generatorService.newTest$.getValue(), category: category});
       }
     })
+    this.testService.getTests()
     this.questionService.getCategories();
   }
 
   ngOnDestroy(): void {
     this.newTest$?.unsubscribe();
     this.saveTest$?.unsubscribe();
+    this.tests$?.unsubscribe();
   }
 
   startNewTest(): void {
@@ -286,7 +290,10 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     if (!this.newTest) return
     this.saveTest$ = this.testService.saveTest(this.newTest).subscribe(res => {
       if (res) {
-        this.testService.allTests$.next(res)
+        //TODO: change after filtering
+        this.testService.allTests$.next(res);
+        this.testService.tests$.next(res);
+        this.generatorService.newTest$.next('');
       }
     })
   }

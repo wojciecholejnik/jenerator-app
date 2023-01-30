@@ -1,0 +1,37 @@
+<div class="wrapper mt-4">
+    <table *ngIf="!testPreviewIsOpen" class="table">
+        <thead>
+            <th>#</th>
+            <th>Kategoria</th>
+            <th>Nazwa</th>
+            <th class="date">Utworzono</th>
+            <th>Autor</th>
+            <th class="actions">Akcje</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let test of tests; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{test.category.name}}</td>
+                <td>{{test.name}}</td>
+                <td>{{test.date | date:'d.M.yyyy, HH:mm'}}</td>
+                <td>{{test.author.shortName}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary mr-2" (click)="toggleTestPreview(test)"><i class="bi bi-file-earmark-text"></i></button>
+                    <button class="btn btn-sm btn-danger" (click)="toggleRemoveConfirmation(test)"><i class="bi bi-x-lg"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-test-preview
+        *ngIf="testPreviewIsOpen && selectedTest"
+        [test]="selectedTest"
+        (onPreviewClose)="toggleTestPreview()"
+    ></app-test-preview>
+</div>
+
+<app-delete-test-confirmation
+    *ngIf="deleteConfirmationIsOpen && selectedTest"
+    [test]="selectedTest"
+    (onModalClose)="toggleRemoveConfirmation()"
+></app-delete-test-confirmation>
+

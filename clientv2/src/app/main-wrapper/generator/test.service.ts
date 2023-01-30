@@ -18,9 +18,10 @@ export class TestService implements OnDestroy {
     this.getTests$?.unsubscribe();
   }
 
-  getTest(): void {
+  getTests(): void {
     this.getTests$ = this.apiService.getAllTest().subscribe(res => {
-      this.allTests$.next(res)
+      this.allTests$.next(res);
+      this.tests$.next(res);
     })
   }
 

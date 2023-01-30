@@ -12,7 +12,7 @@ export class GeneratorService {
   constructor(private loginService: LoginService, private questionsService: QuestionsService) { }
 
   emptyTest: NewTest = {
-    category: '',
+    category: undefined,
     author: this.loginService.getAuthor(),
     date: new Date(),
     questions: [],

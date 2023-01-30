@@ -36,14 +36,13 @@ exports.addTest = async (req, res) => {
 
 exports.deleteTest = async (req, res) => {
   try {
-    const itemToDelete = await Test.findOne(req.params.id);
+    const itemToDelete = await Test.findById(req.params.id);
     if (itemToDelete) {
       await Test.deleteOne({ _id: req.params.id });
       this.getAll(req, res);
     } else {
       res.status(404).json({ message: 'Taki test już nie istnieje.' });
     }
-    
   }
   catch(err) {
     res.status(500).json({ message: err });

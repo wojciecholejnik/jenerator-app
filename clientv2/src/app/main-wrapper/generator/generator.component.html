@@ -7,6 +7,7 @@
             Stwórz nowy test
         </button>
     </div>
+    <app-tests-table *ngIf="!isNewTest" [tests]="tests" ></app-tests-table>
     <div *ngIf="isNewTest" class="action-buttons mb-3">
         <div class="left">
             <button [disabled]="!isTestValid()" class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="printTest()">
