@@ -292,7 +292,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
       if (res) {
         //TODO: change after filtering
         this.testService.allTests$.next(res);
-        this.testService.tests$.next(res);
+        this.testService.filterTests();
         this.generatorService.newTest$.next('');
       }
     })

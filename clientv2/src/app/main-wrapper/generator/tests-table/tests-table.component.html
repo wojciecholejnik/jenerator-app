@@ -1,12 +1,48 @@
 <div class="wrapper mt-4">
     <table *ngIf="!testPreviewIsOpen" class="table">
         <thead>
-            <th>#</th>
-            <th>Kategoria</th>
-            <th>Nazwa</th>
-            <th class="date">Utworzono</th>
-            <th>Autor</th>
-            <th class="actions">Akcje</th>
+            <tr>
+                <th>#</th>
+                <th>Kategoria</th>
+                <th>Nazwa</th>
+                <th class="date">Utworzono</th>
+                <th>Autor</th>
+                <th class="actions">Akcje</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>
+                    <div class="filter-control">
+                        <input class="form-control" type="text" [(ngModel)]="testsFilter.category" (keyup)="filterTests()">
+                        <i class="bi bi-x-lg" *ngIf="testsFilter.category" (click)="clearFilter('category')"></i>
+                    </div>
+                </th>
+                <th>
+                    <div class="filter-control">
+                        <input class="form-control" type="text" [(ngModel)]="testsFilter.name" (keyup)="filterTests()">
+                        <i class="bi bi-x-lg" *ngIf="testsFilter.name" (click)="clearFilter('name')"></i>
+                    </div>
+                </th>
+                <th>
+                    <div class="filter-control creation">
+                        <input class="form-control" type="text" [(ngModel)]="testsFilter.creation" (keyup)="filterTests()">
+                        <i class="bi bi-x-lg" *ngIf="testsFilter.creation" (click)="clearFilter('creation')"></i>
+                    </div>
+                </th>
+                <th>
+                    <div class="filter-control author">
+                        <input class="form-control" type="text" [(ngModel)]="testsFilter.author" (keyup)="filterTests()">
+                        <i class="bi bi-x-lg" *ngIf="testsFilter.author" (click)="clearFilter('author')"></i>
+                    </div>
+                </th>
+                <th>
+                    <button
+                        *ngIf="testsFilter.category || testsFilter.name || testsFilter.creation || testsFilter.author"
+                        class="btn btn-sm btn-secondary"
+                        (click)="clearFilter('')"
+                    >Wyczyść filtr</button>
+                </th>
+            </tr>
         </thead>
         <tbody>
             <tr *ngFor="let test of tests; let i=index">
@@ -22,6 +58,9 @@
             </tr>
         </tbody>
     </table>
+    <div *ngIf="!tests.length" class="empty-table">
+        Brak wyników
+    </div>
     <app-test-preview
         *ngIf="testPreviewIsOpen && selectedTest"
         [test]="selectedTest"

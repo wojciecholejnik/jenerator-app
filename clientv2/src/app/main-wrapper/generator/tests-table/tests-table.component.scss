@@ -4,10 +4,36 @@ table {
     }
 
     .actions {
-        min-width: 100px;
+        min-width: 125px;
     }
 
     .date {
         min-width: 140px;
     }
+
+    .filter-control {
+        position: relative;
+
+        i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        &.creation {
+            width: 120px
+        }
+
+        &.author {
+            width: 100px
+        }
+    }
+}
+
+.empty-table {
+    text-align: center;
+    font-size: 18px;
+    font-style: italic;
 }

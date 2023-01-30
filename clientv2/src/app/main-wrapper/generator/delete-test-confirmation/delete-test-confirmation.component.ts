@@ -34,7 +34,7 @@ export class DeleteTestConfirmationComponent implements OnInit, OnDestroy {
       next: (res) => {
         //TODO: change after filtering
         this.testService.allTests$.next(res);
-        this.testService.tests$.next(res);
+        this.testService.filterTests();
         this.closeModal();
       },
       error: (e) => {
