@@ -143,6 +143,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.questionService.questions$.next(res);
           this.questionService.allQuestions = res;
+          this.questionService.filterQuestions(this.questionService.questionFilter$.getValue());
           this.closeModal();
         },
         error: () => {
@@ -155,6 +156,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.questionService.questions$.next(res);
           this.questionService.allQuestions = res;
+          this.questionService.filterQuestions(this.questionService.questionFilter$.getValue());
           this.closeModal();
         },
         error: () => {
