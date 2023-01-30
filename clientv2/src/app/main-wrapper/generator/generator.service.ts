@@ -79,8 +79,4 @@ export class GeneratorService {
     }
   }
 
-  saveTest(test: NewTest): void {
-    console.log(test)
-  }
-
 }

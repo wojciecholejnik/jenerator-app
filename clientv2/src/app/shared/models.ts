@@ -64,6 +64,8 @@ export interface QuestionToSaveDTO {
 }
 
 export interface NewTest {
+    _id?: string,
+    name?: string,
     author: {
         _id: string,
         shortName: string,

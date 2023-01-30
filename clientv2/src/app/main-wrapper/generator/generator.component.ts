@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Category, NewTest } from 'src/app/shared/models';
 import { QuestionsService } from '../questions.service';
 import { GeneratorService } from './generator.service';
+import { TestService } from './test.service';
 
 @Component({
   selector: 'app-generator',
@@ -12,15 +13,20 @@ import { GeneratorService } from './generator.service';
 export class GeneratorComponent implements OnInit, OnDestroy {
 
   newTest$?: Subscription;
+  selectedCategory$?: Subscription
+  saveTest$?: Subscription;
+
   isNewTest = false;
   newTest?: NewTest;
   categories$?: Subscription;
-  selectedCategory$?: Subscription
   allCategories: Category[] = [];
   selectedCategory?: Category;
 
 
-  constructor(private generatorService: GeneratorService, private questionService: QuestionsService) { }
+  constructor(
+    private generatorService: GeneratorService,
+    private questionService: QuestionsService,
+    private testService: TestService) { }
 
   ngOnInit(): void {
     this.newTest$ = this.generatorService.newTest$.subscribe((test: any) => {
@@ -36,7 +42,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     this.selectedCategory$ = this.questionService.selectedCategory$.subscribe(category => {
       if (this.isNewTest) {
         this.selectedCategory = category;
-        this.generatorService.newTest$.next({...this.newTest, category: category});
+        this.generatorService.newTest$.next({...this.generatorService.newTest$.getValue(), category: category});
       }
     })
     this.questionService.getCategories();
@@ -44,6 +50,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.newTest$?.unsubscribe();
+    this.saveTest$?.unsubscribe();
   }
 
   startNewTest(): void {
@@ -277,7 +284,11 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   saveTest(): void {
     if (!this.newTest) return
-    this.generatorService.saveTest(this.newTest);
+    this.saveTest$ = this.testService.saveTest(this.newTest).subscribe(res => {
+      if (res) {
+        this.testService.allTests$.next(res)
+      }
+    })
   }
 
   isTestValid(): boolean {

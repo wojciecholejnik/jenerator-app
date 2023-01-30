@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
 const testController = require('../controllers/test.controller');
-router.get('/tests', testController.getAll);
-router.post('/tests/save', testController.postTest);
-router.post('/tests/delete', testController.deleteTest);
+
+router.get('/get-tests', testController.getAll);
+router.post('/add-test', testController.addTest);
+router.delete('/delete-test/:id', testController.deleteTest);
 
 
 

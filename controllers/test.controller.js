@@ -9,26 +9,23 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.postTest = async (req, res) => {
-  const {author, questions, category} = req.body;
+exports.addTest = async (req, res) => {
+  const {author, questions, category, name} = req.body;
   
   try {
-    const testIsEgzist = await Test.findOne({
-      author: author,
-      questions: questions,
-      category: category,
+    const testIsExist = await Test.findOne({
+      name: name
     });
-    if (testIsEgzist) {
-      res.status(404).json({message: 'test już istnieje'});
-    } else if (author && questions && category) {
-      const newTest = new Test({
-        author: author,
-        questions: questions,
-        category: category,
-        date: Date.now(),
-      });
+    if (testIsExist) {
+      res.status(404).json({message: 'Taki test już istnieje.'});
+    } else if (author && questions && category && name) {
+      const newTest = new Test(req.body);
       await newTest.save();
-      res.json({ message: 'OK' });
+      this.getAll(req, res);
+    } else if (author && questions && category && !name) {
+      const newTest = new Test({...req.body, name: category.name + ' - ' + new Date().toLocaleDateString()});
+      await newTest.save();
+      this.getAll(req, res);
     } else {
       res.status(500).json({message: 'Za mała ilość danych'});
     }
@@ -39,12 +36,12 @@ exports.postTest = async (req, res) => {
 
 exports.deleteTest = async (req, res) => {
   try {
-    const itemToDelete = await Test.find({ _id: req.body._id });
+    const itemToDelete = await Test.findOne(req.params.id);
     if (itemToDelete) {
-      await Test.deleteOne({ _id: req.body._id });
-      res.json({ message: 'OK' });
+      await Test.deleteOne({ _id: req.params.id });
+      this.getAll(req, res);
     } else {
-      res.status(404).json({ message: 'nie odnaleziono testu' });
+      res.status(404).json({ message: 'Taki test już nie istnieje.' });
     }
     
   }
