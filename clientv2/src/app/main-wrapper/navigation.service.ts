@@ -9,16 +9,16 @@ export class NavigationService {
 
   navOptions: NavOption[] = [
     {
-      name: 'categories',
+      name: 'generator',
       active: false
+    },
+    {
+      name: 'categories',
+      active: true
     },
     {
       name: 'questions',
       active: false
-    },
-    {
-      name: 'generator',
-      active: true
     }
   ]
 
