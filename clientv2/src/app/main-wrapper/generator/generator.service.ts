@@ -41,12 +41,12 @@ export class GeneratorService {
   getRandomQuestions() {
     const category = this.questionsService.getSelectedCategory();
     this.questionsService.getAllQuestionsForTest(category._id).subscribe(questions => {
-      const singleSelectQuestions = questions.filter(question => question.type === 'singleSelect');
-      const multiSelectQuestions = questions.filter(question => question.type === 'multiSelect');
-      const openQuestions = questions.filter(question => question.type === 'open');
+      const singleSelectQuestions = questions.filter(question => question.type === 'singleSelect' && !question.blocked);
+      const multiSelectQuestions = questions.filter(question => question.type === 'multiSelect' && !question.blocked);
+      const openQuestions = questions.filter(question => question.type === 'open' && !question.blocked);
 
       if (singleSelectQuestions.length < 2 || multiSelectQuestions.length < 2 || openQuestions.length < 2) {
-        window.alert('Niewystarczając liczba pytań w wybranej kategorii');
+        window.alert('Niewystarczając liczba aktywnych pytań w wybranej kategorii');
         return
       }
 
@@ -68,6 +68,19 @@ export class GeneratorService {
 
       this.newTest$.next({...this.newTest$.getValue(), questions: randomQuestions})
     });
+
+  }
+
+  isNewTestValid(test: NewTest): boolean {
+    if (test.author && test.category && test.questions.length === 6) {
+      return true
+    }  else {
+      return false
+    }
+  }
+
+  saveTest(test: NewTest): void {
+    console.log(test)
   }
 
 }

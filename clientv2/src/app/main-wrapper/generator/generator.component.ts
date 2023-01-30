@@ -57,6 +57,10 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     this.generatorService.abortNewTest();
   }
 
+  restetQuestions() {
+    this.generatorService.newTest$.next({...this.newTest, questions: []})
+  }
+
   selectCategory(category: Category): void {
     this.selectedCategory = category;
     this.questionService.selectedCategory$.next(category);
@@ -270,7 +274,21 @@ export class GeneratorComponent implements OnInit, OnDestroy {
       }
       
     }
+
+  saveTest(): void {
+    if (!this.newTest) return
+    this.generatorService.saveTest(this.newTest);
   }
+
+  isTestValid(): boolean {
+    if (!this.newTest) return false;
+    if (this.newTest.author && this.newTest.category && this.newTest.questions.length === 6) {
+      return true
+    }  else {
+      return false
+    }
+  }
+}
 
 
   const styleSheet = `
