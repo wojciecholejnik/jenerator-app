@@ -35,6 +35,8 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       return 'Pytania'
     } else if (name === 'generator') {
       return 'Generator'
+    } else if (name === 'help') {
+      return 'Pomoc'
     } else {
       return ''
     }

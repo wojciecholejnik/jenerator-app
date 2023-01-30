@@ -40,7 +40,7 @@ export class LoginModalComponent implements OnInit {
       }
     });
     // temporary auto login
-    // this.loginService.login(mockedUser.email, mockedUser.password)
+    this.loginService.login(mockedUser.email, mockedUser.password)
   }
 
   inputChange(): void {

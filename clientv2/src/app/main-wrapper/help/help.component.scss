@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+    
+    .name {
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.module-content {
+    padding: 24px;
+}
+
+.step {
+    header {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+}

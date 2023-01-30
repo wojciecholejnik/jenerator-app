@@ -25,6 +25,7 @@ import { NewTestComponent } from './generator/new-test/new-test.component';
 import { TestsTableComponent } from './generator/tests-table/tests-table.component';
 import { TestPreviewComponent } from './generator/test-preview/test-preview.component';
 import { DeleteTestConfirmationComponent } from './generator/delete-test-confirmation/delete-test-confirmation.component';
+import { HelpComponent } from './help/help.component';
 
 const routes: Routes = [
   {
@@ -61,7 +62,8 @@ class MainWrapperRoutingModule { }
     NewTestComponent,
     TestsTableComponent,
     TestPreviewComponent,
-    DeleteTestConfirmationComponent
+    DeleteTestConfirmationComponent,
+    HelpComponent
   ],
   imports: [
     CommonModule,
