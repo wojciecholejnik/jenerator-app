@@ -52,6 +52,8 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   }
 
   abortNewTest(): void {
+    this.questionService.selectedCategory$.next('');
+    this.generatorService.startNewTest();
     this.generatorService.abortNewTest();
   }
 

@@ -8,6 +8,9 @@
         </button>
     </div>
     <div *ngIf="isNewTest" class="abort-new mb-3">
+        <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="startNewTest()">
+            Resetuj
+        </button>
         <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="printTest()">
             Drukuj
         </button>
