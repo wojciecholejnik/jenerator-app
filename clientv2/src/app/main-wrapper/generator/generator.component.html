@@ -10,10 +10,12 @@
     <app-tests-table *ngIf="!isNewTest" [tests]="tests" ></app-tests-table>
     <div *ngIf="isNewTest" class="action-buttons mb-3">
         <div class="left">
-            <button [disabled]="!isTestValid()" class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="printTest()">
-                Drukuj
-            </button>
-            <button [disabled]="!isTestValid()" class="btn btn-secondary" *ngIf="selectedCategory" (click)="saveTest()">
+            <button [disabled]="!isTestValid()" mat-icon-button [matMenuTriggerFor]="menu"><button class="btn btn-primary mr-4">Drukuj</button></button>
+            <mat-menu #menu="matMenu" xPosition="after">
+                <button mat-menu-item (click)="printUnresolvedTest()" >Test</button>
+                <button mat-menu-item (click)="printResolvedTest()" >Rozwiązanie</button>
+            </mat-menu>
+            <button [disabled]="!isTestValid()" class="btn btn-secondary ml-5" *ngIf="selectedCategory" (click)="saveTest()">
                 Zapisz
             </button>
 

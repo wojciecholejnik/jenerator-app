@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Test } from 'src/app/shared/models';
+import { GeneratorService } from '../generator.service';
+import { PrintService } from '../print.service';
 
 @Component({
   selector: 'app-test-preview',
@@ -11,7 +13,7 @@ export class TestPreviewComponent implements OnInit {
   @Input() test!: Test;
   @Output() onPreviewClose: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private printService: PrintService) { }
 
   ngOnInit(): void {
   }
@@ -20,8 +22,12 @@ export class TestPreviewComponent implements OnInit {
     this.onPreviewClose.emit();
   }
 
-  print(): void {
-    
+  printUnresolvedTest(): void {
+    this.printService.printUnresolvedTest(this.test)
+  }
+
+  printResolvedTest(): void {
+    this.printService.printResolvedTest(this.test)
   }
 
 }
