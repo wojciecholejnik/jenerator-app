@@ -5,6 +5,7 @@ const questionsController = require('../controllers/questions.controller');
 router.get('/get-questions-category/:categoryId', questionsController.getByCategory);
 router.post('/add-question/:categoryId', questionsController.addQuestion);
 router.delete('/delete-question/:questionId/:categoryId', questionsController.deleteQuestion);
+router.post('/edit-question/:categoryId', questionsController.editQuestion);
 
 
 // router.get('/questions', questionsController.getAll);

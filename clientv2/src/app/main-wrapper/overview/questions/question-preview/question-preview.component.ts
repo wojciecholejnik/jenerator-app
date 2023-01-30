@@ -39,6 +39,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
       }
     })
     if (!this.question) {
+      this.modalType = 'addNewQuestion';
       this.questionForm = this.fb.group({
         questionContent: ['', Validators.required],
         answers: this.fb.group({
@@ -63,8 +64,8 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
         blocked: [false]
       })
     } else {
-      // this.selectedCategory = this.question.category;
-      this.selectType(this.question.type)
+      this.modalType = 'editQuestion';
+      this.selectType(this.question.type);
       this.questionForm = this.fb.group({
         questionContent: [this.question.questionContent, Validators.required],
         answers: this.question.type !== 'open' ? this.fb.group({
@@ -149,6 +150,18 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
         }
       })
     }
+    if (this.isValidToSave() && this.modalType === 'editQuestion') {
+      this.questionService.editQuestion(this.mapQuestion()).subscribe({
+        next: (res) => {
+          this.questionService.questions$.next(res);
+          this.questionService.allQuestions = res;
+          this.closeModal();
+        },
+        error: () => {
+          // handle add question creation
+        }
+      })
+    }
   }
 
   isValidToSave(): boolean {
@@ -187,6 +200,9 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
       img: this.questionForm.value.img,
       author: this.loginService.getAuthor()._id,
       blocked: this.questionForm.value.blocked
+    }
+    if (this.modalType === 'editQuestion') {
+      question._id = this.question._id
     }
     return question
   }

@@ -93,6 +93,10 @@ export class QuestionsService implements OnDestroy {
     return this.apiService.deleteQuestion(questionId, categoryId)
   }
 
+  editQuestion(question: QuestionToSaveDTO): Observable<Question[]> {
+    return this.apiService.editQuestion(question)
+  }
+
   getAllCategories(): Category[] {
     return this.allCategories || []
   }

@@ -53,6 +53,7 @@ export interface QuestionFilter {
 }
 
 export interface QuestionToSaveDTO {
+    _id?: string,
     category: string
     type: QuestionType
     questionContent: string,

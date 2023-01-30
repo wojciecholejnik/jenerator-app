@@ -1,10 +1,6 @@
 const Question = require('../models/question.model');
 const User = require('../models/user.model');
 const Category = require('../models/category.model');
-const pdf = require("pdf-creator-node");
-const fs = require("fs");
-const uniqid = require('uniqid');
-const formidable = require('formidable');
 
 exports.getByCategory = async (req, res) => {
   try {
@@ -57,6 +53,23 @@ exports.deleteQuestion = async  (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
+exports.editQuestion = async (req, res) => {
+  try {
+    const updatedQuestionDTO = req.body;
+    const existingQuestion = await Question.findById(updatedQuestionDTO._id);
+    if (!existingQuestion) {
+      res.status(404).json({message: 'Takie pytanie już nie istnieje !'})
+    } else {
+      await Question.updateOne({_id: updatedQuestionDTO._id}, {$set: {
+        ...updatedQuestionDTO
+      }});
+      await this.getByCategory(req, res);
+    }
+  } catch (e) {
+    res.status(500).json({mesage: e})
+  }
+}
 
 // exports.getBycategoryAndType = async (req, res) => {
 //   try {

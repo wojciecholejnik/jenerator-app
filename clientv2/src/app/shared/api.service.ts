@@ -48,4 +48,8 @@ export class ApiService {
   deleteQuestion(questionId: string, categoryId: string): Observable<Question[]> {
     return this.http.delete<any>(`${this.apiHost}/delete-question/${questionId}/${categoryId}`, this.httpOptions) 
   }
+
+  editQuestion(question: QuestionToSaveDTO): Observable<any[]> {
+    return this.http.post<any>(`${this.apiHost}/edit-question/${question.category}`, question, this.httpOptions)  
+  }
 }
