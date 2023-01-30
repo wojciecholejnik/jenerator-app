@@ -1,9 +1,9 @@
 <div class="wrapper">
-    <div class="trigger">
+    <!-- <div class="trigger">
         <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
             <mat-icon>more_vert</mat-icon>
           </button>
-    </div>
+    </div> -->
     <div class="menu">
         <div
             *ngFor="let item of navigation"
@@ -12,6 +12,7 @@
             (click)="changeNavOption(item.name)"
         >
             {{translateNavNames(item.name)}}
+            <span *ngIf="item.name==='generator' && isNewTest" class="new-test-info">- nowy</span>
         </div>
     </div>
 </div>

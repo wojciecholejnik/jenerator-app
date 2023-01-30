@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { GeneratorService } from 'src/app/main-wrapper/generator/generator.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Category } from 'src/app/shared/models';
+import { Category, Question } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-questions',
@@ -35,7 +36,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.questions$ = this.questionsService.questions$.subscribe(data => {
       if (data) {
         this.questions = data;
-        // this.addModalIsOpen = false;
         this.questionsLoading = false;
       } else {
         this.questions = undefined;

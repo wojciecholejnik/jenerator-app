@@ -1,0 +1,28 @@
+<div class="header">
+    <div class="name">Generator</div>
+</div>
+<div class="module-content">
+    <div *ngIf="!isNewTest" class="start-new">
+        <button class="btn btn-primary" (click)="startNewTest()">
+            Stwórz nowy test
+        </button>
+    </div>
+    <div *ngIf="isNewTest" class="abort-new mb-3">
+        <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="printTest()">
+            Drukuj
+        </button>
+        <button class="btn btn-secondary" *ngIf="selectedCategory">
+            Zapisz
+        </button>
+        <button class="btn btn-secondary ml-2" *ngIf="selectedCategory" (click)="getRandom()">
+            Losowanie
+        </button>
+        <button class="btn btn-secondary  ml-2" (click)="abortNewTest()">
+            Anuluj
+        </button>
+    </div>
+    <ng-container *ngIf="isNewTest && newTest">
+        <app-category-selector [categories]="allCategories" [disabled]="false"></app-category-selector>
+        <app-new-test *ngIf="selectedCategory"  [newTest]="newTest"></app-new-test>
+    </ng-container>
+</div>

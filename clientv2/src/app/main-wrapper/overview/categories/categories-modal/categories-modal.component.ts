@@ -15,6 +15,7 @@ export class CategoriesModalComponent implements OnInit, OnDestroy {
   @Output() onCloseModal: EventEmitter<any> = new EventEmitter();
   categoryName = '';
   private request$?: Subscription;
+  errorMessage = '';
 
   constructor(private questionService: QuestionsService) { }
 
@@ -30,6 +31,10 @@ export class CategoriesModalComponent implements OnInit, OnDestroy {
 
   closeModal(): void {
     this.onCloseModal.emit();
+  }
+
+  onInputChange() {
+    this.errorMessage = '';
   }
 
   editCategory(): void {
@@ -67,7 +72,7 @@ export class CategoriesModalComponent implements OnInit, OnDestroy {
           this.closeModal();
         },
         error: (e) => {
-          //TODO: hadle error
+          this.errorMessage = e.error.message;
         }
       })
     }

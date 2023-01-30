@@ -20,6 +20,8 @@ import { SharedModule } from '../shared/shared.module';
 import { QuestionPreviewComponent } from './overview/questions/question-preview/question-preview.component';
 import { TypeSelectorComponent } from './overview/questions/type-selector/type-selector.component';
 import { DeleteConfirmationComponent } from './overview/questions/delete-confirmation/delete-confirmation.component';
+import { GeneratorComponent } from './generator/generator.component';
+import { NewTestComponent } from './generator/new-test/new-test.component';
 
 const routes: Routes = [
   {
@@ -51,7 +53,9 @@ class MainWrapperRoutingModule { }
     QuestionsTableComponent,
     QuestionPreviewComponent,
     TypeSelectorComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    GeneratorComponent,
+    NewTestComponent,
   ],
   imports: [
     CommonModule,

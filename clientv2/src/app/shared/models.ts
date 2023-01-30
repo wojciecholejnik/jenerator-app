@@ -15,7 +15,7 @@ export interface NavOption {
     active: boolean
 }
 
-export type NavName = 'generator' | 'add-question' | 'questions' | 'categories';
+export type NavName = 'generator' | 'generator' | 'questions' | 'categories';
 
 export interface Category {
     _id: string,
@@ -37,6 +37,7 @@ export interface Question {
     questionContent: string,
     type: QuestionType,
     creationDate: Date,
+    blocked: boolean
 }
 
 export interface Answer {
@@ -58,4 +59,29 @@ export interface QuestionToSaveDTO {
     answers: Answer[],
     img: string,
     author: string,
+    blocked: boolean
+}
+
+export interface NewTest {
+    author: {
+        _id: string,
+        shortName: string,
+        emoticon: string
+    }
+    date: Date;
+    questions: Question[];
+    category: {
+        _id: string,
+        name: string
+    } | '';
+}
+
+export interface TestToSaveDTO {
+    author: string;
+    questions: {
+        singleSelect: Question[],
+        multiSelect: Question[],
+        open: Question[]
+    };
+    category: string;
 }

@@ -93,4 +93,16 @@ export class QuestionsService implements OnDestroy {
     return this.apiService.deleteQuestion(questionId, categoryId)
   }
 
+  getAllCategories(): Category[] {
+    return this.allCategories || []
+  }
+
+  getSelectedCategory(): Category {
+    return this.selectedCategory$.getValue()
+  }
+
+  getAllQuestionsForTest(categoryId: string) {
+    return this.apiService.getQuestionsByCategory(categoryId)
+  }
+
 }

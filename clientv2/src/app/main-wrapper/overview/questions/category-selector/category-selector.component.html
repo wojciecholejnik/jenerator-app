@@ -23,7 +23,7 @@
                 placeholder="Jakiej kategorii szukasz ?"
                 [(ngModel)]="inputPhrase"
                 (keyup)="search()"
-                [disabled]="disabled ? true : false"
+                [disabled]="disabled || !isOpen ? true : false"
             >
         </div>
     </div>

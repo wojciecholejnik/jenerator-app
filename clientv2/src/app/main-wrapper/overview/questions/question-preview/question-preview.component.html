@@ -11,6 +11,17 @@
         <div class="content">
             <div class="confirmation" *ngIf="selectedCategory && selectedType">
                 <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" id="questionForm" validate>
+                    <div class="mb-4 mt-4">
+                        <div class="answer-inputs">
+                            <input 
+                                type="checkbox"
+                                formControlName="blocked"
+                                id="blocked"
+                            >
+                            <label for="blocked" class="mb-0">Pytanie zablokowane</label>
+                        </div>
+
+                    </div>
                     <div class="mb-4">
                         <label for="questionContent" class="form-label">Treść pytania:</label>
                         <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent" aria-describedby="emailHelp"></textarea>
@@ -85,10 +96,11 @@
 
         <div class="content">
             <div class="preview-container">
+                <div *ngIf="question.blocked" class="blocked-question-info text-danger"><i class="bi bi-lock"></i>Pytanie zablokowane</div>
                 <div>Kategoria: <strong>{{question.category.name}}</strong></div>
-                <div>Typ pytania: <strong>{{question.type}}</strong></div>
+                <div>Typ pytania: <strong>{{translateTypeNames(question.type)}}</strong></div>
                 <div>Autor pytania: <strong>{{question.author.shortName}}</strong></div>
-                <div>Data utworzenia: <strong>{{question.creationDate || '---' }}</strong></div>
+                <div>Data utworzenia: <strong>{{(question.creationDate | date:'d.M.yyyy, HH:mm') || '---' }}</strong></div>
                 <div class="mt-2">Pytanie:</div>
                 <div class="question-content preview">
                     {{question.questionContent}}
@@ -98,6 +110,9 @@
                         <div><input [class.isRight]="answer.isRight" type="checkbox" disabled [checked]="answer.isRight"></div>
                         <div>{{answer.content}}</div>
                     </div>
+                </div>
+                <div *ngIf="question.img" class="img preview mt-2">
+                    <img [src]="question.img" alt="">                    
                 </div>
 
 

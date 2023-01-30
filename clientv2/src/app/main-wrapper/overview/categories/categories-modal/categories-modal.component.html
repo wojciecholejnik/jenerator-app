@@ -12,6 +12,10 @@
             </div>
         </div>
 
+        <div class="error-message">
+            <span>{{errorMessage}}</span>
+        </div>
+
         <div class="footer">
             <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
             <button class="btn btn-danger" (click)="deleteCategory()">Usuń</button>
@@ -29,8 +33,12 @@
             </div>
 
             <div class="inputs input-group mb-3">
-                <input type="text" class="form-control" placeholder="np. Kubuś i przyjaciele w stumilowym lesie ..." [(ngModel)]="categoryName">
+                <input type="text" class="form-control" placeholder="np. Kubuś i przyjaciele w stumilowym lesie ..." [(ngModel)]="categoryName" (keyup)="onInputChange()">
             </div>
+        </div>
+
+        <div class="error-message">
+            <span>{{errorMessage}}</span>
         </div>
 
         <div class="footer">
@@ -52,6 +60,10 @@
             <div class="inputs input-group mb-3">
                 <input type="text" class="form-control" placeholder="np. Kubuś i przyjaciele w stumilowym lesie ..." [(ngModel)]="categoryName">
             </div>
+        </div>
+
+        <div class="error-message">
+            <span>{{errorMessage}}</span>
         </div>
 
         <div class="footer">

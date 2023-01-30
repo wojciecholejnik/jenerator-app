@@ -1,3 +1,5 @@
+@import '../../../../global-styling/colors.scss';
+
 .modal-content {
     overflow-y: auto;
     max-height: 90vh;
@@ -46,4 +48,21 @@
               }
         }
     }
+
+    .img.preview {
+        display: flex;
+
+        img {
+            vertical-align: middle;
+            border-style: none;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+    }
+
+    .blocked-question-info {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }  
 }

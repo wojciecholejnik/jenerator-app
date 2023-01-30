@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -8,7 +9,8 @@ import { Category, Question, QuestionToSaveDTO, QuestionType } from 'src/app/sha
 @Component({
   selector: 'app-question-preview',
   templateUrl: './question-preview.component.html',
-  styleUrls: ['./question-preview.component.scss']
+  styleUrls: ['./question-preview.component.scss'],
+  providers: [DatePipe]
 })
 export class QuestionPreviewComponent implements OnInit, OnDestroy {
 
@@ -57,7 +59,8 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
             isRight: [false]
           })
         }),
-        img: ['']
+        img: [''],
+        blocked: [false]
       })
     } else {
       // this.selectedCategory = this.question.category;
@@ -82,7 +85,8 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
             isRight: [this.question.answers[3].isRight]
           })
         }) : [],
-        img: [this.question.img]
+        img: [this.question.img],
+        blocked: [this.question.blocked]
       })
     }
   }
@@ -181,9 +185,22 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
         this.questionForm.value.answers.ans4,
       ] : [],
       img: this.questionForm.value.img,
-      author: this.loginService.getAuthor()._id
+      author: this.loginService.getAuthor()._id,
+      blocked: this.questionForm.value.blocked
     }
     return question
+  }
+
+  translateTypeNames(type: QuestionType): string {
+    if (type === 'singleSelect') {
+      return 'single'
+    } else if (type === 'multiSelect') {
+      return 'multi'
+    } else if (type === 'open') {
+      return 'open'
+    } else {
+      return ''
+    }
   }
 
   

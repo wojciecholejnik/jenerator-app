@@ -2,7 +2,8 @@
 
 .wrapper {
     display: block;
-    height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
+    height: 100%;
     width: 200px;
     background: $color1-opacity50;
     position: relative;
@@ -35,5 +36,10 @@
             background-color: $light-gray;
             border-right: 3px solid $color2;
         }
+    }
+
+    span.new-test-info {
+        font-style: italic;
+        font-size: 12px;
     }
 }

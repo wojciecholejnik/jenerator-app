@@ -41,7 +41,8 @@ export class LoginService implements OnDestroy {
   getAuthor() {
     return {
       _id: this.loggedUser.value._id,
-      shortName: this.loggedUser.value.shortName
+      shortName: this.loggedUser.value.shortName,
+      emoticon: this.loggedUser.value.emoticon
     }
   }
 

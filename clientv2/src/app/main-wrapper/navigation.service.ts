@@ -14,15 +14,11 @@ export class NavigationService {
     },
     {
       name: 'questions',
-      active: true
-    },
-    {
-      name: 'add-question',
       active: false
     },
     {
       name: 'generator',
-      active: false
+      active: true
     }
   ]
 

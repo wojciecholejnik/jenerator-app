@@ -39,17 +39,18 @@ export class LoginModalComponent implements OnInit {
         this.errorMessage = 'Coś poszło nie tak. Spróbuj ponownie.'
       }
     });
-    // this.loginService.login(mockedUser.email, mockedUser.password)
+    // temporary auto login
+    this.loginService.login(mockedUser.email, mockedUser.password)
   }
 
-  inputChange() {
-    this.errorMessage = ''
+  inputChange(): void {
+    this.errorMessage = '';
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       this.loading = true;
-      this.loginService.login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
+      this.loginService.login(this.loginForm.controls.login.value, this.loginForm.controls.password.value);
     }
   }
 

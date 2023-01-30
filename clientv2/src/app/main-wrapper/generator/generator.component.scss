@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
+    
+    .name {
+        font-size: 22px;
+        font-weight: 700;
+    }
+}
+
+.module-content {
+    padding: 24px;
+}
+
+.start-new {
+    display: flex;
+    align-items: center;
+    min-height: 250px;
+    justify-content: center;
+}
+
+.abort-new {
+    text-align: end;
+}
