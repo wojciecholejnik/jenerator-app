@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ApiService } from '../shared/api.service';
-import { Category, Question, QuestionFilter, QuestionToSaveDTO, QuestionType } from '../shared/models';
+import { Category, Question, QuestionFilter, QuestionsFilter, QuestionToSaveDTO, QuestionType } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,12 @@ export class QuestionsService implements OnDestroy {
   selectedCategory$: BehaviorSubject<any> = new BehaviorSubject('');
   questions$: BehaviorSubject<any> = new BehaviorSubject('');
   selectedQuestion$: BehaviorSubject<any> = new BehaviorSubject('');
-  questionFilter$: BehaviorSubject<QuestionFilter> = new BehaviorSubject({
+  questionFilter$: BehaviorSubject<QuestionsFilter> = new BehaviorSubject({
     content: '',
-    type: ''
-  } as QuestionFilter)
+      author: '',
+      type: '',
+      status: '',
+  } as QuestionsFilter)
   allCategories?: Category[];
   allQuestions?: Question[];
 
@@ -76,11 +78,22 @@ export class QuestionsService implements OnDestroy {
     })
   }
 
-  filterQuestions(filter: QuestionFilter): void {
+  filterQuestions(filter: QuestionsFilter): void {
+    const filterQuestionStatus = (questionStatus: boolean, filterStatus: 'active' | 'blocked' | ''): boolean => {
+      if (filterStatus === 'active') {
+        return !questionStatus
+      } else if (filterStatus === 'blocked') {
+        return questionStatus
+      } else {
+        return true
+      }
+    }
     this.questionFilter$.next(filter);
     const filteredQuestions = this.allQuestions?.filter(
-      question => question.questionContent.toLocaleLowerCase().includes(this.questionFilter$.value.content) 
-      && question.type.includes(this.questionFilter$.value.type)
+      question => question.questionContent.toLocaleLowerCase().includes(this.questionFilter$.value.content.toLocaleLowerCase()) 
+      && question.type.toLocaleLowerCase().includes(this.questionFilter$.value.type.toLocaleLowerCase())
+      && question.author.shortName.toLowerCase().includes(filter.author.toLowerCase())
+      && filterQuestionStatus(question.blocked, filter.status)
     )
     this.questions$.next(filteredQuestions);
   }

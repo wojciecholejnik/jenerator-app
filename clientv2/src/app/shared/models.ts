@@ -40,6 +40,13 @@ export interface Question {
     blocked: boolean
 }
 
+export interface QuestionsFilter {
+    content: string,
+    author: string,
+    type: 'open' | 'singleSelect' | 'multiSelect' | '',
+    status: 'active' | 'blocked' | '',
+  }
+
 export interface Answer {
     content: string,
     isRight: boolean

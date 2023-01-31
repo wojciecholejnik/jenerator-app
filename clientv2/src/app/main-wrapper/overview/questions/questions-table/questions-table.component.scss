@@ -1,17 +1,48 @@
 
 .table-wrapper {
-    overflow-y: auto;
-    max-height: calc(100vh - 375px);
+    width: 100%;
 }
 
 .nr {
     width: 40px;
 }
 
+.status, .type {
+    width: 150px;
+}
+
+.content {
+    width: 45%;
+}
+
+.author {
+    width: 80px;
+}
+
+.filter-control {
+    position: relative;
+
+    i {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    &.creation {
+        width: 120px
+    }
+
+    &.author {
+        width: 100px
+    }
+}
+
 .actions {
     width: 140px;
     
-    button {
+    button:not(.clear-filter) {
         visibility: hidden;
     }
 }
@@ -42,4 +73,12 @@ tbody tr:hover {
     margin: 24px;
     text-align: center;
     font-style: italic;
+}
+
+i.status {
+    font-size: 18px;
+    
+    &.bi-lock {
+        color: red
+    }
 }
