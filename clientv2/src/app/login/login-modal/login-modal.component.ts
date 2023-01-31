@@ -39,8 +39,6 @@ export class LoginModalComponent implements OnInit {
         this.errorMessage = 'Coś poszło nie tak. Spróbuj ponownie.'
       }
     });
-    // temporary auto login
-    // this.loginService.login(mockedUser.email, mockedUser.password)
   }
 
   inputChange(): void {

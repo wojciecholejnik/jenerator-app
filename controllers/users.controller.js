@@ -2,11 +2,26 @@ const User = require('../models/user.model');
 
   exports.login = async (req, res) => {
     try {
-      const user = await User.find({email: req.body.email, password: req.body.password});
-      if (!user.length) {
-        res.status(404).json({ message: 'invalid data'});
+      const user = await User.findOne({email: req.body.email, password: req.body.password}).select('-password');
+      if (!user) {
+        res.status(404).json({ message: 'Błędne dane logowania.'});
       } else {
-        res.json(user[0]);
+        res.json(user);
+      }
+    }
+    catch(err) {
+      res.status(500).json({ message: err });
+    }
+  };
+
+  exports.getUserData = async (req, res) => {
+    console.log(req.params.id)
+    try {
+      const user = await User.findById(req.params.id).select('-password');
+      if (!user) {
+        res.status(404).json({ message: 'Taki użytkownik nie istnieje.'});
+      } else {
+        res.json(user);
       }
     }
     catch(err) {

@@ -21,6 +21,10 @@ export class ApiService {
     return this.http.post<User>(`${this.apiHost}/users/login`, {email: login, password: password}, this.httpOptions)
   }
 
+  getUserData(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.apiHost}/user/${userId}`, this.httpOptions)
+  }
+
   getCategories(): Observable<any> {
     return this.http.get<any>(`${this.apiHost}/get-categories`, this.httpOptions) 
   }
