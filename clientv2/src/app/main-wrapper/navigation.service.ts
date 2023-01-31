@@ -10,7 +10,7 @@ export class NavigationService {
   navOptions: NavOption[] = [
     {
       name: 'generator',
-      active: false
+      active: true
     },
     {
       name: 'categories',
@@ -18,7 +18,7 @@ export class NavigationService {
     },
     {
       name: 'questions',
-      active: true
+      active: false
     },
     {
       name: 'help',
