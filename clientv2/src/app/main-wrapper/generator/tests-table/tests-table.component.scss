@@ -30,6 +30,18 @@ table {
             width: 100px
         }
     }
+
+    tbody {
+        .actions button {
+            visibility: hidden;
+        }
+
+        tr:hover {
+            .actions button {
+                visibility: visible;
+            }
+        }
+    }
 }
 
 .empty-table {
