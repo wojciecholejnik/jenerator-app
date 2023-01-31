@@ -5,14 +5,16 @@
           </button>
     </div> -->
     <div class="menu">
-        <div
-            *ngFor="let item of navigation"
-            class="menu-item"
-            [class.active]="item.active"
-            (click)="changeNavOption(item.name)"
-        >
-            {{translateNavNames(item.name)}}
-            <span *ngIf="item.name==='generator' && isNewTest" class="new-test-info">- nowy</span>
-        </div>
+        <ng-container *ngFor="let item of navigation">
+            <div
+                *ngIf="shouldBeVisible(item)"
+                class="menu-item"
+                [class.active]="item.active"
+                (click)="changeNavOption(item.name)"
+            >
+                {{translateNavNames(item.name)}}
+                <span *ngIf="item.name==='generator' && isNewTest" class="new-test-info">- nowy</span>
+            </div>
+        </ng-container>
     </div>
 </div>

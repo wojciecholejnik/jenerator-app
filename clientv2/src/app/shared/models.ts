@@ -15,7 +15,7 @@ export interface NavOption {
     active: boolean
 }
 
-export type NavName = 'generator' | 'generator' | 'questions' | 'categories' | 'help';
+export type NavName = 'generator' | 'generator' | 'questions' | 'categories' | 'help' | 'manage';
 
 export interface Category {
     _id: string,

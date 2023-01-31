@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { ApiService } from 'src/app/shared/api.service';
+import { LoginService } from 'src/app/login/login.service';
 import { NavOption } from 'src/app/shared/models';
 import { NavigationService } from '../navigation.service';
 
@@ -14,7 +14,10 @@ export class MainWrapperComponent implements OnInit, OnDestroy {
   navigation$?: Subscription;
   navigation!: NavOption[];
 
-  constructor(private apisService: ApiService, private navigationService: NavigationService) { }
+  constructor(
+    private navigationService: NavigationService,
+    private loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
     this.navigation$ = this.navigationService.navOptions$.subscribe(data => this.navigation = data);
@@ -24,13 +27,13 @@ export class MainWrapperComponent implements OnInit, OnDestroy {
     this.navigation$?.unsubscribe();
   }
 
-  // addCategory(name: string): void {
-  //   this.apisService.addCategory(name).subscribe()
-  // }
-
   shoulBeVisible(name: string): boolean {
     const index = this.navigation.findIndex(item => item.name === name);
-    return this.navigation[index].active
+    if (name === 'manage' && !this.loginService.loggedUser.getValue().isAdmin) {
+      return false
+    } else {
+      return this.navigation[index].active
+    }
   }
 
 }

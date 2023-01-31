@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LoginService } from 'src/app/login/login.service';
 import { NavName, NavOption } from 'src/app/shared/models';
 import { GeneratorService } from '../generator/generator.service';
 import { NavigationService } from '../navigation.service';
@@ -16,7 +17,11 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
   newTest$?: Subscription;
   isNewTest = false;
 
-  constructor(private navigationService: NavigationService, private generatorService: GeneratorService) { }
+  constructor(
+    private navigationService: NavigationService,
+    private generatorService: GeneratorService,
+    private loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
     this.navigation$ = this.navigationService.navOptions$.subscribe(data => this.navigation = data);
@@ -37,6 +42,8 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
       return 'Generator'
     } else if (name === 'help') {
       return 'Pomoc'
+    } else if (name === 'manage') {
+      return 'Zarządzaj'
     } else {
       return ''
     }
@@ -44,6 +51,19 @@ export class LeftMenuComponent implements OnInit, OnDestroy {
 
   changeNavOption(name: NavName): void {
     this.navigationService.setNavOption(name);
+  }
+
+  isAdmin(): boolean {
+    return this.loginService.isUserLogged().isAdmin
+  }
+
+  shouldBeVisible(item: NavOption): boolean {
+    if (item.name !== 'manage') {
+      return true
+    } else {
+      return this.isAdmin()
+    }
+    
   }
 
 }

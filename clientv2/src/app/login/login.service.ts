@@ -38,8 +38,8 @@ export class LoginService implements OnDestroy {
     return this.apiService.getUserData(userId)
   }
 
-  isUserLogged(): boolean {
-    return this.loggedUser.value
+  isUserLogged() {
+    return this.loggedUser.getValue()
   }
 
   logout() {

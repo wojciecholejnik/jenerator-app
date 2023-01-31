@@ -26,20 +26,10 @@ import { TestsTableComponent } from './generator/tests-table/tests-table.compone
 import { TestPreviewComponent } from './generator/test-preview/test-preview.component';
 import { DeleteTestConfirmationComponent } from './generator/delete-test-confirmation/delete-test-confirmation.component';
 import { HelpComponent } from './help/help.component';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: MainWrapperComponent
-  },
-  
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-class MainWrapperRoutingModule { }
+import { ManageWrapperComponent } from './manage/manage-wrapper/manage-wrapper.component';
+import { MainWrapperRoutingModule } from './main-wrapper.routes';
+import { UsersTableComponent } from './manage/users-table/users-table.component';
+import { AddUserComponent } from './manage/add-user/add-user.component';
 
 
 @NgModule({
@@ -63,7 +53,10 @@ class MainWrapperRoutingModule { }
     TestsTableComponent,
     TestPreviewComponent,
     DeleteTestConfirmationComponent,
-    HelpComponent
+    HelpComponent,
+    ManageWrapperComponent,
+    UsersTableComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
