@@ -1,6 +1,5 @@
 export interface User {
-    _id: string,
-    background: string,
+    _id?: string,
     displayName: string,
     login: string,
     emoticon: string,

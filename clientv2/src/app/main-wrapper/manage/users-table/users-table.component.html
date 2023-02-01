@@ -1,1 +1,22 @@
-<p>users-table works!</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nazwa</th>
+            <th>Login</th>
+            <th>Inicjały</th>
+            <th>Logo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{user.displayName}}</td>
+            <td>{{user.login}}</td>
+            <td>{{user.shortName}}</td>
+            <td>
+                <img [src]="user.emoticon" alt="user-emoticon">
+            </td>
+        </tr>
+    </tbody>
+</table>

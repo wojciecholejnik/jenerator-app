@@ -1,0 +1,24 @@
+.control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    label {
+        margin-bottom: 0;
+    }
+
+    input[type=checkbox] {
+        width: 20px;
+        height: 20px;
+    }
+
+    img {
+        max-width: 40px;
+        max-height: 40px;
+    }
+}
+
+.error-message {
+    text-align: center;
+    min-height: 20px;
+  }

@@ -68,4 +68,20 @@ export class ApiService {
   deleteTest(testId: string): Observable<Test[]> {
     return this.http.delete<any>(`${this.apiHost}/delete-test/${testId}`, this.httpOptions) 
   }
+
+  getUserForManage(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiHost}/user-for-manage`, this.httpOptions)
+  }
+
+  addNewUser(user: User): Observable<User[]> {
+    return this.http.post<User[]>(`${this.apiHost}/add-user`, user, this.httpOptions)
+  }
+
+  editUser(user: User): Observable<User[]> {
+    return this.http.post<User[]>(`${this.apiHost}/add-user`, user, this.httpOptions)
+  }
+
+  deleteUser(userId: string): Observable<User[]> {
+    return this.http.delete<User[]>(`${this.apiHost}/delete-user/${userId}`, this.httpOptions)
+  }
 }
