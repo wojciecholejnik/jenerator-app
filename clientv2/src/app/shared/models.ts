@@ -2,7 +2,7 @@ export interface User {
     _id: string,
     background: string,
     displayName: string,
-    email: string,
+    login: string,
     emoticon: string,
     isAdmin: boolean,
     password: string,

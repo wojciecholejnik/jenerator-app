@@ -18,7 +18,7 @@ export class ApiService {
   }
 
   login(login: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.apiHost}/users/login`, {email: login, password: password}, this.httpOptions)
+    return this.http.post<User>(`${this.apiHost}/users/login`, {login: login, password: password}, this.httpOptions)
   }
 
   getUserData(userId: string): Observable<User> {

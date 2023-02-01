@@ -24,9 +24,8 @@
                     </div>
                     <div class="mb-4">
                         <label for="questionContent" class="form-label">Treść pytania:</label>
-                        <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent" aria-describedby="emailHelp"></textarea>
+                        <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent"></textarea>
                     </div>
-
                     <ng-container *ngIf="selectedType!='open'" formGroupName="answers">
                         <div class="mb-4">
                             <label for="question1-content" class="form-label">Odpowiedź 1</label>
@@ -36,7 +35,7 @@
                                     formControlName="isRight"
                                     (change)="checkboxChange('ans1')"
                                 >
-                                <textarea type="email" class="form-control" id="question1-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                                <textarea class="form-control" id="question1-content" formControlName="content"></textarea>
                             </div>
                         </div>
                         <div class="mb-4">
@@ -47,7 +46,7 @@
                                     formControlName="isRight"
                                     (change)="checkboxChange('ans2')"
                                 >
-                                <textarea type="email" class="form-control" id="question2-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                                <textarea class="form-control" id="question2-content" formControlName="content"></textarea>
                             </div>
                         </div>
                         <div class="mb-4">
@@ -58,7 +57,7 @@
                                     formControlName="isRight"
                                     (change)="checkboxChange('ans3')"
                                 >
-                                <textarea type="email" class="form-control" id="question3-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                                <textarea class="form-control" id="question3-content" formControlName="content"></textarea>
                             </div>
                         </div>
                         <div class="mb-4">
@@ -69,7 +68,7 @@
                                     formControlName="isRight"
                                     (change)="checkboxChange('ans4')"
                                 >
-                                <textarea type="email" class="form-control" id="question4-content" aria-describedby="emailHelp" formControlName="content"></textarea>
+                                <textarea class="form-control" id="question4-content" formControlName="content"></textarea>
                             </div>
                         </div>
                     </ng-container>

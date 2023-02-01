@@ -4,6 +4,7 @@ const router = express.Router();
 const userControllert = require('../controllers/users.controller');
 router.post('/users/login', userControllert.login);
 router.get('/user/:id', userControllert.getUserData);
+router.get('/user-for-manage', userControllert.getUsersToManage);
 
 router.put('/users/changePassword', userControllert.changePassword);
 router.put('/users/changeName', userControllert.changeName);

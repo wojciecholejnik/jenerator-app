@@ -53,15 +53,3 @@ export class LoginModalComponent implements OnInit {
   }
 
 }
-
-const mockedUser = {
-  "_id": "6171b38fbf5e58cf61a943da",
-  "email": "wojtek",
-  "password": "wojtek",
-  "isAdmin": true,
-  "displayName": "Wojciech Olejnik",
-  "shortName": "WO",
-  "emoticon": "https://iili.io/GNgeOF.png",
-  "primaryEmoticon": "https://iili.io/GNgeOF.png",
-  "background": "powderblue"
-}

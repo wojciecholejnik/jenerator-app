@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
   exports.login = async (req, res) => {
     try {
-      const user = await User.findOne({email: req.body.email, password: req.body.password}).select('-password');
+      const user = await User.findOne({login: req.body.login, password: req.body.password}).select('-password');
       if (!user) {
         res.status(404).json({ message: 'Błędne dane logowania.'});
       } else {
@@ -69,7 +69,7 @@ const User = require('../models/user.model');
         res.status(404).json({ message: 'brak użytwkonika !'});
       } else {
         await User.updateOne({ _id: req.body.userId }, { $set: { 
-          email: req.body.newLogin,
+          login: req.body.newLogin,
         }}).then(() => res.json({ message: 'OK' }))
       }
     }
@@ -108,4 +108,18 @@ const User = require('../models/user.model');
     catch(err) {
       res.status(500).json({ message: err });
     }
-  };
+  }
+
+  exports.getUsersToManage = async (req, res) => {
+    try {
+      const users = await User.find({isAdmin: false});
+      if (!users.length) {
+        res.status(404).json({ message: 'Brak użytkowników do wyświetlenia.'});
+      } else {
+        res.json(users)
+      }
+    }
+    catch(err) {
+      res.status(500).json({ message: err });
+    }
+  }
