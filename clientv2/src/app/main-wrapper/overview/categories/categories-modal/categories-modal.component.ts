@@ -54,6 +54,8 @@ export class CategoriesModalComponent implements OnInit, OnDestroy {
     this.request$ = this.questionService.deleteCategory(this.category._id).subscribe({
       next: (res) => {
         this.questionService.allCategories = res;
+        this.questionService.selectedCategory$.next('');
+        this.questionService.selectedQuestion$.next('');
         this.questionService.filerCategories('');
         this.closeModal();
       },
