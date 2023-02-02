@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { LoginService } from 'src/app/login/login.service';
 import { NavOption } from 'src/app/shared/models';
+import { GeneratorService } from '../generator/generator.service';
 import { NavigationService } from '../navigation.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class MainWrapperComponent implements OnInit, OnDestroy {
 
   constructor(
     private navigationService: NavigationService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private generatorService: GeneratorService
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +27,7 @@ export class MainWrapperComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.navigation$?.unsubscribe();
+    this.generatorService.abortNewTest();
   }
 
   shoulBeVisible(name: string): boolean {

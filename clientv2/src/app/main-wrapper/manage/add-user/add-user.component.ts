@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { LoginService } from 'src/app/login/login.service';
 import { User, UserFields } from 'src/app/shared/models';
+import { GeneratorService } from '../../generator/generator.service';
 import { ManageService } from '../manage.service';
 
 @Component({
@@ -13,6 +15,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   @Input() type!: 'add' | 'edit';
   @Input() userInput?: User;
+  @Input() selfEdit?: boolean;
   @Output() onModalClose: EventEmitter<any> = new EventEmitter();
   user = this.fb.group({
     isAdmin: [false, Validators.required],
@@ -25,7 +28,12 @@ export class AddUserComponent implements OnInit, OnDestroy {
   errorMessage = '';
   private addUser$?: Subscription;
 
-  constructor(private manageService: ManageService, private fb: FormBuilder) { }
+  constructor(
+    private manageService: ManageService,
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private generatorService: GeneratorService
+  ) { }
 
   ngOnInit(): void {
     
@@ -116,6 +124,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.manageService.users.next(res);
         this.closeModal();
+        if (this.selfEdit) {
+          this.loginService.logout();
+        }
       },
       error: (e) => {
         // Handle error

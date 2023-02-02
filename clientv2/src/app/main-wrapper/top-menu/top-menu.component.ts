@@ -14,6 +14,8 @@ export class TopMenuComponent implements OnInit, OnDestroy {
   user$?: Subscription;
   user!: User;
 
+  editModalIsOpen = false;
+
   constructor(private loginService: LoginService, private generatorService: GeneratorService) { }
 
   ngOnInit(): void {
@@ -29,6 +31,10 @@ export class TopMenuComponent implements OnInit, OnDestroy {
   logout() {
     this.loginService.logout();
     this.generatorService.abortNewTest();
+  }
+
+  toggleEditModal() {
+    this.editModalIsOpen = !this.editModalIsOpen;
   }
 
 }

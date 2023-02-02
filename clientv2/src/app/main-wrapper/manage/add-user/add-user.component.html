@@ -54,7 +54,7 @@
 
     <div class="content">
         <form id="user-edit" class="form" [formGroup]="user" (ngSubmit)="editUser()">
-            <div class="control mb-4">
+            <div *ngIf="!selfEdit" class="control mb-4">
                 <label for="isAdmin" class="form-label">Uprawnienia administratora</label>
                 <input type="checkbox" class="form-control" (keyup)="valueChange()" id="isAdmin" formControlName="isAdmin">
             </div>
