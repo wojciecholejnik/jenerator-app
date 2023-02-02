@@ -1,0 +1,24 @@
+<div class="modal-wrapper">
+    <div  class="modal-content">
+        <div class="header">
+            Usuń test
+        </div>
+
+        <div class="content">
+            <div class="confirmation">
+                Czy napewno chcesz usunąć test: 
+                <strong class="name">{{user.displayName}}</strong>
+                ?
+            </div>
+        </div>
+
+        <div class="error-message">
+            <span>{{errorMessage}}</span>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Anuluj</button>
+            <button class="btn btn-danger" (click)="deleteUser()">Usuń</button>
+        </div>
+    </div>
+</div>

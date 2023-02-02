@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Category, NewTest, Question, QuestionToSaveDTO, Test, User } from './models';
+import { Category, NewTest, Question, QuestionToSaveDTO, Test, User, UserFields } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -77,8 +77,8 @@ export class ApiService {
     return this.http.post<User[]>(`${this.apiHost}/add-user`, user, this.httpOptions)
   }
 
-  editUser(user: User): Observable<User[]> {
-    return this.http.post<User[]>(`${this.apiHost}/add-user`, user, this.httpOptions)
+  editUser(user: UserFields): Observable<User[]> {
+    return this.http.post<User[]>(`${this.apiHost}/edit-user`, user, this.httpOptions)
   }
 
   deleteUser(userId: string): Observable<User[]> {

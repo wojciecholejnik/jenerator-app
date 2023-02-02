@@ -45,8 +45,7 @@ exports.deleteCategory = async (req, res) => {
             await Category.deleteOne({_id: _id})
             .then(async () => {
                 await Question.deleteMany({category: _id})
-            .then(async (c) => {
-                console.log(c)
+            .then(async () => {
                 await this.getAllCategories(req, res);
             })
             });

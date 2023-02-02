@@ -46,4 +46,51 @@
         </div>
     </div>
 
+<!-- EDIT USER MODAL -->
+<div  class="modal-content" *ngIf="type==='edit'">
+    <div class="header">
+        Edytuj użytkownika
+    </div>
+
+    <div class="content">
+        <form id="user-edit" class="form" [formGroup]="user" (ngSubmit)="editUser()">
+            <div class="control mb-4">
+                <label for="isAdmin" class="form-label">Uprawnienia administratora</label>
+                <input type="checkbox" class="form-control" (keyup)="valueChange()" id="isAdmin" formControlName="isAdmin">
+            </div>
+            <div class="control mb-4">
+                <label for="displayName" class="form-label">Wyświetlana nazwa</label>
+                <input type="text" class="form-control" (keyup)="valueChange()" formControlName="displayName" id="displayName" maxlength="30">
+            </div>
+            <div class="control mb-4">
+                <label for="login" class="form-label">Login</label>
+                <input type="text" class="form-control" (keyup)="valueChange()" formControlName="login" id="login" maxlength="30">
+            </div>
+            <div class="control mb-4">
+                <label for="shortName" class="form-label">Inicjały</label>
+                <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" (keyup)="valueChange()" formControlName="shortName" id="shortName" maxlength="10">
+            </div>
+            <div class="control mb-4">
+                <label for="password" class="form-label">Hasło</label>
+                <input type="text" class="form-control" (keyup)="valueChange()" formControlName="password" id="password" maxlength="30">
+            </div>
+            <div class="control mb-4">
+                <label for="emoticon" class="form-label">logo</label>
+                <input type="text" class="form-control" (keyup)="valueChange()" formControlName="emoticon" id="emoticon">
+                <img *ngIf="user.value.emoticon" [src]="user.value.emoticon" alt="user-emoticon">
+            </div>
+
+        </form>
+    </div>
+
+    <div class="error-message">
+        <span class="text-danger">{{errorMessage}}</span>
+    </div>
+
+    <div class="footer">
+        <button class="btn btn-secondary" (click)="closeModal()" type="submit" >Anuluj</button>
+        <button class="btn btn-primary" form="user-edit">Zapisz</button>
+    </div>
+</div>
+
 </div>

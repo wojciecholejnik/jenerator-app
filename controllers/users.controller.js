@@ -15,7 +15,6 @@ const User = require('../models/user.model');
   };
 
   exports.getUserData = async (req, res) => {
-    console.log(req.params.id)
     try {
       const user = await User.findById(req.params.id).select('-password');
       if (!user) {
@@ -29,90 +28,11 @@ const User = require('../models/user.model');
     }
   };
 
-  exports.changePassword = async (req, res) => {
-    try {
-      const user = await User.find({_id: req.body.userId});
-      if (!user.length) {
-        res.status(404).json({ message: 'brak użytwkonika !'});
-      } else {
-        await User.updateOne({ _id: req.body.userId }, { $set: { 
-          password: req.body.newPassword,
-        }});
-        res.json({ message: 'OK' });
-      }
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
-  };
-
-  exports.changeName = async (req, res) => {
-    try {
-      const user = await User.find({_id: req.body.userId});
-      if (!user.length) {
-        res.status(404).json({ message: 'brak użytwkonika !'});
-      } else {
-        await User.updateOne({ _id: req.body.userId }, { $set: { 
-          displayName: req.body.newName,
-        }}).then(() => res.json({ message: 'OK' }))
-      }
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
-  };
-
-  exports.changeLogin = async (req, res) => {
-    try {
-      const user = await User.find({_id: req.body.userId});
-      if (!user.length) {
-        res.status(404).json({ message: 'brak użytwkonika !'});
-      } else {
-        await User.updateOne({ _id: req.body.userId }, { $set: { 
-          login: req.body.newLogin,
-        }}).then(() => res.json({ message: 'OK' }))
-      }
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
-  };
-
-  exports.changeEmoticon = async (req, res) => {
-    try {
-      const user = await User.find({_id: req.body.userId});
-      if (!user.length) {
-        res.status(404).json({ message: 'brak użytwkonika !'});
-      } else {
-        await User.updateOne({ _id: req.body.userId }, { $set: { 
-          emoticon: req.body.newEmoticon,
-        }}).then(() => res.json({ message: 'OK' }))
-      }
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
-  };
-
-  exports.changeBackground = async (req, res) => {
-    try {
-      const user = await User.find({_id: req.body.userId});
-      if (!user.length) {
-        res.status(404).json({ message: 'brak użytwkonika !'});
-      } else {
-        await User.updateOne({ _id: req.body.userId }, { $set: { 
-          background: req.body.newBackground,
-        }}).then(() => res.json({ message: 'OK' }))
-      }
-    }
-    catch(err) {
-      res.status(500).json({ message: err });
-    }
-  }
-
   exports.getUsersToManage = async (req, res) => {
     try {
-      const users = await User.find({ $and : [ { "_id" : { $ne : "6171b38fbf5e58cf61a943da" } }, { "_id" : { $ne : "6171b319bf5e58cf61a943d9" } } ] });
+      const users = await User.find(
+        { $and : [ { "_id" : { $ne : "6171b38fbf5e58cf61a943da" } }, { "_id" : { $ne : "6171b319bf5e58cf61a943d9" } } ] }
+        ).select('-password');
       if (!users.length) {
         res.status(404).json({ message: 'Brak użytkowników do wyświetlenia.'});
       } else {
@@ -149,5 +69,24 @@ const User = require('../models/user.model');
     }
     catch(err) {
       res.status(500).json({ message: err });
+    }
+  }
+
+  exports.editUser = async (req, res) => {
+    try {
+      const id = req.body._id
+      const editedUser = req.body;
+      delete editedUser._id;
+      const userToEdit = await User.findById(id);
+      if (!userToEdit) {
+        res.status(404).json({message: 'Nie znaleziono użytkownika'});
+      } else {
+        await User.updateOne({_id: id},{
+          $set: editedUser
+        })
+        this.getUsersToManage(req, res);
+      }
+    } catch (e) {
+
     }
   }

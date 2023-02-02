@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/models';
+import { User, UserFields } from 'src/app/shared/models';
 import { ManageService } from '../manage.service';
 
 @Component({
@@ -16,8 +16,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
   @Output() onModalClose: EventEmitter<any> = new EventEmitter();
   user = this.fb.group({
     isAdmin: [false, Validators.required],
-    login: ['qwe', Validators.required],
-    password: ['', Validators.required],
+    login: ['', Validators.required],
+    password: [''],
     displayName: ['', Validators.required],
     shortName: ['', Validators.required],
     emoticon: ['', Validators.required],
@@ -35,6 +35,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
       this.user.controls['displayName'].setValue(this.userInput.displayName);
       this.user.controls['shortName'].setValue(this.userInput.shortName);
       this.user.controls['emoticon'].setValue(this.userInput.emoticon);
+    } else {
+      this.user.controls['password'].addValidators(Validators.required)
     }
 
   }
@@ -59,6 +61,58 @@ export class AddUserComponent implements OnInit, OnDestroy {
       return
     }
     this.addUser$ = this.manageService.addUser(this.user.value).subscribe({
+      next: (res) => {
+        this.manageService.users.next(res);
+        this.closeModal();
+      },
+      error: (e) => {
+        // Handle error
+      }
+    })
+
+  }
+
+  editUser(): void {
+    if (this.user.status == 'INVALID') {
+      this.errorMessage = 'Nie wszystkie pola są wypełnione !';
+      return
+    }
+    let userFiledsDTO: UserFields = {
+      _id: this.userInput && this.userInput._id ? this.userInput._id : '',
+    }
+
+    if (this.user.controls['login'].touched) {
+      userFiledsDTO = {
+        ...userFiledsDTO,
+        login: this.user.controls['login'].value 
+      }
+    }
+    if (this.user.controls['password'].touched) {
+      userFiledsDTO = {
+        ...userFiledsDTO,
+        password: this.user.controls['password'].value 
+      }
+    }
+    if (this.user.controls['displayName'].touched) {
+      userFiledsDTO = {
+        ...userFiledsDTO,
+        displayName: this.user.controls['displayName'].value 
+      }
+    }
+    if (this.user.controls['isAdmin'].touched) {
+      userFiledsDTO = {
+        ...userFiledsDTO,
+        isAdmin: this.user.controls['isAdmin'].value 
+      }
+    }
+    if (this.user.controls['emoticon'].touched) {
+      userFiledsDTO = {
+        ...userFiledsDTO,
+        emoticon: this.user.controls['emoticon'].value 
+      }
+    }
+
+    this.addUser$ = this.manageService.editUser(userFiledsDTO).subscribe({
       next: (res) => {
         this.manageService.users.next(res);
         this.closeModal();

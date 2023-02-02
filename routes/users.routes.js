@@ -7,6 +7,7 @@ router.get('/user/:id', userControllert.getUserData);
 router.get('/user-for-manage', userControllert.getUsersToManage);
 router.post('/add-user', userControllert.addNewUser);
 router.delete('/delete-user/:id', userControllert.deleteUser);
+router.post('/edit-user', userControllert.editUser);
 
 // router.put('/users/changePassword', userControllert.changePassword);
 // router.put('/users/changeName', userControllert.changeName);

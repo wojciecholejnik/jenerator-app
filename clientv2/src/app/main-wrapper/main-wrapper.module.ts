@@ -30,6 +30,7 @@ import { ManageWrapperComponent } from './manage/manage-wrapper/manage-wrapper.c
 import { MainWrapperRoutingModule } from './main-wrapper.routes';
 import { UsersTableComponent } from './manage/users-table/users-table.component';
 import { AddUserComponent } from './manage/add-user/add-user.component';
+import { DeleteUserConfirmationComponent } from './manage/delete-user-confirmation/delete-user-confirmation.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { AddUserComponent } from './manage/add-user/add-user.component';
     HelpComponent,
     ManageWrapperComponent,
     UsersTableComponent,
-    AddUserComponent
+    AddUserComponent,
+    DeleteUserConfirmationComponent
   ],
   imports: [
     CommonModule,

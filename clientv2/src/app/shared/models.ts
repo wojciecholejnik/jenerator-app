@@ -4,9 +4,19 @@ export interface User {
     login: string,
     emoticon: string,
     isAdmin: boolean,
-    password: string,
+    password?: string,
     primaryEmoticon: string,
     shortName: string,
+}
+
+export interface UserFields {
+    _id: string,
+    displayName?: string,
+    login?: string,
+    emoticon?: string,
+    isAdmin?: boolean,
+    password?: string,
+    shortName?: string,
 }
 
 export interface NavOption {

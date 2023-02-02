@@ -6,6 +6,7 @@
             <th>Login</th>
             <th>Inicjały</th>
             <th>Logo</th>
+            <th class="actions"></th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,23 @@
             <td>
                 <img [src]="user.emoticon" alt="user-emoticon">
             </td>
+            <td class="actions">
+                <button class="btn btn-sm btn-primary mr-2" (click)="toggleEditModal(user)"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-danger" (click)="toggleDeleteConfirmatnion(user)"><i class="bi bi-x-lg"></i></button>
+
+            </td>
         </tr>
     </tbody>
 </table>
+
+<app-delete-user-confirmation
+    *ngIf="deleteConfirmatnionIsOpen && selectedUser"
+    [user]="selectedUser"
+    (onModalClose)="toggleDeleteConfirmatnion()"
+></app-delete-user-confirmation>
+<app-add-user
+    *ngIf="editModalIsOpen"
+    type="edit"
+    [userInput]="selectedUser"
+    (onModalClose)="toggleEditModal()"
+></app-add-user>

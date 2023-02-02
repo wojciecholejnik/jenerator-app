@@ -9,10 +9,33 @@ import { User } from 'src/app/shared/models';
 export class UsersTableComponent implements OnInit {
 
   @Input() users: User[] = [];
+  selectedUser?: User;
+  deleteConfirmatnionIsOpen = false;
+  editModalIsOpen = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleDeleteConfirmatnion(user?: User): void {
+    if (user) {
+      this.selectedUser = user;
+      this.deleteConfirmatnionIsOpen = true;
+    } else {
+      this.selectedUser = undefined;
+      this.deleteConfirmatnionIsOpen = false;
+    }
+  }
+
+  toggleEditModal(user?: User): void {
+    if (user) {
+      this.selectedUser = user;
+      this.editModalIsOpen = true;
+    } else {
+      this.selectedUser = undefined;
+      this.editModalIsOpen = false;
+    }
   }
 
 }
