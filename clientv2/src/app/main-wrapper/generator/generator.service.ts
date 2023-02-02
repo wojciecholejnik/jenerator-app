@@ -21,6 +21,7 @@ export class GeneratorService {
   newTest$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   startNewTest(): void {
+    this.emptyTest.author = this.loginService.getAuthor(),
     this.newTest$.next(this.emptyTest);
   }
 

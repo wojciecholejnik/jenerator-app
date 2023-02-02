@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { GeneratorService } from '../main-wrapper/generator/generator.service';
 import { ApiService } from '../shared/api.service';
 import { User } from '../shared/models';
 
@@ -44,6 +45,7 @@ export class LoginService implements OnDestroy {
 
   logout() {
     this.loggedUser.next('');
+    // this.generatorService.abortNewTest();
     this.router.navigate(['']);
     this.removeFromLlocal();
   }

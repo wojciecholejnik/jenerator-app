@@ -57,6 +57,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     this.newTest$?.unsubscribe();
     this.saveTest$?.unsubscribe();
     this.tests$?.unsubscribe();
+    this.selectedCategory$?.unsubscribe();
   }
 
   startNewTest(): void {

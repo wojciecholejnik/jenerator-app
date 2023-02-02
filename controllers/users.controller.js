@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
   exports.login = async (req, res) => {
     try {
-      const user = await User.findOne({login: req.body.login, password: req.body.password}).select('-password');
+      const user = await User.findOne({login: req.body.login, password: req.body.password, removed: false}).select('-password');
       if (!user) {
         res.status(404).json({ message: 'Błędne dane logowania.'});
       } else {
@@ -31,7 +31,7 @@ const User = require('../models/user.model');
   exports.getUsersToManage = async (req, res) => {
     try {
       const users = await User.find(
-        { $and : [ { "_id" : { $ne : "6171b38fbf5e58cf61a943da" } }, { "_id" : { $ne : "6171b319bf5e58cf61a943d9" } } ] }
+        { $and : [ { "_id" : {$ne : "63db85f477c222359adcd3d6" }}, {"_id" : { $ne : "63db865fb6101799f38a1644" }}, {removed: false} ] }
         ).select('-password');
       if (!users.length) {
         res.status(404).json({ message: 'Brak użytkowników do wyświetlenia.'});
@@ -46,7 +46,7 @@ const User = require('../models/user.model');
 
   exports.addNewUser = async (req, res) => {
     try {
-      const user = await new User(req.body);
+      const user = await new User({...req.body, removed: false});
       await user.save();
       await this.getUsersToManage(req, res)
     }

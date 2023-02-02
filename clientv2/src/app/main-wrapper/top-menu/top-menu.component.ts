@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { LoginService } from 'src/app/login/login.service';
 import { User } from 'src/app/shared/models';
+import { GeneratorService } from '../generator/generator.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -13,7 +14,7 @@ export class TopMenuComponent implements OnInit, OnDestroy {
   user$?: Subscription;
   user!: User;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private generatorService: GeneratorService) { }
 
   ngOnInit(): void {
     this.user$ = this.loginService.loggedUser.subscribe(user => {
@@ -27,6 +28,7 @@ export class TopMenuComponent implements OnInit, OnDestroy {
 
   logout() {
     this.loginService.logout();
+    this.generatorService.abortNewTest();
   }
 
 }
