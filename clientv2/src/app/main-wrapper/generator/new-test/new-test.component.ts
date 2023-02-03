@@ -11,6 +11,7 @@ import { TestService } from '../test.service';
 export class NewTestComponent implements OnInit {
 
   @Input() newTest!: NewTest | Test;
+  @Input() savedTestPreview?: boolean;
 
   constructor() { }
 

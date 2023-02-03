@@ -1,0 +1,27 @@
+<button class="btn btn-sm btn-secondary" (click)="open()"><i class="bi bi-arrow-repeat"></i></button>
+
+<div class="wrapper" *ngIf="isOpen">
+    <form class="form">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Treść pytania ...</mat-label>
+          <input type="text"
+                 placeholder="Pick one"
+                 aria-label="Treść pytania ..."
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto"
+                >
+          <mat-autocomplete 
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            (optionSelected)="selectQuestion($event)"
+            [displayWith]="displayFn.bind(this)"
+            (closed)="isOpen=false"
+        >
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option.questionContent}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+</div>

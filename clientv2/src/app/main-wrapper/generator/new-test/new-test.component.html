@@ -16,6 +16,7 @@
 
         <!-- QUESTION 1 -->
         <div class="question" *ngFor="let question of newTest.questions; let i = index">
+            <app-question-changer *ngIf="!savedTestPreview" [question]="question"></app-question-changer>
             <div class="question-content-wrapper">
                 <h6>{{i + 1}}</h6>
                 <textarea class="question-content" >{{question.questionContent}}</textarea>

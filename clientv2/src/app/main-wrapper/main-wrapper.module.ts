@@ -31,6 +31,10 @@ import { MainWrapperRoutingModule } from './main-wrapper.routes';
 import { UsersTableComponent } from './manage/users-table/users-table.component';
 import { AddUserComponent } from './manage/add-user/add-user.component';
 import { DeleteUserConfirmationComponent } from './manage/delete-user-confirmation/delete-user-confirmation.component';
+import { QuestionChangerComponent } from './generator/question-changer/question-changer.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -58,7 +62,8 @@ import { DeleteUserConfirmationComponent } from './manage/delete-user-confirmati
     ManageWrapperComponent,
     UsersTableComponent,
     AddUserComponent,
-    DeleteUserConfirmationComponent
+    DeleteUserConfirmationComponent,
+    QuestionChangerComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +73,10 @@ import { DeleteUserConfirmationComponent } from './manage/delete-user-confirmati
     MatMenuModule,
     FormsModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     MainWrapperComponent
