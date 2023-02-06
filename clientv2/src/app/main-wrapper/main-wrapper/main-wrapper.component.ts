@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { LoginService } from 'src/app/login/login.service';
 import { NavOption } from 'src/app/shared/models';
@@ -8,7 +9,8 @@ import { NavigationService } from '../navigation.service';
 @Component({
   selector: 'app-main-wrapper',
   templateUrl: './main-wrapper.component.html',
-  styleUrls: ['./main-wrapper.component.scss']
+  styleUrls: ['./main-wrapper.component.scss'],
+  providers: [NgbTooltipConfig]
 })
 export class MainWrapperComponent implements OnInit, OnDestroy {
 
@@ -18,8 +20,11 @@ export class MainWrapperComponent implements OnInit, OnDestroy {
   constructor(
     private navigationService: NavigationService,
     private loginService: LoginService,
-    private generatorService: GeneratorService
-  ) { }
+    private generatorService: GeneratorService,
+    config: NgbTooltipConfig
+  ) { 
+    config.openDelay = 500
+  }
 
   ngOnInit(): void {
     this.navigation$ = this.navigationService.navOptions$.subscribe(data => this.navigation = data);

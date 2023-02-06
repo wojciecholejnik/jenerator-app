@@ -10,7 +10,7 @@
     <app-tests-table *ngIf="!isNewTest" [tests]="tests" ></app-tests-table>
     <div *ngIf="isNewTest" class="action-buttons mb-3">
         <div class="left">
-            <button [disabled]="!isTestValid()" mat-icon-button [matMenuTriggerFor]="menu"><button class="btn btn-primary mr-4">Drukuj</button></button>
+            <button mat-icon-button [matMenuTriggerFor]="menu"><button [disabled]="!isTestValid()" class="btn btn-primary mr-4">Drukuj</button></button>
             <mat-menu #menu="matMenu" xPosition="after">
                 <button mat-menu-item (click)="printUnresolvedTest()" >Test</button>
                 <button mat-menu-item (click)="printResolvedTest()" >Rozwiązanie</button>
@@ -21,10 +21,10 @@
 
         </div>
         <div class="center">
-            <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="getRandom()">
+            <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="getRandom()" ngbTooltip="Wygeneruj 6 losowych pytań: 2 single, 2 multi i 2 open.">
                 Losowanie
             </button>
-            <button class="btn btn-secondary" *ngIf="selectedCategory" (click)="restetQuestions()">
+            <button class="btn btn-secondary" *ngIf="selectedCategory" (click)="restetQuestions()" ngbTooltip="Usuń wygenerowane pytania.">
                 Resetuj
             </button>
         </div>

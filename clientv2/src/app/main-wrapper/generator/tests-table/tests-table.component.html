@@ -52,8 +52,16 @@
                 <td>{{test.date | date:'dd.MM.yyyy, HH:mm'}}</td>
                 <td>{{test.author.shortName}}</td>
                 <td class="actions">
-                    <button class="btn btn-sm btn-primary mr-2" (click)="toggleTestPreview(test)"><i class="bi bi-file-earmark-text"></i></button>
-                    <button class="btn btn-sm btn-danger" (click)="toggleRemoveConfirmation(test)"><i class="bi bi-x-lg"></i></button>
+                    <button
+                        class="btn btn-sm btn-primary mr-2"
+                        (click)="toggleTestPreview(test)"
+                        ngbTooltip="Otwórz test"
+                    ><i class="bi bi-file-earmark-text"></i></button>
+                    <button
+                        class="btn btn-sm btn-danger"
+                        (click)="toggleRemoveConfirmation(test)"
+                        ngbTooltip="Usuń test"
+                    ><i class="bi bi-x-lg"></i></button>
                 </td>
             </tr>
         </tbody>

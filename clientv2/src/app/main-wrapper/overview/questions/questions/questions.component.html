@@ -1,6 +1,6 @@
 <div class="header">
     <div class="name">Pytania</div>
-    <button class="btn btn-primary" (click)="toggleAddModal()"><i class="bi bi-plus-square mr-1"></i>Dodaj</button>
+    <button class="btn btn-primary" (click)="toggleAddModal()" placement="left" ngbTooltip="Dodaj nowe pytanie."><i class="bi bi-plus-square mr-1"></i>Dodaj</button>
 </div>
 <div class="module-content">
     <app-category-selector *ngIf="categories" [categories]="categories"></app-category-selector>

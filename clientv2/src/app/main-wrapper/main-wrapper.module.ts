@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainWrapperComponent } from './main-wrapper/main-wrapper.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
-import { RouterModule, Routes } from '@angular/router';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
@@ -35,6 +34,7 @@ import { QuestionChangerComponent } from './generator/question-changer/question-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 
 
 @NgModule({
@@ -76,7 +76,8 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NgbTooltipModule
   ],
   exports: [
     MainWrapperComponent

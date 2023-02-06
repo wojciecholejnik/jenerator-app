@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from './shared/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatButtonModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbTooltipModule
   ],
   providers: [ApiService, IsUserLogged],
   bootstrap: [AppComponent]

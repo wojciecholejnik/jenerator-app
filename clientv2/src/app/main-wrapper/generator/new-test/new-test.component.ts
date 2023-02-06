@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Category, NewTest, Test } from 'src/app/shared/models';
-import { QuestionsService } from '../../questions.service';
-import { TestService } from '../test.service';
+import { NewTest, Test } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-new-test',

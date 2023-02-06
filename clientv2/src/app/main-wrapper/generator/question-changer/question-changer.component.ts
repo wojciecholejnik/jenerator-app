@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { NewTest, Question } from 'src/app/shared/models';
 import { QuestionsService } from '../../questions.service';
 import { GeneratorService } from '../generator.service';
-import { TestService } from '../test.service';
 import {map, startWith} from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
@@ -21,7 +20,6 @@ export class QuestionChangerComponent implements OnInit, OnDestroy {
     if (this.isOpen && !this.eRef.nativeElement.contains(event.target)) {
       this.isOpen = false;
     }
-
   }
 
   @Input() question!: Question;
@@ -48,10 +46,11 @@ export class QuestionChangerComponent implements OnInit, OnDestroy {
         )
         this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
-          map(value => this._filter(value || '')),
+          map((value: Question) => this._filter(value || '')),
         );
       }
-    })
+    });
+    this.questionsService.getQuestionsByCategory(this.question.category._id);
   }
 
   isInTheTest(questionId?: string): boolean {

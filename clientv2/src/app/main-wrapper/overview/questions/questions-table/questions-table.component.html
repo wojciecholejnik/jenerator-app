@@ -64,14 +64,31 @@
                     <td>{{question.author.shortName}}</td>
                     <td>{{translateTypeNames(question.type)}}</td>
                     <td>
-                        <i *ngIf="question.blocked" class="status bi bi-lock"></i>
+                        <i *ngIf="question.blocked" class="status bi bi-lock" ngbTooltip="To pytanie jest zablokowane i nie zostanie uwzględnione przy tworzeniu testu"></i>
                         <i *ngIf="!question.blocked" class="status bi bi-unlock"></i>
                     </td>
                     <td class="actions">
-                        <button *ngIf="isNewTest" class="btn btn-sm btn-primary mr-2" (click)="addToNewTest(question)"><i class="bi bi-file-earmark-plus"></i></button>
-                        <button class="btn btn-sm btn-primary mr-2" (click)="togglePreviewModal(question)"><i class="bi bi-arrow-up-right"></i></button>
-                        <button *ngIf="!isNewTest" class="btn btn-sm btn-primary mr-2" (click)="toggleEditModal(question)"><i class="bi bi-pencil"></i></button>
-                        <button *ngIf="!isNewTest" class="btn btn-sm btn-danger" (click)="toggelDeleteModalIsOpen(question)"><i class="bi bi-x-lg"></i></button>
+                        <!-- <button
+                            *ngIf="isNewTest"
+                            class="btn btn-sm btn-primary mr-2" (click)="addToNewTest(question)"
+                        ><i class="bi bi-file-earmark-plus"></i></button> -->
+                        <button
+                            class="btn btn-sm btn-primary mr-2"
+                            (click)="togglePreviewModal(question)"
+                            ngbTooltip="Zobacz widok szczegółowy"
+                        ><i class="bi bi-arrow-up-right"></i></button>
+                        <button
+                            *ngIf="!isNewTest"
+                            class="btn btn-sm btn-primary mr-2"
+                            (click)="toggleEditModal(question)"
+                            ngbTooltip="Edytuj pytanie"
+                        ><i class="bi bi-pencil"></i></button>
+                        <button
+                            *ngIf="!isNewTest"
+                            class="btn btn-sm btn-danger"
+                            (click)="toggelDeleteModalIsOpen(question)"
+                            ngbTooltip="Usuń pytanie"
+                        ><i class="bi bi-x-lg"></i></button>
                     </td>
                 </tr>
             </tbody>
