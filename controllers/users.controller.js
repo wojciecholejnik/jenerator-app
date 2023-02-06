@@ -46,9 +46,14 @@ const User = require('../models/user.model');
 
   exports.addNewUser = async (req, res) => {
     try {
-      const user = await new User({...req.body, removed: false});
-      await user.save();
-      await this.getUsersToManage(req, res)
+      const isLoginUsed = await User.findOne({login: req.body.login});
+      if (isLoginUsed) {
+        res.status(409).json({message: 'Ten login jest już zajęty.'})
+      } else {
+        const user = await new User({...req.body, removed: false});
+        await user.save();
+        await this.getUsersToManage(req, res)
+      }
     }
     catch(err) {
       res.status(500).json({ message: err });
@@ -81,6 +86,14 @@ const User = require('../models/user.model');
       if (!userToEdit) {
         res.status(404).json({message: 'Nie znaleziono użytkownika'});
       } else {
+        if (editedUser.login) {
+          const loginUsers = await User.find({login: editedUser.login});
+          const isLoginExist = loginUsers.find(user => user._id != id && user.login == editedUser.login);
+          if (isLoginExist) {
+            res.status(409).json({message: 'Ten login jest już zajęty.'})
+            return
+          }
+        }
         await User.updateOne({_id: id},{
           $set: editedUser
         })

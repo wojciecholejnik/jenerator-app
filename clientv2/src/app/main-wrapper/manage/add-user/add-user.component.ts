@@ -129,7 +129,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
         }
       },
       error: (e) => {
-        // Handle error
+        if (e.status === 409) {
+          this.errorMessage = e.error.message
+        }
       }
     })
 
