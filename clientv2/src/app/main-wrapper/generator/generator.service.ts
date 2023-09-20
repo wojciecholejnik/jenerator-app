@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginService } from 'src/app/login/login.service';
-import { NewTest, Question } from 'src/app/shared/models';
+import { NewTest, Question, QuestionSpecies } from 'src/app/shared/models';
 import { QuestionsService } from '../questions.service';
 
 @Injectable({
@@ -42,11 +42,17 @@ export class GeneratorService {
   getRandomQuestions() {
     const category = this.questionsService.getSelectedCategory();
     this.questionsService.getAllQuestionsForTest(category._id).subscribe(questions => {
-      const singleSelectQuestions = questions.filter(question => question.type === 'singleSelect' && !question.blocked);
-      const multiSelectQuestions = questions.filter(question => question.type === 'multiSelect' && !question.blocked);
-      const openQuestions = questions.filter(question => question.type === 'open' && !question.blocked);
 
-      if (singleSelectQuestions.length < 2 || multiSelectQuestions.length < 2 || openQuestions.length < 2) {
+      const singleSelectQuestionsKnowledge = questions.filter(question => question.type === 'singleSelect' && !question.blocked && question.species === QuestionSpecies.knowledgeTask);
+      const multiSelectQuestionsKnowledge = questions.filter(question => question.type === 'multiSelect' && !question.blocked && question.species === QuestionSpecies.knowledgeTask);
+      const openQuestionsKnowledge = questions.filter(question => question.type === 'open' && !question.blocked && question.species === QuestionSpecies.knowledgeTask);
+
+      const singleSelectQuestionsCalculate = questions.filter(question => question.type === 'singleSelect' && !question.blocked && question.species === QuestionSpecies.countingTask);
+      const multiSelectQuestionsCalculate = questions.filter(question => question.type === 'multiSelect' && !question.blocked && question.species === QuestionSpecies.countingTask);
+      const openQuestionsCalculate = questions.filter(question => question.type === 'open' && !question.blocked && question.species === QuestionSpecies.countingTask);
+
+      if (singleSelectQuestionsKnowledge.length < 1 || multiSelectQuestionsKnowledge.length < 1 || openQuestionsKnowledge.length < 1
+        || singleSelectQuestionsCalculate.length < 1 || multiSelectQuestionsCalculate.length < 1 || openQuestionsCalculate.length < 1) {
         window.alert('Niewystarczając liczba aktywnych pytań w wybranej kategorii');
         return
       }
@@ -60,12 +66,12 @@ export class GeneratorService {
 
       const randomQuestions: Question[] = [];
 
-      randomQuestions.push(getRandomQuestion(singleSelectQuestions));
-      randomQuestions.push(getRandomQuestion(singleSelectQuestions));
-      randomQuestions.push(getRandomQuestion(multiSelectQuestions));
-      randomQuestions.push(getRandomQuestion(multiSelectQuestions));
-      randomQuestions.push(getRandomQuestion(openQuestions));
-      randomQuestions.push(getRandomQuestion(openQuestions));
+      randomQuestions.push(getRandomQuestion(singleSelectQuestionsKnowledge));
+      randomQuestions.push(getRandomQuestion(singleSelectQuestionsCalculate));
+      randomQuestions.push(getRandomQuestion(multiSelectQuestionsKnowledge));
+      randomQuestions.push(getRandomQuestion(multiSelectQuestionsCalculate));
+      randomQuestions.push(getRandomQuestion(openQuestionsKnowledge));
+      randomQuestions.push(getRandomQuestion(openQuestionsCalculate));
 
       this.newTest$.next({...this.newTest$.getValue(), questions: randomQuestions})
     });

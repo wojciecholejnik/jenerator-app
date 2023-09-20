@@ -34,7 +34,8 @@ import { QuestionChangerComponent } from './generator/question-changer/question-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { SpeciesSelectorComponent } from './overview/questions/species-selector/species-selector.component'
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap'
     UsersTableComponent,
     AddUserComponent,
     DeleteUserConfirmationComponent,
-    QuestionChangerComponent
+    QuestionChangerComponent,
+    SpeciesSelectorComponent
   ],
   imports: [
     CommonModule,

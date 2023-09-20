@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GeneratorService } from 'src/app/main-wrapper/generator/generator.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Question, QuestionsFilter, QuestionType } from 'src/app/shared/models';
+import { Question, QuestionsFilter, QuestionSpecies, QuestionType, translateQuestionSpecies } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-questions-table',
@@ -19,6 +19,7 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
     author: '',
     type: '',
     status: '',
+    species: undefined
   }
   type: QuestionType | string = '';
   deletModalIsOpen = false;
@@ -38,7 +39,10 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
     this.isNewTest$?.unsubscribe();
   }
 
-  onFilterChange(): void {
+  onFilterChange(event?: any): void {
+    if (event && event.target.id === "species") {
+      this.questionsFilter.species = event.target.value === 'undefined' ? undefined : Number(event.target.value)
+    }
     this.questionService.filterQuestions(this.questionsFilter)
   }
 
@@ -49,6 +53,7 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
         author: '',
         type: '',
         status: '',
+        species: undefined
       }
     } else {
       if (filterControl === 'content') {
@@ -106,5 +111,7 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
       return ''
     }
   }
+
+  translateQuestionSpeciesName = translateQuestionSpecies;
 
 }

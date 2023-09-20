@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/login/login.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Category, Question, QuestionToSaveDTO, QuestionType } from 'src/app/shared/models';
+import { Category, Question, QuestionSpecies, QuestionToSaveDTO, QuestionType, translateQuestionSpecies } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-question-preview',
@@ -21,6 +21,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
   @Output() onCloseModal: EventEmitter<any> = new EventEmitter();
   selectedCategory?: Category;
   selectedType: QuestionType | string = '';
+  selectedSpecies: QuestionSpecies | undefined;
   private selectedCategory$?: Subscription;
   questionForm!: FormGroup;
   imgSrc = '';
@@ -66,6 +67,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
     } else {
       this.modalType = 'editQuestion';
       this.selectType(this.question.type);
+      this.selectedSpecies = this.question.species;
       this.questionForm = this.fb.group({
         questionContent: [this.question.questionContent, Validators.required],
         answers: this.question.type !== 'open' ? this.fb.group({
@@ -98,6 +100,10 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
 
   selectType(type: QuestionType) {
     this.selectedType = type
+  }
+
+  selectSpecies(species: QuestionSpecies) {
+    this.selectedSpecies = species
   }
 
   closeModal(): void {
@@ -141,6 +147,7 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
     if (this.isValidToSave() && this.modalType === 'addNewQuestion') {
       this.questionService.addQuestion(this.mapQuestion()).subscribe({
         next: (res) => {
+          console.log(res)
           this.questionService.questions$.next(res);
           this.questionService.allQuestions = res;
           this.questionService.filterQuestions(this.questionService.questionFilter$.getValue());
@@ -169,7 +176,12 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
   isValidToSave(): boolean {
     if (!this.selectedCategory && !this.selectedType) {
       return false
+    } 
+    
+    if (this.selectedSpecies === undefined) {
+      return false
     }
+
     if (this.selectedType === 'open' && this.questionForm.value.questionContent && this.questionForm.value.questionContent.length) {
       return true
     }
@@ -201,7 +213,9 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
       ] : [],
       img: this.questionForm.value.img,
       author: this.loginService.getAuthor()._id,
-      blocked: this.questionForm.value.blocked
+      blocked: this.questionForm.value.blocked, 
+      species: this.selectedSpecies
+
     }
     if (this.modalType === 'editQuestion') {
       question._id = this.question._id
@@ -221,6 +235,6 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  
+  translateQuestionSpeciesName = translateQuestionSpecies;
 
 }

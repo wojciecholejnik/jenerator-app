@@ -8,7 +8,8 @@ const questionSchema = new mongoose.Schema({
   img: { type: String, required: false },
   author: {type: String, required: true, ref: 'users'},
   creationDate: {type: Date, required: true},
-  blocked: {type: Boolean, required: true}
+  blocked: {type: Boolean, required: true},
+  species: {type: Number, required: true}
 });
 
 module.exports = mongoose.model('Question', questionSchema);

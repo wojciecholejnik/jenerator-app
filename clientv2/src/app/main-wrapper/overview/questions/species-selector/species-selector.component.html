@@ -1,0 +1,22 @@
+<div class="wrapper card">
+    <div class="resoults">
+        
+    </div>
+    <div class="header mt-3">
+        <span>{{selectedSpecies !== undefined ? 'Wybrany rodzaj:' : 'Wybierz rodzaj:'}}</span>
+        <div class="searching">
+            <button
+                class="btn"
+                [class.btn-secondary]="selectedSpecies != 0"
+                [class.btn-primary]="selectedSpecies == 0"
+                (click)="selectSpecies(0)"
+            >wiedza</button>
+            <button
+                class="btn"
+                [class.btn-secondary]="selectedSpecies != 1"
+                [class.btn-primary]="selectedSpecies == 1"
+                (click)="selectSpecies(1)"
+            >kalkulacja</button>
+        </div>
+    </div>
+</div>

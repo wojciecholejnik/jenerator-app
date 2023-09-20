@@ -46,7 +46,8 @@ export interface Question {
     questionContent: string,
     type: QuestionType,
     creationDate: Date,
-    blocked: boolean
+    blocked: boolean,
+    species: QuestionSpecies
 }
 
 export interface QuestionsFilter {
@@ -54,6 +55,7 @@ export interface QuestionsFilter {
     author: string,
     type: 'open' | 'singleSelect' | 'multiSelect' | '',
     status: 'active' | 'blocked' | '',
+    species: QuestionSpecies | undefined
   }
 
 export interface Answer {
@@ -77,6 +79,7 @@ export interface QuestionToSaveDTO {
     img: string,
     author: string,
     blocked: boolean
+    species: QuestionSpecies | undefined
 }
 
 export interface Test {
@@ -120,3 +123,18 @@ export interface TestToSaveDTO {
     };
     category: string;
 }
+
+export enum QuestionSpecies {
+    countingTask = 0,
+    knowledgeTask = 1
+}
+
+export const translateQuestionSpecies = (species: QuestionSpecies): string => {
+    if (species === QuestionSpecies.countingTask) {
+      return 'wiedza'
+    } else if (species === QuestionSpecies.knowledgeTask) {
+      return 'kalkulacja'
+    } else {
+      return 'brak info'
+    }
+  }

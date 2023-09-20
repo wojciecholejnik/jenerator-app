@@ -18,6 +18,7 @@ export class QuestionsService implements OnDestroy {
       author: '',
       type: '',
       status: '',
+      species: undefined
   } as QuestionsFilter)
   allCategories?: Category[];
   allQuestions?: Question[];
@@ -89,11 +90,13 @@ export class QuestionsService implements OnDestroy {
       }
     }
     this.questionFilter$.next(filter);
-    const filteredQuestions = this.allQuestions?.filter(
-      question => question.questionContent.toLocaleLowerCase().includes(this.questionFilter$.value.content.toLocaleLowerCase()) 
+    const filteredQuestions = this.allQuestions?.filter(question => {
+      return question.questionContent.toLocaleLowerCase().includes(this.questionFilter$.value.content.toLocaleLowerCase()) 
       && question.type.toLocaleLowerCase().includes(this.questionFilter$.value.type.toLocaleLowerCase())
       && question.author.shortName.toLowerCase().includes(filter.author.toLowerCase())
       && filterQuestionStatus(question.blocked, filter.status)
+      && (filter.species === undefined ? true : (question.species === filter.species))
+    }
     )
     this.questions$.next(filteredQuestions);
   }

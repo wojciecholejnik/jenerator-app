@@ -1,0 +1,22 @@
+.header {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+        
+        i {
+            cursor: pointer;
+            font-size: 22px;
+        }
+    }
+}
+
+.searching {
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}

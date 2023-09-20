@@ -7,8 +7,8 @@
     width: 40px;
 }
 
-.status, .type {
-    width: 150px;
+.status, .type, .species {
+    width: 110px;
 }
 
 .content {
@@ -21,6 +21,11 @@
 
 .filter-control {
     position: relative;
+
+    select, input {
+        font-size: 13px !important;
+        padding: 2px
+    }
 
     i {
         position: absolute;

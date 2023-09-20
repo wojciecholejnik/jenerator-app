@@ -8,6 +8,8 @@
 
         <app-type-selector *ngIf="selectedCategory" (onTypeSelect)="selectType($event)" [questionType]="question ? question.type : ''"></app-type-selector>
 
+        <app-species-selector *ngIf="selectedType" [questionSpecies]="question ? question.species : undefined" (onSpeciesSelect)="selectSpecies($event)"></app-species-selector>
+        
         <div class="content">
             <div class="confirmation" *ngIf="selectedCategory && selectedType">
                 <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" id="questionForm" validate>
@@ -98,6 +100,7 @@
                 <div *ngIf="question.blocked" class="blocked-question-info text-danger"><i class="bi bi-lock"></i>Pytanie zablokowane</div>
                 <div>Kategoria: <strong>{{question.category.name}}</strong></div>
                 <div>Typ pytania: <strong>{{translateTypeNames(question.type)}}</strong></div>
+                <div>Rodzaj pytania: <strong>{{translateQuestionSpeciesName(question.species)}}</strong></div>
                 <div>Autor pytania: <strong>{{question.author.shortName}}</strong></div>
                 <div>Data utworzenia: <strong>{{(question.creationDate | date:'d.M.yyyy, HH:mm') || '---' }}</strong></div>
                 <div class="mt-2">Pytanie:</div>
