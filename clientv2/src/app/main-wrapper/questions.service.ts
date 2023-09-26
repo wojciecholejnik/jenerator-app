@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ApiService } from '../shared/api.service';
-import { Category, Question, QuestionFilter, QuestionsFilter, QuestionToSaveDTO, QuestionType } from '../shared/models';
+import { Category, Question, QuestionFilter, QuestionsFilter, QuestionToSaveDTO, QuestionType, Tag } from '../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +96,7 @@ export class QuestionsService implements OnDestroy {
       && question.author.shortName.toLowerCase().includes(filter.author.toLowerCase())
       && filterQuestionStatus(question.blocked, filter.status)
       && (filter.species === undefined ? true : (question.species === filter.species))
+      && this.filterByTags(question.tags, filter.tags)
     }
     )
     this.questions$.next(filteredQuestions);
@@ -123,6 +124,15 @@ export class QuestionsService implements OnDestroy {
 
   getAllQuestionsForTest(categoryId: string) {
     return this.apiService.getQuestionsByCategory(categoryId)
+  }
+
+  filterByTags(questionTags: Tag[] | undefined, tagsFilterValue: string): boolean {
+    if (!tagsFilterValue.length) return true
+    if (!questionTags && tagsFilterValue.length) {
+      return false
+    } else {
+      return questionTags?.map(tag => tag.name).join(' ').includes(tagsFilterValue) ? true : false
+    }
   }
 
 }

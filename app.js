@@ -6,6 +6,7 @@ const usersRoutes = require('./routes/users.routes');
 const questionRoutes = require('./routes/questions.routes');
 const testRoutes = require('./routes/test.routes');
 const categoriesRoutes = require('./routes/categories.routes');
+const tagsRoutes = require('./routes/tags.routes');
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/api', usersRoutes);
 app.use('/api', questionRoutes);
 app.use('/api', testRoutes);
 app.use('/api', categoriesRoutes);
+app.use('/api', tagsRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/client/index.html'));
 });

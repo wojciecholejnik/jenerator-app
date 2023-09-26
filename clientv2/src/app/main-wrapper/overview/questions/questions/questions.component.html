@@ -4,7 +4,12 @@
 </div>
 <div class="module-content">
     <app-category-selector *ngIf="categories" [categories]="categories"></app-category-selector>
-    <app-questions-table *ngIf="selectedCategory" [questions]="questions" [loading]="questionsLoading"></app-questions-table>
+    <app-questions-table 
+        *ngIf="selectedCategory"
+        [questions]="questions"
+        [loading]="questionsLoading"
+        [selectedCategory]="selectedCategory"
+    ></app-questions-table>
 </div>
 
 <app-question-preview

@@ -1,0 +1,24 @@
+.tag-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    gap: 3px;
+    
+    p {
+        margin: 0;
+    }
+
+    button {
+        padding: 2px;
+    }
+
+    &.active {
+        color: #495057;
+        background-color: white;
+        border-color: #a4b46f;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(96, 108, 56, 0.25);
+    }
+}

@@ -4,7 +4,6 @@
     display: block;
     min-height: calc(100vh - 60px);
     height: 100%;
-    width: 200px;
     background: $color1-opacity50;
     position: relative;
 
@@ -28,18 +27,35 @@
         font-size: 16px;
         font-weight: 400;
         color: $font-gray;
-        padding-left: 24px;
         cursor: pointer;
+        position: relative;
   
         &.active {
             color: $font-dark-gray;
             background-color: $light-gray;
             border-right: 3px solid $color2;
         }
+
+        span.tab-name {
+            display: none;
+        }
+
+        i {
+            padding: 0 10px;
+        }
+
+        &:hover {
+            background-color: $light-gray;;
+            i {
+                color: $color1
+            }
+        }
     }
 
     span.new-test-info {
-        font-style: italic;
-        font-size: 12px;
+        font-size: 18px;
+        position: absolute;
+        right: 3px;
+        top: -7px;
     }
 }

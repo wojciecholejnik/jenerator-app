@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <i class="bi bi-three-dots-vertical trigger trigger-close" (click)="setIsOpen()"></i>
+
+    <div class="menu" [class.open]="isOpen">
+
+        <div class="menu-item trigger-close" (click)="showDetails()">
+            <span class="icon trigger-close"><i class="bi bi-arrow-up-right trigger-close"></i></span>
+            <span class="name trigger-close">Szczegóły</span>
+        </div>
+        <div class="menu-item trigger-close" *ngIf="!isNewTest" (click)="editQuestion()">
+            <span class="icon trigger-close"><i class="bi bi-pencil trigger-close"></i></span>
+            <span class="name trigger-close">Edytuj pytanie</span>
+        </div>
+        <div class="menu-item remove trigger-close" *ngIf="!isNewTest" (click)="removeQuestion()">
+            <span class="icon trigger-close"><i class="bi bi-x-lg trigger-close"></i></span>
+            <span class="name trigger-close">Usuń pytanie</span>
+        </div>
+
+    </div>
+</div>

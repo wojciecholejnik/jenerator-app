@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Category, NewTest, Question, QuestionToSaveDTO, Test, User, UserFields } from './models';
+import { Category, NewTest, Question, QuestionToSaveDTO, Tag, TagDTO, Test, User, UserFields } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -83,5 +83,21 @@ export class ApiService {
 
   deleteUser(userId: string): Observable<User[]> {
     return this.http.delete<User[]>(`${this.apiHost}/delete-user/${userId}`, this.httpOptions)
+  }
+
+  getTagsForCategory(categoryId: string): Observable<Tag[]> {
+    return this.http.get<Tag[]>(`${this.apiHost}/get-tags/${categoryId}`, this.httpOptions)
+  }
+
+  addTag(tag: TagDTO): Observable<Tag[]> {
+    return this.http.post<Tag[]>(`${this.apiHost}/add-tag/${tag.category}`, tag, this.httpOptions)
+  }
+
+  editTag(tag: Tag): Observable<Tag[]> {
+    return this.http.post<Tag[]>(`${this.apiHost}/edit-tag/${tag.category}`, tag, this.httpOptions)
+  }
+
+  deleteTag(tag: Tag): Observable<Tag[]> {
+    return this.http.post<Tag[]>(`${this.apiHost}/delete-tag/${tag.category}`, tag, this.httpOptions)
   }
 }

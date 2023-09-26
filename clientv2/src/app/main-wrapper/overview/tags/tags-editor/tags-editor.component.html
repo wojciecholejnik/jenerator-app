@@ -1,0 +1,55 @@
+<div class="modal-wrapper" *ngIf="editorIsOpen">
+    <div class="modal-content" >
+        <div class="header">Edytuj tagi</div>
+        <div class="sub-header">kategoria:<strong>{{selectedCategory ? selectedCategory.name : ''}}</strong></div>
+
+        <div class="content">
+
+            <div class="add-new-tag">
+                <ng-container *ngIf="!editing">
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder="wprowadź tag"
+                        (keydown.enter)="addTag($event)"
+                        [(ngModel)]="newTagValue"
+                    >
+                    <button class="btn btn-primary" (click)="addTag()">Dodaj</button>
+                </ng-container>
+                <ng-container *ngIf="editing && tagToEdit">
+                    <input
+                        class="form-control"
+                        type="text"
+                        id="editInput"
+                        [placeholder]="'Edytuj tag: ' + tagToEdit.name"
+                        (keydown.enter)="editTag()"
+                        [(ngModel)]="editTagValue"
+                    >
+                    <button class="btn btn-primary" (click)="editTag()" [disabled]="editingLoading">
+                        {{editingLoading ? 'Zapisywanie ...' : 'Edytuj'}}
+                    </button>
+                    <button class="btn btn-secondary" (click)="abortEditing()" [disabled]="editingLoading">Anuluj</button>
+                </ng-container>
+            </div>
+
+            <div class="tag-list" *ngIf="tags.length > 0 && !loading">
+                <ng-container class="tag-item" *ngFor="let tag of tags">
+                    <app-tag-item
+                        [tag]="tag"
+                        [editing]="editing"
+                        (onDelete)="deleteTag(tag)"
+                        (onEdit)="startEditTag(tag)"
+                    ></app-tag-item>
+                </ng-container>
+            </div>
+
+            <app-loading *ngIf="loading"></app-loading>
+
+            <div class="no-tags-info" *ngIf="tags.length === 0 && !loading">brak tagów w tej kategorii</div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Zamknij</button>
+        </div>
+    </div>
+</div>

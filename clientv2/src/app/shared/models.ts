@@ -47,7 +47,8 @@ export interface Question {
     type: QuestionType,
     creationDate: Date,
     blocked: boolean,
-    species: QuestionSpecies
+    species: QuestionSpecies,
+    tags: Tag[] | undefined
 }
 
 export interface QuestionsFilter {
@@ -55,7 +56,8 @@ export interface QuestionsFilter {
     author: string,
     type: 'open' | 'singleSelect' | 'multiSelect' | '',
     status: 'active' | 'blocked' | '',
-    species: QuestionSpecies | undefined
+    species: QuestionSpecies | undefined,
+    tags: string
   }
 
 export interface Answer {
@@ -78,8 +80,9 @@ export interface QuestionToSaveDTO {
     answers: Answer[],
     img: string,
     author: string,
-    blocked: boolean
-    species: QuestionSpecies | undefined
+    blocked: boolean,
+    species: QuestionSpecies | undefined,
+    tags: string[]
 }
 
 export interface Test {
@@ -122,6 +125,17 @@ export interface TestToSaveDTO {
         open: Question[]
     };
     category: string;
+}
+
+export interface Tag {
+    category: string,
+    name: string,
+    _id: string
+}
+
+export interface TagDTO {
+    category: string,
+    name: string,
 }
 
 export enum QuestionSpecies {

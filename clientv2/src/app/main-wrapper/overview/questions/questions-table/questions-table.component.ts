@@ -1,25 +1,30 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GeneratorService } from 'src/app/main-wrapper/generator/generator.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Question, QuestionsFilter, QuestionSpecies, QuestionType, translateQuestionSpecies } from 'src/app/shared/models';
+import { Category, Question, QuestionsFilter, QuestionSpecies, QuestionType, Tag, translateQuestionSpecies } from 'src/app/shared/models';
+import { TagsService } from '../../tags/tags.service';
 
 @Component({
   selector: 'app-questions-table',
   templateUrl: './questions-table.component.html',
   styleUrls: ['./questions-table.component.scss']
 })
-export class QuestionsTableComponent implements OnInit, OnDestroy {
+export class QuestionsTableComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() questions!: any;
   @Input() loading!: boolean;
+  @Input() selectedCategory!: Category;
+  @ViewChild('questionsTable', { read: ElementRef }) table: any;
+  questionsToShow: Question[] = [];
   searchPhrase = '';
   questionsFilter : QuestionsFilter = {
     content: '',
     author: '',
     type: '',
     status: '',
-    species: undefined
+    species: undefined,
+    tags: ''
   }
   type: QuestionType | string = '';
   deletModalIsOpen = false;
@@ -29,10 +34,24 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
   private isNewTest$?: Subscription;
   isNewTest = '';
 
-  constructor(private questionService: QuestionsService, private generatorService: GeneratorService) { }
+  constructor(
+    private questionService: QuestionsService,
+    private generatorService: GeneratorService,
+    private tagsService: TagsService
+  ) { }
 
   ngOnInit(): void {
     this.isNewTest$ = this.generatorService.newTest$.subscribe(data => this.isNewTest = data);
+  }
+
+  ngOnChanges(): void {
+    if(this.minIndex + this.numberOfRows > this.questions.length) {
+      this.minIndex = 0;
+      this.maxIndex = this.numberOfRows;
+    }
+
+    this.setButtons();
+    this.questionsToShow = this.questions.slice(this.minIndex, this.maxIndex);
   }
 
   ngOnDestroy(): void {
@@ -46,14 +65,15 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
     this.questionService.filterQuestions(this.questionsFilter)
   }
 
-  clearFilter(filterControl?: 'content' | 'author' | 'type' | 'status'): void {
+  clearFilter(filterControl?: 'content' | 'author' | 'type' | 'status' | 'species' | 'tags'): void {
     if (!filterControl) {
       this.questionsFilter = {
         content: '',
         author: '',
         type: '',
         status: '',
-        species: undefined
+        species: undefined,
+        tags: ''
       }
     } else {
       if (filterControl === 'content') {
@@ -64,6 +84,10 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
         this.questionsFilter.type = ''
       } else if (filterControl === 'status') {
         this.questionsFilter.status = ''
+      } else if (filterControl === 'species') {
+        this.questionsFilter.species = undefined
+      } else if (filterControl === 'tags') {
+        this.questionsFilter.tags = ''
       }
     }
     this.onFilterChange();
@@ -112,6 +136,49 @@ export class QuestionsTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  openTagsEditor(): void {
+    this.tagsService.openTagEditor(this.selectedCategory)
+  }
+
+  showTags(tags: Tag[]): string {
+    return tags.map(tag => tag.name).join(', ')
+  }
+
   translateQuestionSpeciesName = translateQuestionSpecies;
+
+  numberOfRows = 10;
+  minIndex=0;
+  maxIndex=this.numberOfRows;
+  btnPrevDisabled = true;
+  btnResetDisabled = true;
+  btnNextDisabled = this.questions ? this.questions.length > this.numberOfRows : true;
+
+  changeRange(direction: 'asc' | 'desc' | 'reset') {
+    if (direction === 'asc' && this.minIndex + this.numberOfRows < this.questions.length) {
+      this.minIndex += this.numberOfRows;
+      this.maxIndex += this.numberOfRows;
+    } else if (direction === 'desc' && this.minIndex > 0) {
+      this.minIndex -= this.numberOfRows;
+      this.maxIndex -= this.numberOfRows;
+    } else if (direction === 'reset') {
+      this.minIndex = 0;
+      this.maxIndex = this.numberOfRows;
+      this.table.nativeElement.scrollTop = 0;
+    } 
+
+    this.setButtons();
+    this.questionsToShow = this.questions.slice(this.minIndex, this.maxIndex).map((claim: any) => {
+      return {
+        ...claim,
+        isChecked: false,
+      }
+    });
+  }
+
+  setButtons(){
+    this.btnNextDisabled = this.maxIndex >= this.questions.length;
+    this.btnPrevDisabled = this.minIndex <= 0;
+    this.btnResetDisabled = this.minIndex <= 0;
+  }
 
 }

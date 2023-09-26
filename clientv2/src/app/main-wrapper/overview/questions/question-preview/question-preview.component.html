@@ -6,7 +6,7 @@
 
         <app-category-selector [categories]="categories" [disabled]="question ? true : false"></app-category-selector>
 
-        <app-type-selector *ngIf="selectedCategory" (onTypeSelect)="selectType($event)" [questionType]="question ? question.type : ''"></app-type-selector>
+        <app-type-selector *ngIf="selectedCategory" (onTypeSelect)="onTypeSelect($event)" [questionType]="question ? question.type : ''"></app-type-selector>
 
         <app-species-selector *ngIf="selectedType" [questionSpecies]="question ? question.species : undefined" (onSpeciesSelect)="selectSpecies($event)"></app-species-selector>
         
@@ -26,7 +26,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="questionContent" class="form-label">Treść pytania:</label>
-                        <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent"></textarea>
+                        <textarea formControlName="questionContent" type="text" class="form-control" id="questionContent" rows="3"></textarea>
                     </div>
                     <ng-container *ngIf="selectedType!='open'" formGroupName="answers">
                         <div class="mb-4">
@@ -77,10 +77,25 @@
                     <div class="mb-4">
                         <label for="questionContent" class="form-label">Adres url obrazka:</label>
                         <input type="text" class="form-control" id="imgUrl" formControlName="img" (keyup)="setSrc()">
-                    </div>    
+                    </div>
+                    <img class="mb-4" *ngIf="imgSrc" [src]="imgSrc" alt="img-preview" style="max-width: 100%;">
+                    <div class="mb-4" formGroupName="tags">
+                        <label class="form-label">Tagi:</label>
+                        <ng-container *ngIf="tags && tags.length">
+                            <div class="answer-inputs" *ngFor="let tag of tags; index as i" [formGroupName]="i">
+                                <input
+                                    type="checkbox"
+                                    formControlName="isChecked"
+                                >
+                                <textarea class="form-control" formControlName="name"></textarea>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!tags || !tags.length">
+                            <p>brak tagów do wyświetlenia</p>
+                        </ng-container>
+                        
+                    </div>  
                 </form>
-
-                <img *ngIf="imgSrc" [src]="imgSrc" alt="img-preview" style="max-width: 100%;">
             </div>
         </div>
 

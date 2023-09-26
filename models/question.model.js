@@ -9,7 +9,8 @@ const questionSchema = new mongoose.Schema({
   author: {type: String, required: true, ref: 'users'},
   creationDate: {type: Date, required: true},
   blocked: {type: Boolean, required: true},
-  species: {type: Number, required: true}
+  species: {type: Number, required: true},
+  tags: {type: Array, required: true, ref: 'tags'}
 });
 
 module.exports = mongoose.model('Question', questionSchema);

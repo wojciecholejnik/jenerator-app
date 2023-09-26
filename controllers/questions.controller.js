@@ -1,6 +1,7 @@
 const Question = require('../models/question.model');
 const User = require('../models/user.model');
 const Category = require('../models/category.model');
+const Tag = require('../models/tag.model');
 
 exports.getByCategory = async (req, res) => {
   try {
@@ -12,6 +13,10 @@ exports.getByCategory = async (req, res) => {
       path: 'author',
       model: User,
       select: 'shortName'
+    },
+    {
+      path: 'tags',
+      model: Tag,
     }]).sort({questionContent: 1});
     if(!questions) res.status(404).json({ message: 'Not found' });
     else res.json(questions);

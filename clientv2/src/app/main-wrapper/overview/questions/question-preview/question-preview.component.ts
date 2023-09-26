@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/login/login.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Category, Question, QuestionSpecies, QuestionToSaveDTO, QuestionType, translateQuestionSpecies } from 'src/app/shared/models';
+import { Category, Question, QuestionSpecies, QuestionToSaveDTO, QuestionType, Tag, translateQuestionSpecies } from 'src/app/shared/models';
+import { TagsService } from '../../tags/tags.service';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-question-preview',
@@ -22,84 +24,48 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
   selectedCategory?: Category;
   selectedType: QuestionType | string = '';
   selectedSpecies: QuestionSpecies | undefined;
-  private selectedCategory$?: Subscription;
   questionForm!: FormGroup;
   imgSrc = '';
   modalType = 'addNewQuestion'
-
+  tags: Tag[] | undefined = [];
+  
+  private _selectedCategory?: Subscription;
+  private _tags?: Subscription;
+  
   constructor(
     private loginService: LoginService,
     private questionService: QuestionsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tagsService: TagsService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
-    this.selectedCategory$ = this.questionService.selectedCategory$.subscribe(data => {
+    this._selectedCategory = this.questionService.selectedCategory$.subscribe(data => {
       if (data) {
         this.selectedCategory = data;
+        setTimeout(() => this.tagsService.getTags(data._id))
       }
     })
-    if (!this.question) {
-      this.modalType = 'addNewQuestion';
-      this.questionForm = this.fb.group({
-        questionContent: ['', Validators.required],
-        answers: this.fb.group({
-          ans1: this.fb.group({
-            content: [''],
-            isRight: [true]
-          }),
-          ans2: this.fb.group({
-            content: [''],
-            isRight: [false]
-          }),
-          ans3: this.fb.group({
-            content: [''],
-            isRight: [false]
-          }),
-          ans4: this.fb.group({
-            content: [''],
-            isRight: [false]
-          })
-        }),
-        img: [''],
-        blocked: [false]
-      })
-    } else {
-      this.modalType = 'editQuestion';
-      this.selectType(this.question.type);
-      this.selectedSpecies = this.question.species;
-      this.questionForm = this.fb.group({
-        questionContent: [this.question.questionContent, Validators.required],
-        answers: this.question.type !== 'open' ? this.fb.group({
-          ans1: this.fb.group({
-            content: [this.question.answers[0].content],
-            isRight: [this.question.answers[0].isRight]
-          }),
-          ans2: this.fb.group({
-            content: [this.question.answers[1].content],
-            isRight: [this.question.answers[1].isRight]
-          }),
-          ans3: this.fb.group({
-            content: [this.question.answers[2].content],
-            isRight: [this.question.answers[2].isRight]
-          }),
-          ans4: this.fb.group({
-            content: [this.question.answers[3].content],
-            isRight: [this.question.answers[3].isRight]
-          })
-        }) : [],
-        img: [this.question.img],
-        blocked: [this.question.blocked]
-      })
-    }
+
+    this._tags = this.tagsService.tags.subscribe(tags => {
+      this.tags = tags;
+    this.prepareForm(this.question && this.question.type ? this.question.type : 'singleSelect')
+    
+    });
   }
 
   ngOnDestroy(): void {
-    this.selectedCategory$?.unsubscribe();
+    this._selectedCategory?.unsubscribe();
+    this._tags?.unsubscribe();
   }
 
   selectType(type: QuestionType) {
     this.selectedType = type
+  }
+
+  onTypeSelect(type: QuestionType) {
+    this.prepareForm(type)
   }
 
   selectSpecies(species: QuestionSpecies) {
@@ -108,6 +74,84 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
 
   closeModal(): void {
     this.onCloseModal.emit();
+  }
+
+  setFormWithoutQuestion(): void {
+    this.questionForm = this.fb.group({
+      questionContent: ['', Validators.required],
+      answers: this.fb.group({
+        ans1: this.fb.group({
+          content: [''],
+          isRight: [true]
+        }),
+        ans2: this.fb.group({
+          content: [''],
+          isRight: [false]
+        }),
+        ans3: this.fb.group({
+          content: [''],
+          isRight: [false]
+        }),
+        ans4: this.fb.group({
+          content: [''],
+          isRight: [false]
+        })
+      }),
+      img: [''],
+      blocked: [false],
+      tags: this.fb.group(this.tags ? this.tags.map(tag => {
+        return this.fb.group({
+          name: [tag.name],
+          isChecked: [false],
+          _id: [tag._id]
+        })
+      }) : [])
+    })
+  }
+
+  setFormWithQuestion(type: QuestionType): void {
+    this.questionForm = this.fb.group({
+      questionContent: [this.question.questionContent, Validators.required],
+      answers: type !== 'open' ? this.fb.group({
+        ans1: this.fb.group({
+          content: [this.question.answers[0] ? this.question.answers[0].content : '' ],
+          isRight: [this.question.answers[0] ? this.question.answers[0].isRight : false]
+        }),
+        ans2: this.fb.group({
+          content: [this.question.answers[1] ? this.question.answers[1].content : ''],
+          isRight: [this.question.answers[1] ? this.question.answers[1].isRight : false]
+        }),
+        ans3: this.fb.group({
+          content: [this.question.answers[2] ? this.question.answers[2].content : ''],
+          isRight: [this.question.answers[2] ? this.question.answers[2].isRight : false]
+        }),
+        ans4: this.fb.group({
+          content: [this.question.answers[3] ? this.question.answers[3].content : ''],
+          isRight: [this.question.answers[3] ? this.question.answers[3].isRight : false]
+        })
+      }) : [],
+      img: [this.question.img],
+      blocked: [this.question.blocked],
+      tags: this.fb.group(this.tags ? this.tags.map(tag => {
+        return this.fb.group({
+          name: new FormControl({value: tag.name, disabled: true}),
+          isChecked: [this.question.tags?.find(item => item._id === tag._id) ? true : false],
+          _id: [tag._id]
+        })
+      }): [])
+    })
+  }
+
+  prepareForm(type: QuestionType): void {
+    if (!this.question) {
+      this.modalType = 'addNewQuestion';
+      this.setFormWithoutQuestion();
+    } else {
+      this.modalType = 'editQuestion';
+      this.selectedSpecies = this.question.species;
+      this.setFormWithQuestion(type)
+    }
+    this.selectType(type);
   }
 
   setSrc() {
@@ -147,14 +191,14 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
     if (this.isValidToSave() && this.modalType === 'addNewQuestion') {
       this.questionService.addQuestion(this.mapQuestion()).subscribe({
         next: (res) => {
-          console.log(res)
           this.questionService.questions$.next(res);
           this.questionService.allQuestions = res;
           this.questionService.filterQuestions(this.questionService.questionFilter$.getValue());
+          this.toastService.show("Pytanie zostało utworzone.", { classname: 'bg-success text-light', delay: 1500 })
           this.closeModal();
         },
-        error: () => {
-          // handle add question creation
+        error: (e) => {
+          this.toastService.show(e.error.message, { classname: 'bg-danger text-light', autohide: false })
         }
       })
     }
@@ -167,13 +211,14 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
           this.closeModal();
         },
         error: () => {
-          // handle add question creation
+          this.toastService.show("Nie udało się edytować pytania.", { classname: 'bg-danger text-light', autohide: false })
         }
       })
     }
   }
 
   isValidToSave(): boolean {
+    if (!this.questionForm) return false
     if (!this.selectedCategory && !this.selectedType) {
       return false
     } 
@@ -214,8 +259,8 @@ export class QuestionPreviewComponent implements OnInit, OnDestroy {
       img: this.questionForm.value.img,
       author: this.loginService.getAuthor()._id,
       blocked: this.questionForm.value.blocked, 
-      species: this.selectedSpecies
-
+      species: this.selectedSpecies,
+      tags: this.questionForm.value.tags ? Object.values(this.questionForm.value.tags).filter((tag: any) => tag.isChecked).map((item:any) => item._id) : []
     }
     if (this.modalType === 'editQuestion') {
       question._id = this.question._id

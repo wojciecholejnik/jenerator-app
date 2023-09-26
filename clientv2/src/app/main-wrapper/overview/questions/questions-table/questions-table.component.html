@@ -8,23 +8,22 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <td class="nr">#</td>
                     <td class="content">Treść pytania</td>
                     <td class="author">Autor</td>
-                    <td>Typ</td>
-                    <td>Status</td>
-                    <td>Rodzaj</td>
+                    <td class="status">Status</td>
+                    <td class="type">Typ</td>
+                    <td class="tags">Tagi <button class="btn btn-primary btn-sm" (click)="openTagsEditor()">edytuj</button></td>
+                    <td class="species">Rodzaj</td>
                     <td class="actions"></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td>
+                    <td class="content">
                         <div class="filter-control">
                             <input class="form-control" type="text" [(ngModel)]="questionsFilter.content" (keyup)="onFilterChange()">
                             <i class="bi bi-x-lg" *ngIf="questionsFilter.content" (click)="clearFilter('content')"></i>
                         </div>
                     </td>
-                    <td>
+                    <td class="author">
                         <div class="filter-control">
                             <input class="form-control" type="text" [(ngModel)]="questionsFilter.author" (keyup)="onFilterChange()">
                             <i class="bi bi-x-lg" *ngIf="questionsFilter.author" (click)="clearFilter('author')"></i>
@@ -40,15 +39,6 @@
                             </select>
                         </div>
                     </td>
-                    <td class="status">
-                        <div class="filter-control">
-                            <select class="form-control" type="text" [(ngModel)]="questionsFilter.status" (change)="onFilterChange()">
-                                <option value="">wszystkie</option>
-                                <option value="active">aktywne</option>
-                                <option value="blocked">zablokowane</option>
-                            </select>
-                        </div>
-                    </td>
                     <td class="species">
                         <div class="filter-control">
                             <select class="form-control" name="species" id="species" [(ngModel)]="questionsFilter.species" (change)="onFilterChange($event)">
@@ -58,52 +48,63 @@
                             </select>
                         </div>
                     </td>
+                    <td class="tags">
+                        <div class="filter-control">
+                            <input class="form-control" type="text" [(ngModel)]="questionsFilter.tags" (keyup)="onFilterChange()">
+                            <i class="bi bi-x-lg" *ngIf="questionsFilter.tags" (click)="clearFilter('tags')"></i>
+                        </div>
+                    </td>
+                    <td class="status">
+                        <div class="filter-control">
+                            <select class="form-control" type="text" [(ngModel)]="questionsFilter.status" (change)="onFilterChange()">
+                                <option value="">wszystkie</option>
+                                <option value="active">aktywne</option>
+                                <option value="blocked">zablokowane</option>
+                            </select>
+                        </div>
+                    </td>
                     <td class="actions">
                         <button 
                             class="btn btn-sm btn-secondary clear-filter"
                             (click)="clearFilter()"
-                            *ngIf="questionsFilter.content || questionsFilter.author || questionsFilter.type || questionsFilter.status"
+                            *ngIf="questionsFilter.content 
+                            || questionsFilter.author 
+                            || questionsFilter.type 
+                            || questionsFilter.status
+                            || questionsFilter.species
+                            || questionsFilter.tags
+                            "
                         >Wyczyść filtr</button>
                     </td>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let question of questions; let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{question.questionContent}}</td>
-                    <td>{{question.author.shortName}}</td>
-                    <td>{{translateTypeNames(question.type)}}</td>
-                    <td>
+            <tbody #questionsTable>
+                <tr *ngFor="let question of questionsToShow">
+                    <td class="content">{{question.questionContent}}</td>
+                    <td class="author">{{question.author.shortName}}</td>
+                    <td class="status">{{translateTypeNames(question.type)}}</td>
+                    <td class="species">{{translateQuestionSpeciesName(question.species)}}</td>
+                    <td class="tags">{{showTags(question.tags)}}</td>
+                    <td class="status">
                         <i *ngIf="question.blocked" class="status bi bi-lock" ngbTooltip="To pytanie jest zablokowane i nie zostanie uwzględnione przy tworzeniu testu"></i>
                         <i *ngIf="!question.blocked" class="status bi bi-unlock"></i>
                     </td>
-                    <td>{{translateQuestionSpeciesName(question.species)}}</td>
                     <td class="actions">
-                        <!-- <button
-                            *ngIf="isNewTest"
-                            class="btn btn-sm btn-primary mr-2" (click)="addToNewTest(question)"
-                        ><i class="bi bi-file-earmark-plus"></i></button> -->
-                        <button
-                            class="btn btn-sm btn-primary mr-2"
-                            (click)="togglePreviewModal(question)"
-                            ngbTooltip="Zobacz widok szczegółowy"
-                        ><i class="bi bi-arrow-up-right"></i></button>
-                        <button
-                            *ngIf="!isNewTest"
-                            class="btn btn-sm btn-primary mr-2"
-                            (click)="toggleEditModal(question)"
-                            ngbTooltip="Edytuj pytanie"
-                        ><i class="bi bi-pencil"></i></button>
-                        <button
-                            *ngIf="!isNewTest"
-                            class="btn btn-sm btn-danger"
-                            (click)="toggelDeleteModalIsOpen(question)"
-                            ngbTooltip="Usuń pytanie"
-                        ><i class="bi bi-x-lg"></i></button>
+                        <app-action-cell 
+                            [isNewTest]="isNewTest"
+                            (onDetails)="togglePreviewModal(question)"
+                            (onEdit)="toggleEditModal(question)"
+                            (onRemove)="toggelDeleteModalIsOpen(question)"
+                        ></app-action-cell>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="range-selectors">
+            <button class="btn btn-primary btn-small" [disabled]="btnPrevDisabled" (click)="changeRange('desc')">Poprzednia</button>
+            <button class="btn btn-secondary btn-small" [disabled]="btnResetDisabled" (click)="changeRange('reset')">Reset</button>
+            <button class="btn btn-primary btn-small" [disabled]="btnNextDisabled" (click)="changeRange('asc')">Następna</button>
+          </div>
     </div>
 
     <div class="no-questions-message" *ngIf="!loading && !questions">
@@ -129,3 +130,7 @@
     [previewOnly]="true"
     (onCloseModal)="togglePreviewModal()"
 ></app-question-preview>
+
+<app-tags-editor
+    [selectedCategory]="selectedCategory"
+></app-tags-editor>

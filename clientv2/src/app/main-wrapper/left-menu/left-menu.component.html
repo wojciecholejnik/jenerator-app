@@ -11,9 +11,14 @@
                 class="menu-item"
                 [class.active]="item.active"
                 (click)="changeNavOption(item.name)"
+                [ngbTooltip]="translateNavNames(item.name)"
             >
-                {{translateNavNames(item.name)}}
-                <span *ngIf="item.name==='generator' && isNewTest" class="new-test-info">- nowy</span>
+                <i class="bi bi-cpu" *ngIf="item.name==='generator'"></i>
+                <i class="bi bi-boxes" *ngIf="item.name==='categories'"></i>
+                <i class="bi bi-card-checklist" *ngIf="item.name==='questions'"></i>
+                <i class="bi bi-info-square" *ngIf="item.name==='help'"></i>
+                <i class="bi bi-person-gear" *ngIf="item.name==='manage'"></i>
+                <span *ngIf="item.name==='generator' && isNewTest" class="new-test-info">*</span>
             </div>
         </ng-container>
     </div>

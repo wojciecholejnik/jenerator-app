@@ -1,0 +1,9 @@
+<div class="tag-item" [class.active]="editThisTag">
+    <p>{{tag.name}}</p>
+    <button class="btn btn-sm btn-secondary edit-button" [disabled]="editing" (click)="editTag()">
+        <i class="bi bi-pencil"></i>
+    </button>
+    <button class="btn btn-sm btn-danger delete-button" [disabled]="editing" (click)="deleteTag()">
+        <i class="bi bi-x-lg"></i>
+    </button>
+</div>

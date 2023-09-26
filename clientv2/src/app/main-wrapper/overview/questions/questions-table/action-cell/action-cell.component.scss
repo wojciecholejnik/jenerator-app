@@ -1,0 +1,42 @@
+.wrapper {
+    text-align: end;
+    position: relative;
+
+    i.trigger:hover {
+        background-color: lightgray;
+        border-radius: 5px;
+    }
+
+    .menu {
+        display: none;
+        position: absolute;
+        border: 1px solid lightgray;
+        padding: 5px;
+        background: white;
+        right: 0;
+        text-align: center;
+
+        .menu-item {
+            width: 130px;
+            padding: 5px 7px;
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            position: relative;
+            z-index: 1;
+
+            &:hover {
+                background-color: #606C38;
+                color: white;
+            }
+        }
+
+        .menu-item.remove:hover {
+            background-color: #dc3545;
+        }
+    }
+
+    .open {
+        display: block;
+    }
+}

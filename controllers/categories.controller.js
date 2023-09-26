@@ -1,5 +1,6 @@
 const Category = require('../models/category.model');
 const Question = require('../models/question.model');
+const Tag = require('../models/tag.model');
 
 exports.getAllCategories = async (req, res) => {
     try {
@@ -46,8 +47,10 @@ exports.deleteCategory = async (req, res) => {
             .then(async () => {
                 await Question.deleteMany({category: _id})
             .then(async () => {
+                await Tag.deleteMany({category: _id})
+            .then(async () => {
                 await this.getAllCategories(req, res);
-            })
+            })})
             });
         } else {
             res.status(404).json({message: 'Taka kategoria nie istnieje.'})

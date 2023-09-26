@@ -35,7 +35,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { SpeciesSelectorComponent } from './overview/questions/species-selector/species-selector.component'
+import { SpeciesSelectorComponent } from './overview/questions/species-selector/species-selector.component';
+import { ActionCellComponent } from './overview/questions/questions-table/action-cell/action-cell.component';
+import { TagsEditorComponent } from './overview/tags/tags-editor/tags-editor.component';
+import { TagItemComponent } from './overview/tags/tag-item/tag-item.component'
 
 
 @NgModule({
@@ -65,7 +68,10 @@ import { SpeciesSelectorComponent } from './overview/questions/species-selector/
     AddUserComponent,
     DeleteUserConfirmationComponent,
     QuestionChangerComponent,
-    SpeciesSelectorComponent
+    SpeciesSelectorComponent,
+    ActionCellComponent,
+    TagsEditorComponent,
+    TagItemComponent
   ],
   imports: [
     CommonModule,
