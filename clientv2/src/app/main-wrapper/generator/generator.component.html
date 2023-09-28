@@ -38,6 +38,10 @@
     </div>
     <ng-container *ngIf="isNewTest && newTest">
         <app-category-selector [categories]="allCategories" [disabled]="false"></app-category-selector>
-        <app-new-test *ngIf="selectedCategory"  [newTest]="newTest"></app-new-test>
+        <app-new-test *ngIf="selectedCategory && !generatePending"  [newTest]="newTest"></app-new-test>
+        <div class="loading-container" *ngIf="selectedCategory && generatePending">
+            <app-loading></app-loading>
+            <p>Trwa generowanie testu ...</p>
+        </div>
     </ng-container>
 </div>

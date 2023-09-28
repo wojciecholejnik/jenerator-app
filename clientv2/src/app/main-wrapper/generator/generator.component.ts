@@ -13,17 +13,19 @@ import { TestService } from './test.service';
 })
 export class GeneratorComponent implements OnInit, OnDestroy {
 
-  newTest$?: Subscription;
-  selectedCategory$?: Subscription
-  saveTest$?: Subscription;
-  tests$?: Subscription;
+  private _newTest?: Subscription;
+  private _selectedCategory?: Subscription
+  private _saveTest?: Subscription;
+  private _tests?: Subscription;
+  private _generatePending?: Subscription;
+  private _categories?: Subscription;
 
   isNewTest = false;
   newTest?: NewTest;
-  categories$?: Subscription;
   allCategories: Category[] = [];
   selectedCategory?: Category;
   tests: Test[] = [];
+  generatePending = false;
 
   constructor(
     private generatorService: GeneratorService,
@@ -32,8 +34,8 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     private printService: PrintService) { }
 
   ngOnInit(): void {
-    this.tests$ = this.testService.tests$.subscribe(tests => this.tests = tests);
-    this.newTest$ = this.generatorService.newTest$.subscribe((test: any) => {
+    this._tests = this.testService.tests$.subscribe(tests => this.tests = tests);
+    this._newTest = this.generatorService.newTest$.subscribe((test: any) => {
       if (test) {
         this.newTest = test;
         this.isNewTest = true;
@@ -42,22 +44,26 @@ export class GeneratorComponent implements OnInit, OnDestroy {
         this.isNewTest = false;
       }
     });
-    this.categories$ = this.questionService.categories$.subscribe(categories => this.allCategories = categories);
-    this.selectedCategory$ = this.questionService.selectedCategory$.subscribe(category => {
+    this._categories = this.questionService.categories$.subscribe(categories => this.allCategories = categories);
+    this._selectedCategory = this.questionService.selectedCategory$.subscribe(category => {
       if (this.isNewTest) {
         this.selectedCategory = category;
         this.generatorService.newTest$.next({...this.generatorService.newTest$.getValue(), category: category});
       }
     })
+    this._generatePending = this.generatorService.generatePending$.subscribe(state => this.generatePending = state);
+    
     this.testService.getTests()
     this.questionService.getCategories();
   }
 
   ngOnDestroy(): void {
-    this.newTest$?.unsubscribe();
-    this.saveTest$?.unsubscribe();
-    this.tests$?.unsubscribe();
-    this.selectedCategory$?.unsubscribe();
+    this._newTest?.unsubscribe();
+    this._saveTest?.unsubscribe();
+    this._tests?.unsubscribe();
+    this._selectedCategory?.unsubscribe();
+    this._categories?.unsubscribe();
+    this._generatePending?.unsubscribe();
   }
 
   startNewTest(): void {
@@ -98,7 +104,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   saveTest(): void {
     if (!this.newTest) return
-    this.saveTest$ = this.testService.saveTest(this.newTest).subscribe(res => {
+    this._saveTest = this.testService.saveTest(this.newTest).subscribe(res => {
       if (res) {
         this.testService.allTests$.next(res);
         this.testService.filterTests();
