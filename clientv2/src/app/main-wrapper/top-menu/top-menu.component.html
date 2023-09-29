@@ -10,7 +10,12 @@
             -375 32 -504 28z"></path></g></svg>
         Jenerator
     </div>
-    <div class="account-name">{{user.displayName}}</div>
+    <div class="account-name">
+        <span>
+            <img [src]="user.emoticon" alt="">
+        </span>
+        <span>{{user.displayName}}</span>
+    </div>
     <button  mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
     <mat-menu #menu="matMenu" xPosition="before">
         <button mat-menu-item (click)="toggleEditModal()">Edycja</button>

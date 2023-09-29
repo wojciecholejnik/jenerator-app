@@ -24,6 +24,7 @@ export class GeneratorService implements OnDestroy {
     author: this.loginService.getAuthor(),
     date: new Date(),
     questions: [],
+    name: ''
   }
   
   newTest$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -77,6 +78,7 @@ export class GeneratorService implements OnDestroy {
     if (singleSelectQuestionsKnowledge.length < 1 || multiSelectQuestionsKnowledge.length < 1 || openQuestionsKnowledge.length < 1
       || singleSelectQuestionsCalculate.length < 1 || multiSelectQuestionsCalculate.length < 1 || openQuestionsCalculate.length < 1) {
         this.toastService.show("Za mała ilość pytań/tagów w wybranej kategorii.", { classname: 'bg-danger text-light', autohide: false })
+        this.generatePending$.next(false)
       return
     }
 

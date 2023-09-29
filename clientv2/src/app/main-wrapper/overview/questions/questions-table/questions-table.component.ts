@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild }
 import { Subscription } from 'rxjs';
 import { GeneratorService } from 'src/app/main-wrapper/generator/generator.service';
 import { QuestionsService } from 'src/app/main-wrapper/questions.service';
-import { Category, Question, QuestionsFilter, QuestionSpecies, QuestionType, Tag, translateQuestionSpecies } from 'src/app/shared/models';
+import { Category, PaginationInfo, Question, QuestionsFilter, QuestionSpecies, QuestionType, Tag, translateQuestionSpecies } from 'src/app/shared/models';
 import { TagsService } from '../../tags/tags.service';
 
 @Component({
@@ -45,10 +45,13 @@ export class QuestionsTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
+    if (!this.questions) return
+
     if(this.minIndex + this.numberOfRows > this.questions.length) {
       this.minIndex = 0;
       this.maxIndex = this.numberOfRows;
     }
+    this.countPages();
 
     this.setButtons();
     this.questionsToShow = this.questions.slice(this.minIndex, this.maxIndex);
@@ -152,21 +155,28 @@ export class QuestionsTableComponent implements OnInit, OnChanges, OnDestroy {
   btnPrevDisabled = true;
   btnResetDisabled = true;
   btnNextDisabled = this.questions ? this.questions.length > this.numberOfRows : true;
+  pagesAmount = 0;
+  showingPage = 1;
+  allQuestionsAmount = 0;
 
   changeRange(direction: 'asc' | 'desc' | 'reset') {
     if (direction === 'asc' && this.minIndex + this.numberOfRows < this.questions.length) {
       this.minIndex += this.numberOfRows;
       this.maxIndex += this.numberOfRows;
+      this.showingPage ++
     } else if (direction === 'desc' && this.minIndex > 0) {
       this.minIndex -= this.numberOfRows;
       this.maxIndex -= this.numberOfRows;
+      this.showingPage --
     } else if (direction === 'reset') {
       this.minIndex = 0;
       this.maxIndex = this.numberOfRows;
       this.table.nativeElement.scrollTop = 0;
-    } 
+      this.showingPage = 1;
+    }
 
     this.setButtons();
+    this.countPages();
     this.questionsToShow = this.questions.slice(this.minIndex, this.maxIndex).map((claim: any) => {
       return {
         ...claim,
@@ -179,6 +189,22 @@ export class QuestionsTableComponent implements OnInit, OnChanges, OnDestroy {
     this.btnNextDisabled = this.maxIndex >= this.questions.length;
     this.btnPrevDisabled = this.minIndex <= 0;
     this.btnResetDisabled = this.minIndex <= 0;
+  }
+
+  countPages(): void {
+    this.pagesAmount = Math.ceil(this.questions.length / this.numberOfRows);
+    this.allQuestionsAmount = this.questions.length; 
+  }
+
+  setPaginationInfo(): PaginationInfo {
+    return {
+      allQuestionsAmount: this.allQuestionsAmount,
+      showingPage: this.showingPage,
+      pagesAmount: this.pagesAmount,
+      btnNextDisabled: this.btnNextDisabled,
+      btnPrevDisabled: this.btnPrevDisabled,
+      btnResetDisabled: this.btnResetDisabled
+    }
   }
 
 }

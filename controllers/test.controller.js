@@ -17,13 +17,13 @@ exports.addTest = async (req, res) => {
       name: name
     });
     if (testIsExist) {
-      res.status(404).json({message: 'Taki test już istnieje.'});
+      res.status(422).json({message: 'Test o takiej nazwie już istnieje.'});
     } else if (author && questions && category && name) {
       const newTest = new Test(req.body);
       await newTest.save();
       this.getAll(req, res);
     } else if (author && questions && category && !name) {
-      const newTest = new Test({...req.body, name: category.name + ' - ' + new Date().toLocaleDateString()});
+      const newTest = new Test({...req.body, name: !name && !name.length ? category.name + ' - ' + new Date().toLocaleDateString() : name});
       await newTest.save();
       this.getAll(req, res);
     } else {

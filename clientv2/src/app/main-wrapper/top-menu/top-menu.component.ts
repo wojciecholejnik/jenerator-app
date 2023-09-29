@@ -11,7 +11,7 @@ import { GeneratorService } from '../generator/generator.service';
 })
 export class TopMenuComponent implements OnInit, OnDestroy {
 
-  user$?: Subscription;
+  private _user?: Subscription;
   user!: User;
 
   editModalIsOpen = false;
@@ -19,13 +19,13 @@ export class TopMenuComponent implements OnInit, OnDestroy {
   constructor(private loginService: LoginService, private generatorService: GeneratorService) { }
 
   ngOnInit(): void {
-    this.user$ = this.loginService.loggedUser.subscribe(user => {
+    this._user = this.loginService.loggedUser.subscribe(user => {
       this.user = user;
     })
   }
 
   ngOnDestroy(): void {
-    
+    this._user?.unsubscribe();
   }
 
   logout() {

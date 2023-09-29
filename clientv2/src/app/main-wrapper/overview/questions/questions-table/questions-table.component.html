@@ -100,11 +100,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="range-selectors">
-            <button class="btn btn-primary btn-small" [disabled]="btnPrevDisabled" (click)="changeRange('desc')">Poprzednia</button>
-            <button class="btn btn-secondary btn-small" [disabled]="btnResetDisabled" (click)="changeRange('reset')">Reset</button>
-            <button class="btn btn-primary btn-small" [disabled]="btnNextDisabled" (click)="changeRange('asc')">Następna</button>
-          </div>
+         <app-pagination-footer [paginationInfo]="setPaginationInfo()" (onChangeRange)="changeRange($event)"></app-pagination-footer>
     </div>
 
     <div class="no-questions-message" *ngIf="!loading && !questions">

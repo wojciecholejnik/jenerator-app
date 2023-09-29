@@ -138,6 +138,15 @@ export interface TagDTO {
     name: string,
 }
 
+export interface PaginationInfo {
+    allQuestionsAmount: number,
+    showingPage: number,
+    pagesAmount: number,
+    btnPrevDisabled: boolean,
+    btnResetDisabled: boolean,
+    btnNextDisabled: boolean
+  }
+
 export enum QuestionSpecies {
     countingTask = 0,
     knowledgeTask = 1

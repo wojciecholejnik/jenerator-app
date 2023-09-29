@@ -5,6 +5,7 @@ import { QuestionsService } from '../questions.service';
 import { GeneratorService } from './generator.service';
 import { PrintService } from './print.service';
 import { TestService } from './test.service';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-generator',
@@ -26,12 +27,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   selectedCategory?: Category;
   tests: Test[] = [];
   generatePending = false;
+  newTestName = '';
 
   constructor(
     private generatorService: GeneratorService,
     private questionService: QuestionsService,
     private testService: TestService,
-    private printService: PrintService) { }
+    private printService: PrintService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this._tests = this.testService.tests$.subscribe(tests => this.tests = tests);
@@ -104,11 +107,15 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   saveTest(): void {
     if (!this.newTest) return
-    this._saveTest = this.testService.saveTest(this.newTest).subscribe(res => {
-      if (res) {
+    this._saveTest = this.testService.saveTest(this.newTest).subscribe({
+      next: (res: any) => {
         this.testService.allTests$.next(res);
         this.testService.filterTests();
         this.generatorService.newTest$.next('');
+      },
+      error: (e) => {
+        this.toastService.show(e.error.message, { classname: 'bg-danger text-light', autohide: false })
+
       }
     })
   }

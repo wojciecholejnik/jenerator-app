@@ -2,7 +2,6 @@
     <table *ngIf="!testPreviewIsOpen" class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Kategoria</th>
                 <th>Nazwa</th>
                 <th class="date">Utworzono</th>
@@ -10,7 +9,6 @@
                 <th class="actions">Akcje</th>
             </tr>
             <tr>
-                <th></th>
                 <th>
                     <div class="filter-control">
                         <input class="form-control" type="text" [(ngModel)]="testsFilter.category" (keyup)="filterTests()">
@@ -46,7 +44,6 @@
         </thead>
         <tbody>
             <tr *ngFor="let test of tests; let i=index">
-                <td>{{i+1}}</td>
                 <td>{{test.category.name}}</td>
                 <td>{{test.name}}</td>
                 <td>{{test.date | date:'dd.MM.yyyy, HH:mm'}}</td>
@@ -66,9 +63,13 @@
             </tr>
         </tbody>
     </table>
+    
     <div *ngIf="!tests.length" class="empty-table">
         Brak wyników
     </div>
+
+    <app-pagination-footer *ngIf="!testPreviewIsOpen" [paginationInfo]="setPaginationInfo()" (onChangeRange)="changeRange($event)"></app-pagination-footer>
+    
     <app-test-preview
         *ngIf="testPreviewIsOpen && selectedTest"
         [test]="selectedTest"

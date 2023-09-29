@@ -22,3 +22,33 @@ $primary: $color1;
     max-width: 1000px;
     margin: 0 auto;
 }
+
+thead {
+    background-color: #606C3810;
+}
+
+.range-selectors {
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+    justify-content: space-between;
+    background-color: #606C3810;
+    border: 1px solid #dee2e6;
+  
+    .range-buttons {
+        display: flex;
+        gap: 15px;
+
+        button {
+            padding: 3px;
+            line-height: 15px;
+            height: 25px;
+            font-size: 13px;
+        }
+    }
+
+    .info {
+        display: flex;
+        gap: 20px;
+    }
+}

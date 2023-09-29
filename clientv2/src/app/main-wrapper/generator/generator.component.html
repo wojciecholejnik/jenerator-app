@@ -10,17 +10,19 @@
     <app-tests-table *ngIf="!isNewTest" [tests]="tests" ></app-tests-table>
     <div *ngIf="isNewTest" class="action-buttons mb-3">
         <div class="left">
-            <button mat-icon-button [matMenuTriggerFor]="menu"><button [disabled]="!isTestValid()" class="btn btn-primary mr-4">Drukuj</button></button>
+            <button [matMenuTriggerFor]="menu" style="border: none !important">
+                <button [disabled]="!isTestValid()" class="btn btn-primary" style="width: 100%;">Drukuj</button>
+            </button>
             <mat-menu #menu="matMenu" xPosition="after">
                 <button mat-menu-item (click)="printUnresolvedTest()" >Test</button>
                 <button mat-menu-item (click)="printResolvedTest()" >Rozwiązanie</button>
             </mat-menu>
-            <button [disabled]="!isTestValid()" class="btn btn-secondary ml-5" *ngIf="selectedCategory" (click)="saveTest()">
+            <button [disabled]="!isTestValid()" class="btn btn-primary ml-2" *ngIf="selectedCategory" (click)="saveTest()">
                 Zapisz
             </button>
-
+            <input *ngIf="isTestValid()" type="text" class="form-control ml-2" [(ngModel)]="newTest.name" maxlength="500" placeholder="Wpisz nazwę testu">
         </div>
-        <div class="center">
+        <div class="center" [class.margined]="isTestValid()">
             <button class="btn btn-secondary mr-2" *ngIf="selectedCategory" (click)="getRandom()" ngbTooltip="Wygeneruj 6 losowych pytań: 2 single, 2 multi i 2 open.">
                 Losowanie
             </button>

@@ -33,3 +33,15 @@
         text-align: center;
     }
 }
+
+.left {
+    display: flex;
+
+    input {
+        width: 300px;
+    }
+}
+
+.center.margined {
+    margin-right: 300px
+}

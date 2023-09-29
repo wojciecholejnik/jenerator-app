@@ -1,0 +1,11 @@
+<div class="range-selectors">
+    <div class="range-buttons">
+        <button class="btn btn-primary btn-small" [disabled]="paginationInfo.btnPrevDisabled" (click)="changeRange('desc')">Poprzednia</button>
+        <button class="btn btn-secondary btn-small" [disabled]="paginationInfo.btnResetDisabled" (click)="changeRange('reset')">Reset</button>
+        <button class="btn btn-primary btn-small" [disabled]="paginationInfo.btnNextDisabled" (click)="changeRange('asc')">Następna</button>
+    </div>
+    <div class="info">
+        <span>{{'Wyników: '}}<strong>{{paginationInfo.allQuestionsAmount}}</strong></span>
+        <span *ngIf="paginationInfo.allQuestionsAmount">{{'Strona: '}} <strong>{{paginationInfo.showingPage + '/' + paginationInfo.pagesAmount}}</strong></span>
+    </div>
+ </div>
